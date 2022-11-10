@@ -1,8 +1,11 @@
 import React from 'react'
+import Navbar from './Navbar'
 
 function HeaderSection() {
   return (
-    <div>HeaderSection</div>
+    <div>
+       <Navbar />
+        HeaderSection</div>
   )
 }
 
