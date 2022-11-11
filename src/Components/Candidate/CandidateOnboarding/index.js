@@ -1,20 +1,201 @@
-import { Grid, TextField, Typography } from '@mui/material'
-import React from 'react'
+import { useTheme } from "@emotion/react";
+import {
+  Button,
+  Chip,
+  Grid,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import React, { useState } from "react";
 
 function CandidateOnboarding() {
-  const data = ['Names', 'Email', 'Phone', 'Experience', 'Education', 'Domain', 'Skills']
-  return (
+  // const data = ['Names', 'Email', 'Phone', 'Experience', 'Education', 'Domain', 'Skills']
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    experience: "",
+    education: "",
+    domain: "",
+    skills: [],
+  });
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+  const submitUserInfo = () => {
+    // localStorage.setItem('userInfo', userInfo)
+    console.log("submit", userInfo);
+  };
+  const handleSkillChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setUserInfo({
+      ...userInfo,
+      skills: typeof value === "string" ? value.split(",") : value,
+    });
+  };
+  const theme = useTheme();
 
-    <Grid container spacing={2} sx={{padding: '10px', maxWidth: '95%', margin: '20px auto', 
-    boxShadow: '0px 8px 24px #789', background: '#fff', borderRadius: '8px'}}>
-      {data.map((item) => (
+  const skillSet = [
+    "Java",
+    "JavaScript",
+    "React",
+    "HTML",
+    "Angular",
+    "CSS",
+    "Bootstrap",
+  ];
+
+  // function getStyles(name, data, theme) {
+  //   return {
+  //     fontWeight:
+  //       data.indexOf(name) === -1
+  //         ? theme.typography.fontWeightRegular
+  //         : theme.typography.fontWeightMedium,
+  //   };
+  // }
+  const domainItems = [
+    "Frontend",
+    "Backend",
+    "Full Stack",
+    "React",
+    "JavsScript",
+    "Java",
+    "C++",
+  ];
+  return (
+    <form onSubmit={submitUserInfo}>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          padding: "10px",
+          maxWidth: "95%",
+          margin: "20px auto",
+          boxShadow: "0px 8px 24px #789",
+          background: "#fff",
+          borderRadius: "8px",
+        }}
+      >
         <Grid item xs={12} sm={6}>
-          <Typography variant='h6'>{item}</Typography>
-          <TextField variant='outlined' fullWidth />
+          <Typography variant="h6">Name</Typography>
+          <TextField required
+            variant="outlined"
+            fullWidth
+            value={userInfo.name}
+            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+          />
         </Grid>
-      ))}
-    </Grid>
-  )
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h6">Email</Typography>
+          <TextField required
+            variant="outlined"
+            fullWidth
+            value={userInfo.email}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, email: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h6">Phone</Typography>
+          <TextField
+            variant="outlined"
+            fullWidth
+            value={userInfo.phone}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, phone: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h6">Experience</Typography>
+          <TextField
+            variant="outlined"
+            fullWidth
+            value={userInfo.experience}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, experience: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h6">Education</Typography>
+          <TextField required
+            variant="outlined"
+            fullWidth
+            value={userInfo.education}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, education: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h6">Domain</Typography>
+          <Select
+            fullWidth
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={userInfo.domain}
+            label="Age"
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, domain: e.target.value })
+            }
+          >
+            {domainItems.map((domain, index) => (
+              <MenuItem key={index} value={domain}>
+                {domain}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} sm={6} >
+          <Typography variant="h6">Skills</Typography>
+          <Select required
+            fullWidth
+            id="demo-multiple-chip"
+            multiple
+            value={userInfo.skills}
+            onChange={handleSkillChange}
+            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {skillSet.map((skill) => (
+              <MenuItem
+                key={skill}
+                value={skill}
+                // style={getStyles(skill, userInfo.skills, theme)}
+              >
+                {skill}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12}>
+          <Button onClick={submitUserInfo}>Submit</Button>
+        </Grid>
+      </Grid>
+    </form>
+  );
 }
 
-export default CandidateOnboarding
+export default CandidateOnboarding;
