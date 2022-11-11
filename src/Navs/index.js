@@ -34,7 +34,8 @@ function Navs() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/candidate/auth" element={<AuthPage type='candidate' />} />
+          <Route path="/employer/auth" element={<AuthPage type='employer' />} />
           <Route element={<CandidateProtactedRotes />}>
             <Route
               path="/candidateOnboarding"
