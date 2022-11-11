@@ -21,7 +21,7 @@ import {
 
 function Navs() {
   const CandidateProtactedRotes = () => {
-    if ("c" === "a") return <Outlet />;
+    if ("a" === "a") return <Outlet />;
     else return <Navigate to="/" />;
   };
   const EmployerProtactedRotes = () => {
@@ -38,7 +38,7 @@ function Navs() {
           <Route path="/employer/auth" element={<AuthPage type='employer' />} />
           <Route element={<CandidateProtactedRotes />}>
             <Route
-              path="/candidateOnboarding"
+              path="candidate/onboarding"
               element={<CandidateOnboarding />}
             />
             <Route path="candidate/jobs" element={<CandidateJobs />} />
@@ -51,7 +51,7 @@ function Navs() {
           </Route>
           <Route element={<EmployerProtactedRotes />}>
             <Route
-              path="/employerOnboarding"
+              path="employer/onboarding"
               element={<EmployerOnboarding />}
             />
             <Route path="employer/jobs" element={<EmployerJobs />} />
