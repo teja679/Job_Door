@@ -13,10 +13,10 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 
 function CandidateOnboarding() {
-  // const data = ['Names', 'Email', 'Phone', 'Experience', 'Education', 'Domain', 'Skills']
+  const data = JSON.parse(localStorage.getItem('users'))
   const [userInfo, setUserInfo] = useState({
     name: "",
-    email: "",
+    email: data?.email ? data?.email : "",
     phone: "",
     experience: "",
     education: "",
@@ -34,7 +34,7 @@ function CandidateOnboarding() {
     },
   };
   const submitUserInfo = () => {
-    // localStorage.setItem('userInfo', userInfo)
+    localStorage.setItem('user', userInfo)
     console.log("submit", userInfo);
   };
   const handleSkillChange = (event) => {
@@ -57,15 +57,6 @@ function CandidateOnboarding() {
     "CSS",
     "Bootstrap",
   ];
-
-  // function getStyles(name, data, theme) {
-  //   return {
-  //     fontWeight:
-  //       data.indexOf(name) === -1
-  //         ? theme.typography.fontWeightRegular
-  //         : theme.typography.fontWeightMedium,
-  //   };
-  // }
   const domainItems = [
     "Frontend",
     "Backend",
@@ -91,7 +82,7 @@ function CandidateOnboarding() {
       >
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Name</Typography>
-          <TextField required
+          <TextField required placeholder="Enter name"
             variant="outlined"
             fullWidth
             value={userInfo.name}
@@ -100,7 +91,7 @@ function CandidateOnboarding() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Email</Typography>
-          <TextField required
+          <TextField required disabled
             variant="outlined"
             fullWidth
             value={userInfo.email}
@@ -111,7 +102,7 @@ function CandidateOnboarding() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Phone</Typography>
-          <TextField
+          <TextField  placeholder="Enter phone number"
             variant="outlined"
             fullWidth
             value={userInfo.phone}
@@ -133,7 +124,7 @@ function CandidateOnboarding() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Education</Typography>
-          <TextField required
+          <TextField required placeholder="Enter education"
             variant="outlined"
             fullWidth
             value={userInfo.education}
@@ -146,7 +137,7 @@ function CandidateOnboarding() {
           <Typography variant="h6">Domain</Typography>
           <Select
             fullWidth
-            labelId="demo-simple-select-label"
+            labelId="demo"
             id="demo-simple-select"
             value={userInfo.domain}
             label="Age"
@@ -163,7 +154,8 @@ function CandidateOnboarding() {
         </Grid>
         <Grid item xs={12} sm={6} >
           <Typography variant="h6">Skills</Typography>
-          <Select required
+          <Select required placeholder="Skills"
+            label='skills'
             fullWidth
             id="demo-multiple-chip"
             multiple
@@ -190,8 +182,8 @@ function CandidateOnboarding() {
             ))}
           </Select>
         </Grid>
-        <Grid item xs={12}>
-          <Button onClick={submitUserInfo}>Submit</Button>
+        <Grid item xs={12} >
+          <Button fullWidth onClick={submitUserInfo}>Submit</Button>
         </Grid>
       </Grid>
     </form>

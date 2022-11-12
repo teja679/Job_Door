@@ -13,7 +13,7 @@ function AuthPage({ type }) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // The signed-in user info.
         const user = result.user;
-        localStorage.setItem('users', user)
+        localStorage.setItem('users', JSON.stringify(user))
         if(type === 'candidate'){
           if(!true){
             navigate('/candidate/profile')
