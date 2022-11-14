@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { db } from "../../../firebaseConfig";
 
 function CandidateOnboarding() {
-  const userData = JSON.parse(localStorage.getItem('users'))
+  const userData = JSON.parse(localStorage.getItem('user'))
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -73,10 +73,15 @@ function CandidateOnboarding() {
     "Frontend",
     "Backend",
     "Full Stack",
-    "React",
-    "JavsScript",
-    "Java",
-    "C++",
+    "Devops",
+    "UI/UX",
+    "QA",
+    "Data Science",
+    "MAchine Learning",
+    "Artificial Intelligence",
+    "Cloud Computing",
+    "Blockchain",
+    "Software Engineering",
   ];
   return (
     <form onSubmit={submitUserInfo}>

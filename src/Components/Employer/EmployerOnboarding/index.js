@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import { db } from '../../../firebaseConfig'
 import {
   Button,   Grid,  MenuItem,
-  OutlinedInput,  Select,  TextField,  Typography,
+   Select,  TextField,  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
@@ -10,7 +10,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom'
 
 function EmployerOnboarding() {
-  const userData = JSON.parse(localStorage.getItem('users'))
+  const userData = JSON.parse(localStorage.getItem('user'))
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     name: "",

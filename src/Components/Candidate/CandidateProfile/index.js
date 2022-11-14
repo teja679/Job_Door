@@ -11,22 +11,43 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
-import { doc, setDoc } from "firebase/firestore";
-import React, { useState } from "react";
-import { db } from "../../../firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { db } from '../../../firebaseConfig'
 
 function CandidateProfile() {
-  const userData = JSON.parse(localStorage.getItem('users'))
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     name: "",
-    email: userData?.email ? userData?.email : "",
+    email: '',
     phone: "",
     experience: "",
     education: "",
     domain: "",
     skills: [],
   });
+  
+  async function fetchUserInfo() {
+    const userData = JSON.parse(localStorage.getItem('user'))
+    
+    try{
+      const docRef = doc(db, "userData", userData.uid)
+    
+      const docSnap = await getDoc(docRef)
+      
+      if(docSnap.exists()){
+        console.log('Document data:', docSnap.data())
+      }
+      else {
+        console.log('No such comment!')
+      }
+    } catch(err){
+        console.log(err)
+    }
+  }
+  useEffect(() => {
+    fetchUserInfo()
+  }, [])
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -38,16 +59,16 @@ function CandidateProfile() {
     },
   };
   const submitUserInfo = async () => {
-    try{
-      await setDoc(doc(db, "userData", `${userData.uid}`), {
-        ...userInfo, type: 'candidate'
-      })
-      alert('Sucessfully submitted')
-      navigate('/candidate/profile')
-    } catch (e) {
-        console.error("Error adding document", e)
-    }
-    console.error("submit", userInfo)
+    // try{
+    //   await setDoc(doc(db, "userData", `${userData.uid}`), {
+    //     ...userInfo, type: 'candidate'
+    //   })
+    //   alert('Sucessfully submitted')
+    //   navigate('/candidate/profile')
+    // } catch (e) {
+    //     console.error("Error adding document", e)
+    // }
+    // console.error("submit", userInfo)
   };
   const handleSkillChange = (event) => {
     const {
@@ -78,8 +99,9 @@ function CandidateProfile() {
     "Java",
     "C++",
   ];
+
   return (
-    <form onSubmit={submitUserInfo}>
+    <form>
     <h1>Profile</h1>
       <Grid
         container
