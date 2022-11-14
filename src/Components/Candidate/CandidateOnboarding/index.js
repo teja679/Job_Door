@@ -10,13 +10,15 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { db } from "../../../firebaseConfig";
 
 function CandidateOnboarding() {
-  const data = JSON.parse(localStorage.getItem('users'))
+  const userData = JSON.parse(localStorage.getItem('users'))
   const [userInfo, setUserInfo] = useState({
     name: "",
-    email: data?.email ? data?.email : "",
+    email: userData?.email ? userData?.email : "",
     phone: "",
     experience: "",
     education: "",
@@ -33,9 +35,15 @@ function CandidateOnboarding() {
       },
     },
   };
-  const submitUserInfo = () => {
-    localStorage.setItem('user', userInfo)
-    console.log("submit", userInfo);
+  const submitUserInfo = async () => {
+    try{
+      await setDoc(doc(db, "userData", `${userData.uid}`), {
+        ...userInfo, type: 'candidate'
+      })
+    } catch (e) {
+        console.error("Error adding document", e)
+    }
+    console.error("submit", userInfo)
   };
   const handleSkillChange = (event) => {
     const {
