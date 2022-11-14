@@ -5,13 +5,15 @@ import {
    Select,  TextField,  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
-import { doc, setDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom'
 
 function EmployerProfile() {
   const userData = JSON.parse(localStorage.getItem('user'))
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
+  const [edit, setEdit] = useState(false);
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: userData?.email ? userData?.email : "",
@@ -22,20 +24,44 @@ function EmployerProfile() {
     address: "",
     industry: "",
   });
-const submitUserInfo = async (e) => {
-    e.preventDefault()
-    try{
-      await setDoc(doc(db, "userData", `${userData.uid}`), {
-        ...userInfo, type: 'employer'
-      })
-      alert('Sucessfully submitted')
-      navigate('/candidate/profile')
-    } catch (e) {
-        console.error("Error adding document", e)
-    }
-    console.error("submit", userInfo)
-  };
   
+  async function fetchUserInfo() {
+    try {
+      const docRef = doc(db, "userData", userData.uid);
+
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setUserInfo(docSnap.data());
+        setLoading(false);
+      } else {
+        console.log("No such comment!");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+  
+  async function saveInfo() {
+    try {
+      await setDoc(
+        doc(db, "userData", `${userData.uid}`),
+        {
+          ...userInfo,
+        },
+        { merge: true }
+      );
+      alert("Sucessfully updated");
+      setEdit(!edit);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const industryType = [
     "Agriculture",
     "Manufacturing",
@@ -46,8 +72,12 @@ const submitUserInfo = async (e) => {
     "Design",
   ];
   return (
-    <form onSubmit={submitUserInfo}>
-      <h1>Employer Onboarding</h1>
+    <>
+      {loading ? (
+        <div>loading...</div>
+      ) : (
+    <form>
+      <h1>Profile</h1>
       <Grid
         container
         spacing={2}
@@ -62,7 +92,9 @@ const submitUserInfo = async (e) => {
       >
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Name</Typography>
-          <TextField required placeholder="Enter name"
+          <TextField 
+            required
+            disabled={!edit} placeholder="Enter name"
             variant="outlined"
             fullWidth
             value={userInfo.name}
@@ -71,7 +103,9 @@ const submitUserInfo = async (e) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Email</Typography>
-          <TextField required disabled
+          <TextField
+            required type='email'
+            disabled={!edit}
             variant="outlined"
             fullWidth
             value={userInfo.email}
@@ -83,6 +117,8 @@ const submitUserInfo = async (e) => {
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Phone</Typography>
           <TextField  placeholder="Enter phone number"
+            required type='number'
+            disabled={!edit}
             variant="outlined"
             fullWidth
             value={userInfo.phone}
@@ -94,6 +130,8 @@ const submitUserInfo = async (e) => {
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Company Name</Typography>
           <TextField placeholder="Enter Company Name"
+          required
+          disabled={!edit}
             variant="outlined"
             fullWidth
             value={userInfo.company}
@@ -105,6 +143,8 @@ const submitUserInfo = async (e) => {
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Company Size</Typography>
           <TextField placeholder="Enter Company size"
+            required
+            disabled={!edit}
             variant="outlined"
             fullWidth
             value={userInfo.size}
@@ -116,6 +156,8 @@ const submitUserInfo = async (e) => {
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">HR Email</Typography>
           <TextField required placeholder="Enter HR Email"
+             type='email'
+            disabled={!edit}
             variant="outlined"
             fullWidth
             value={userInfo.hrEmail}
@@ -127,6 +169,8 @@ const submitUserInfo = async (e) => {
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Company Address</Typography>
           <TextField  placeholder="Enter address"
+            required
+            disabled={!edit}
             variant="outlined"
             fullWidth
             value={userInfo.address}
@@ -138,6 +182,8 @@ const submitUserInfo = async (e) => {
         <Grid item xs={12} sm={6} >
           <Typography variant="h6">Industry</Typography>
           <Select
+            required
+            disabled={!edit}
             fullWidth
             labelId="demo"
             id="demo-simple-select"
@@ -154,11 +200,22 @@ const submitUserInfo = async (e) => {
             ))}
           </Select>
         </Grid>
-        <Grid item xs={12} >
-          <Button fullWidth onClick={submitUserInfo}>Submit</Button>
-        </Grid>
+            <Grid item xs={12}>
+              {edit ? (
+                <>
+                  <Button onClick={saveInfo}>Save</Button>
+                  <Button onClick={() => setEdit(!edit)}>Cancel</Button>
+                </>
+              ) : (
+                <Button fullWidth onClick={() => setEdit(!edit)}>
+                  Edit
+                </Button>
+              )}
+            </Grid>
       </Grid>
     </form>
+        )}
+      </>
   );
 }
 
