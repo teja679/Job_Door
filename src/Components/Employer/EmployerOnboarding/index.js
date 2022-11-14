@@ -7,9 +7,11 @@ import {
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom'
 
 function EmployerOnboarding() {
   const userData = JSON.parse(localStorage.getItem('users'))
+  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: userData?.email ? userData?.email : "",
@@ -26,6 +28,8 @@ const submitUserInfo = async (e) => {
       await setDoc(doc(db, "userData", `${userData.uid}`), {
         ...userInfo, type: 'employer'
       })
+      alert('Sucessfully submitted')
+      navigate('/candidate/profile')
     } catch (e) {
         console.error("Error adding document", e)
     }
@@ -43,7 +47,7 @@ const submitUserInfo = async (e) => {
   ];
   return (
     <form onSubmit={submitUserInfo}>
-      <h1>employer Onboarding</h1>
+      <h1>Employer Onboarding</h1>
       <Grid
         container
         spacing={2}

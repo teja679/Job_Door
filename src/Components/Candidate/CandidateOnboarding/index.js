@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import { doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
@@ -16,6 +17,7 @@ import { db } from "../../../firebaseConfig";
 
 function CandidateOnboarding() {
   const userData = JSON.parse(localStorage.getItem('users'))
+  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: userData?.email ? userData?.email : "",
@@ -40,6 +42,8 @@ function CandidateOnboarding() {
       await setDoc(doc(db, "userData", `${userData.uid}`), {
         ...userInfo, type: 'candidate'
       })
+      alert('Sucessfully submitted')
+      navigate('/candidate/profile')
     } catch (e) {
         console.error("Error adding document", e)
     }
@@ -76,6 +80,7 @@ function CandidateOnboarding() {
   ];
   return (
     <form onSubmit={submitUserInfo}>
+    <h1>Candidate Onboarding</h1>
       <Grid
         container
         spacing={2}
