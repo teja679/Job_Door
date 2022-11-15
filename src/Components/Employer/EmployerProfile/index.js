@@ -203,11 +203,11 @@ function EmployerProfile() {
             <Grid item xs={12}>
               {edit ? (
                 <>
-                  <Button onClick={saveInfo}>Save</Button>
-                  <Button onClick={() => setEdit(!edit)}>Cancel</Button>
+                  <Button variant="contained" onClick={saveInfo}>Save</Button>
+                  <Button variant="contained" onClick={() => setEdit(!edit)}>Cancel</Button>
                 </>
               ) : (
-                <Button fullWidth onClick={() => setEdit(!edit)}>
+                <Button variant="contained" onClick={() => setEdit(!edit)}>
                   Edit
                 </Button>
               )}
