@@ -7,13 +7,13 @@ function EmployerJobs() {
   const [mobileSidebar, setMobileSidebar] = useState(true)
   return (
     <>
-    <Grid container spacing={2} sx={{margin: '0'}}>
-      <Grid item xs={3} sm={12} sx={{
+    <Grid container spacing={2}>
+      <Grid item xs={3} sm={3} sx={{
         display: { xs: mobileSidebar ? 'none' : 'block', sm: 'block'} 
       }} >
         <Sidebar />
       </Grid>
-      <Grid xs={9} sm={12} sx={{
+      <Grid item xs={12} sm={9} sx={{
         display: { xs: mobileSidebar ? 'block' : 'none', sm: 'block'} 
       }}>
         <JobForm />

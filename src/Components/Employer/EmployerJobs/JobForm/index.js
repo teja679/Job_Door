@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
-import uuid from 'uuidv4'
+import { db } from '../../../../firebaseConfig'
+import { v4 as uuid} from 'uuid'
 import {
   Button,
   Chip,
@@ -20,12 +21,13 @@ function JobForm() {
   const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   const userData = JSON.parse(localStorage.getItem("user"));
-  const [userInfo, setUserInfo] = useState({
+  const [jobData, setJobData] = useState({
     name: "",
-    email: "",
-    phone: "",
+    location: "",
+    salary: "",
     experience: "",
-    education: "",
+    jobType: "",
+    desc: '',
     domain: "",
     skills: [],
   });
@@ -45,8 +47,8 @@ function JobForm() {
     const {
       target: { value },
     } = event;
-    setUserInfo({
-      ...userInfo,
+    setJobData({
+      ...jobData,
       skills: typeof value === "string" ? value.split(",") : value,
     });
   };
@@ -70,8 +72,13 @@ function JobForm() {
     "Java",
     "C++",
   ];
-  function submitJob () {
-
+  async function submitJob () {
+    const job_id = uuid();
+    await setDoc(doc(db, 'jobsData', job_id), {
+      ...jobData, 
+      job_id : job_id
+    }) 
+    alert('Job Posted Successfully')
   }
   return (
     <>
@@ -93,26 +100,22 @@ function JobForm() {
               <Typography variant="h6">Job Title</Typography>
               <TextField
                 required
-                placeholder="Enter name"
                 variant="outlined"
                 fullWidth
-                value={userInfo.name}
+                value={jobData.name}
                 onChange={(e) =>
-                  setUserInfo({ ...userInfo, name: e.target.value })
+                  setJobData({ ...jobData, name: e.target.value })
                 }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography variant="h6">Location</Typography>
               <TextField
-                required
-                type="email"
-                disabled
-                variant="outlined"
+                required variant="outlined"
                 fullWidth
-                value={userInfo.email}
+                value={jobData.location}
                 onChange={(e) =>
-                  setUserInfo({ ...userInfo, email: e.target.value })
+                  setJobData({ ...jobData, location: e.target.value })
                 }
               />
             </Grid>
@@ -121,12 +124,11 @@ function JobForm() {
               <TextField
                 type="number"
                 required
-                placeholder="Enter phone number"
                 variant="outlined"
                 fullWidth
-                value={userInfo.phone}
+                value={jobData.salary}
                 onChange={(e) =>
-                  setUserInfo({ ...userInfo, phone: e.target.value })
+                  setJobData({ ...jobData, salary: e.target.value })
                 }
               />
             </Grid>
@@ -136,9 +138,9 @@ function JobForm() {
                 required
                 variant="outlined"
                 fullWidth
-                value={userInfo.experience}
+                value={jobData.experience}
                 onChange={(e) =>
-                  setUserInfo({ ...userInfo, experience: e.target.value })
+                  setJobData({ ...jobData, experience: e.target.value })
                 }
               />
             </Grid>
@@ -146,12 +148,11 @@ function JobForm() {
               <Typography variant="h6">Job Type</Typography>
               <TextField
                 required
-                placeholder="Enter education"
                 variant="outlined"
                 fullWidth
-                value={userInfo.education}
+                value={jobData.jobType}
                 onChange={(e) =>
-                  setUserInfo({ ...userInfo, education: e.target.value })
+                  setJobData({ ...jobData, jobType: e.target.value })
                 }
               />
             </Grid>
@@ -159,11 +160,10 @@ function JobForm() {
               <Typography variant="h6">Description</Typography>
               <TextField fullWidth
                 required
-                placeholder="Enter education"
                 variant="outlined"
-                value={userInfo.education}
+                value={jobData.desc}
                 onChange={(e) =>
-                  setUserInfo({ ...userInfo, education: e.target.value })
+                  setJobData({ ...jobData, desc: e.target.value })
                 }
               />
             </Grid>
@@ -174,10 +174,10 @@ function JobForm() {
                 fullWidth
                 labelId="demo"
                 id="demo-simple-select"
-                value={userInfo.domain}
+                value={jobData.domain}
                 label="Age"
                 onChange={(e) =>
-                  setUserInfo({ ...userInfo, domain: e.target.value })
+                  setJobData({ ...jobData, domain: e.target.value })
                 }
               >
                 {domainItems.map((domain, index) => (
@@ -196,7 +196,7 @@ function JobForm() {
                 fullWidth
                 id="demo-multiple-chip"
                 multiple
-                value={userInfo.skills}
+                value={jobData.skills}
                 onChange={handleSkillChange}
                 input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                 renderValue={(selected) => (
@@ -212,7 +212,7 @@ function JobForm() {
                   <MenuItem
                     key={skill}
                     value={skill}
-                    // style={getStyles(skill, userInfo.skills, theme)}
+                    // style={getStyles(skill, jobData.skills, theme)}
                   >
                     {skill}
                   </MenuItem>
@@ -220,7 +220,7 @@ function JobForm() {
               </Select>
             </Grid>
                   <Grid>
-                    <Button variant="contained" color="primry"
+                    <Button variant="contained" color="primary"
                     onClick={submitJob}>Submit</Button>
                   </Grid>
           </Grid>
