@@ -18,9 +18,7 @@ import React, { useEffect, useState } from "react";
 
 function JobForm() {
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const [edit, setEdit] = useState(false);
-  const userData = JSON.parse(localStorage.getItem("user"));
+  const userInfo = JSON.parse(localStorage.getItem("user"));
   const [jobData, setJobData] = useState({
     name: "",
     location: "",
@@ -76,7 +74,8 @@ function JobForm() {
     const job_id = uuid();
     await setDoc(doc(db, 'jobsData', job_id), {
       ...jobData, 
-      job_id : job_id
+      job_id : job_id,
+      employerId: userInfo.uid
     }) 
     alert('Job Posted Successfully')
   }
@@ -159,7 +158,7 @@ function JobForm() {
             <Grid item xs={12} sm={12}>
               <Typography variant="h6">Description</Typography>
               <TextField fullWidth
-                required
+                required multiline rows={4}
                 variant="outlined"
                 value={jobData.desc}
                 onChange={(e) =>
