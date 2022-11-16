@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
-import { db } from '../../../../firebaseConfig'
-import { v4 as uuid} from 'uuid'
+import { db } from "../../../../firebaseConfig";
+import { v4 as uuid } from "uuid";
 import {
   Button,
   Chip,
@@ -16,21 +16,10 @@ import { Box } from "@mui/system";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
-function JobForm() {
+function JobForm({ postAjob, jobData, setJobData }) {
   const [loading, setLoading] = useState(true);
   const userInfo = JSON.parse(localStorage.getItem("user"));
-  const [jobData, setJobData] = useState({
-    name: "",
-    location: "",
-    salary: "",
-    experience: "",
-    jobType: "",
-    desc: '',
-    domain: "",
-    skills: [],
-  });
 
-  
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -70,18 +59,26 @@ function JobForm() {
     "Java",
     "C++",
   ];
-  async function submitJob () {
+  async function submitJob(e) {
     const job_id = uuid();
-    await setDoc(doc(db, 'jobsData', job_id), {
-      ...jobData, 
-      job_id : job_id,
-      employerId: userInfo.uid
-    }) 
-    alert('Job Posted Successfully')
+    if (jobData.job_id) {
+      await setDoc(doc(db, "jobsData", jobData.job_id), {
+        ...jobData,
+      });
+    } else {
+      await setDoc(doc(db, "jobsData", job_id), {
+        ...jobData,
+        job_id: job_id,
+        employerId: userInfo.uid,
+        createdAt: new Date(),
+      });
+    }
+    alert("Job Posted Successfully");
   }
   return (
     <>
-        <form>
+      {postAjob ? (
+        <form onSubmit={submitJob}>
           <h1>Job Form</h1>
           <Grid
             container
@@ -101,16 +98,17 @@ function JobForm() {
                 required
                 variant="outlined"
                 fullWidth
-                value={jobData.name}
+                value={jobData.title}
                 onChange={(e) =>
-                  setJobData({ ...jobData, name: e.target.value })
+                  setJobData({ ...jobData, title: e.target.value })
                 }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography variant="h6">Location</Typography>
               <TextField
-                required variant="outlined"
+                required
+                variant="outlined"
                 fullWidth
                 value={jobData.location}
                 onChange={(e) =>
@@ -157,8 +155,11 @@ function JobForm() {
             </Grid>
             <Grid item xs={12} sm={12}>
               <Typography variant="h6">Description</Typography>
-              <TextField fullWidth
-                required multiline rows={4}
+              <TextField
+                fullWidth
+                required
+                multiline
+                rows={4}
                 variant="outlined"
                 value={jobData.desc}
                 onChange={(e) =>
@@ -218,12 +219,16 @@ function JobForm() {
                 ))}
               </Select>
             </Grid>
-                  <Grid>
-                    <Button variant="contained" color="primary"
-                    onClick={submitJob}>Submit</Button>
-                  </Grid>
+            <Grid>
+              <Button variant="contained" color="primary" onClick={submitJob}>
+                Submit
+              </Button>
+            </Grid>
           </Grid>
         </form>
+      ) : (
+        <div>please select a job</div>
+      )}
     </>
   );
 }
