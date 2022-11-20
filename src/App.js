@@ -1,9 +1,10 @@
 import './App.css';
+import Navs from './Navs';
 
 function App() {
   return (
       <div>
-        Hello
+        <Navs />
       </div>
     );
 }
