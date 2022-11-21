@@ -6,6 +6,11 @@ import CandidateConversation from "../Components/Candidate/CandidateConversation
 import CandidateJobs from "../Components/Candidate/CandidateJobs";
 import CandidateOnboarding from "../Components/Candidate/CandidateOnboarding";
 import CandidateProfile from "../Components/Candidate/CandidateProfile";
+import Applicants from "../Components/Employer/Applicants";
+import EmployerProfile from "../Components/Employer/EmployerProfile";
+import EmployerJobs from "../Components/Employer/EmployerJobs";
+import EmployerOnboarding from "../Components/Employer/EmployerOnboarding";
+import EmployerConversation from "../Components/Employer/EmployerConversation";
 import LandingPage from "../Components/LandingPage";
 
 function Navs() {
@@ -39,7 +44,7 @@ function Navs() {
           <Route element={<EmployerProtactedRotes />}>
             <Route
               path="employer/onboarding"
-              element={<EmployerOnboarding />}
+            element={<EmployerOnboarding />}
             />
             <Route path="employer/jobs" element={<EmployerJobs />} />
             <Route
@@ -47,7 +52,7 @@ function Navs() {
               element={<EmployerConversation />}
             />
             <Route path="employer/profile" element={<EmployerProfile />} />
-            <Route path="employer/applications" element={<Applications />} />
+            <Route path="employer/applications" element={<Applicants />} />
           </Route>
         </Routes>
       </BrowserRouter>
