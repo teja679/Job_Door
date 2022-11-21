@@ -5,6 +5,7 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../../firebaseConfig'
 
 function AuthPage({ type }) {
+    
     const navigate= useNavigate()
     const signIn = () => {
         const provider = new GoogleAuthProvider();
