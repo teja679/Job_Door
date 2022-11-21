@@ -1,4 +1,6 @@
 import { useTheme } from "@emotion/react";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from '../../../firebaseConfig'
 import {
   Button,
   Chip,
@@ -13,9 +15,11 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 
 function CandidateOnboarding() {
+  const userData = JSON.parse(localStorage.getItem('users'))
+
   const [userInfo, setUserInfo] = useState({
     name: "",
-    email: "",
+    email: userData?.email ? userData?.email : "",
     phone: "",
     experience: "",
     education: "",
@@ -32,8 +36,18 @@ function CandidateOnboarding() {
       },
     },
   };
-  const submitUserInfo = () => {
-    localStorage.setItem('userInfo', JSON.stringify(userInfo))
+  const submitUserInfo = async (e) => {
+    e.preventDefault()
+    console.log(userData)
+    // localStorage.setItem('userInfo', JSON.stringify(userInfo))
+    try {
+      await setDoc(doc(db, 'userData', `${userData.uid}`), {
+        ...userInfo, type: 'candidate'
+      })
+    }
+    catch(e){
+      console.error('Error adding document', e)
+    }
     console.log("submit", userInfo);
   };
   const handleSkillChange = (event) => {
@@ -73,8 +87,9 @@ function CandidateOnboarding() {
           container
           spacing={2}
           sx={{
-            padding: "10px",
+            padding: "1rem",
             maxWidth: "95%",
+            height: '90%',
             margin: "20px auto",
             boxShadow: "0px 8px 24px #789",
             background: "#fff",
@@ -95,7 +110,7 @@ function CandidateOnboarding() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Email</Typography>
-            <TextField
+            <TextField disabled
               required
               variant="outlined"
               fullWidth
