@@ -15,7 +15,7 @@ import LandingPage from "../Components/LandingPage";
 
 function Navs() {
   const CandidateProtactedRotes = () => {
-    if ("c" === "a") return <Outlet />;
+    if ("a" === "a") return <Outlet />;
     else return <Navigate to="/" />;
   };
   const EmployerProtactedRotes = () => {
@@ -27,7 +27,8 @@ function Navs() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/candidate/auth" element={<AuthPage type='candidate' />} />
+          <Route path="/employer/auth" element={<AuthPage type='employer' />} />
           <Route element={<CandidateProtactedRotes />}>
             <Route
               path="candidate/onboarding"
