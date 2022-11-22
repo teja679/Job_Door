@@ -12,3 +12,22 @@
 p {
     font-size: 1.5rem;
 }
+.section-2 > .container {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.section-2 > .container > .item-div {
+    /* border: 1px solid gray; */
+    box-shadow: 1px 1px 3px black;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
