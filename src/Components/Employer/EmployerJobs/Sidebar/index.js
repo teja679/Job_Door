@@ -7,9 +7,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 
 function Sidebar({ selectAjob }) {
+
   const [allJobs, setAllJobs] = useState(null);
   const fetchJobs = () => {
-    const userInfo = JSON.parse(localStorage.getItem("user"));
+    
     const q = query(collection(db, "jobsData"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const jobs = [];
@@ -17,15 +18,16 @@ function Sidebar({ selectAjob }) {
           jobs.push(doc.data());
         });
         setAllJobs(jobs)
-        console.log("Current jobs: ", jobs);
+        // console.log("Current jobs: ", jobs);
     }) 
   }
   useEffect(() => {
     fetchJobs();
   }, []);
+  
   return(
     <div className="sidebar">
-      <Button
+      <Button fullWidth
        onClick={() => selectAjob(false)}>
       <AddIcon />{' '}
         post a job</Button>
@@ -40,14 +42,14 @@ function Sidebar({ selectAjob }) {
             onClick={() => selectAjob(job)}
             key={job.job_id}
             sx={{
-              padding: "10px",
+              padding: "1rem",
               margin: "10px",
-              border: "1px solid",
-              borderRadius: "8px",
+              textAlign: 'left',
+              borderBottom: "1px solid gray",
               fontSize: "16px",
             }}
           >
-            <Grid item xs={12}>
+            <Grid sx={{fontWeight: '600'}} item xs={12}>
               {job.title}
             </Grid>
             <Grid item xs={12}>

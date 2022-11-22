@@ -20,13 +20,13 @@ function AuthPage({ type }) {
         console.log(user)
         localStorage.setItem("users", JSON.stringify(user));
         if (type === "candidate") {
-          if (true) {
+          if (!true) {
             navigate("/candidate/profile");
           } else {
             navigate("/candidate/onboarding");
           }
         } else {
-          if (true) {
+          if (!true) {
             navigate("/employer/profile");
           } else {
             navigate("/employer/onboarding");

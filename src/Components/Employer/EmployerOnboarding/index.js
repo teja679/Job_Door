@@ -15,7 +15,6 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 
 function EmployerOnboarding() {
-  const [edit, setEdit] = useState(false)
   const userData = JSON.parse(localStorage.getItem('users'))
 
   const [userInfo, setUserInfo] = useState({
@@ -60,8 +59,6 @@ function EmployerOnboarding() {
       await setDoc(doc(db, 'userData', `${userData.uid}`), {
         ...userInfo,
       }, {mergin: true})
-      alert('Successfully updated');
-      setEdit(!edit);
     }
     catch (e){
       console.error('Error adding document', e)
@@ -119,8 +116,7 @@ function EmployerOnboarding() {
             <Typography variant="h6">Name</Typography>
             <TextField
               required 
-              disabled={!edit}
-              variant="outlined"
+                  variant="outlined"
               fullWidth
               value={userInfo.name}
               onChange={(e) =>
@@ -143,8 +139,7 @@ function EmployerOnboarding() {
           <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Company Name</Typography>
             <TextField 
-            disabled={!edit}
-              variant="outlined"
+                variant="outlined"
               fullWidth
               value={userInfo.company}
               onChange={(e) =>
@@ -155,8 +150,7 @@ function EmployerOnboarding() {
           <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Company Size</Typography>
             <TextField
-              disabled={!edit}
-              variant="outlined"
+                  variant="outlined"
               fullWidth
               value={userInfo.size}
               onChange={(e) =>
@@ -167,8 +161,7 @@ function EmployerOnboarding() {
           <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Phone</Typography>
             <TextField  
-            disabled={!edit}
-            variant="outlined"
+              variant="outlined"
               fullWidth
               value={userInfo.phone}
               onChange={(e) =>
@@ -179,8 +172,7 @@ function EmployerOnboarding() {
           <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">HR Email</Typography>
             <TextField
-              disabled={!edit}
-              variant="outlined"
+                  variant="outlined"
               fullWidth
               value={userInfo.hrEmail}
               onChange={(e) =>
@@ -191,8 +183,7 @@ function EmployerOnboarding() {
           <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Address</Typography>
             <TextField
-            disabled={!edit}
-            required
+              required
               variant="outlined"
               fullWidth
               value={userInfo.address}
@@ -204,8 +195,7 @@ function EmployerOnboarding() {
           <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Industry</Typography>
             <Select
-            disabled={!edit}
-              fullWidth
+                fullWidth
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={userInfo.industry}
@@ -221,15 +211,8 @@ function EmployerOnboarding() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12}>
-            {!edit ? (
-              <Button onClick={()=>setEdit(!edit)}>Edit</Button>
-            ) : (
-              <>
-                <Button onClick={saveInfo}>Save</Button>
-                <Button onClick={()=>setEdit(!edit)}>Cancel</Button> 
-              </>
-            )}
+         <Grid item xs={12}>
+            <Button onClick={saveInfo}>Submit</Button>
           </Grid>
         </Grid>
       </form>

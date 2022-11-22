@@ -48,13 +48,16 @@ function JobForm() {
           ...jobData,
         });
       } else {
-        await setDoc(doc(db, "jobData", job_id), {
+        console.log('hai')
+        await setDoc(doc(db, "jobsData", job_id), {
           job_id: job_id,
           ...jobData,
           empployerId: jobData.uid,
           createdAt: new Date(),
         });
       }
+      alert('Job Data updated')
+      
     } catch (e) {
       console.error("Error adding document", e);
     }
@@ -90,7 +93,7 @@ function JobForm() {
     "C++",
   ];
   return (
-      <form className="job-form" onSubmit={e=>submitJob(e)}>
+      <form className="job-form" onSubmit={submitJob}>
         <h1>Job Form</h1>
         <Grid
           container
@@ -120,7 +123,6 @@ function JobForm() {
           <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
             <Typography variant="h6">Location</Typography>
             <TextField
-              disabled
               required
               variant="outlined"
               fullWidth
@@ -225,8 +227,8 @@ function JobForm() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12}>
-            <Button>Submit</Button>
+          <Grid item xs={12} fullWidth>
+            <Button variant="contained">Submit</Button>
           </Grid>
         </Grid>
       </form>

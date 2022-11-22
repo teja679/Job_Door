@@ -5,6 +5,7 @@
      height: 100vh;
 }   
 .job-form {
+    border-left: 1px solid black;
     /* background: rgba(0,228,255,0.969625350140056); */
     /* border: 1px solid rgb(31, 93, 117); */
     height: 100%;
@@ -18,7 +19,7 @@
     border-radius: 1rem;
     padding: 0 1rem;
     height: 100%;
-    box-shadow: 0px 8px 24px #789;
+    /* box-shadow: 0px 8px 24px #789; */
 }
 .sidebar > button {
     margin: 1rem;
@@ -35,4 +36,5 @@
     border-radius: 30px;
     padding: 5px 10px;
     border: 1px solid gray;
+    width: 90%;
 }
