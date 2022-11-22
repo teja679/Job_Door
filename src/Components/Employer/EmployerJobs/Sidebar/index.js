@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { collection, query, onSnapshot, querySnapshot } from "firebase/firestore";
 import { db } from '../../../../firebaseConfig'
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Input } from "@mui/material";
+import '../styles.css'
+import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
 
 function Sidebar({ selectAjob }) {
   const [allJobs, setAllJobs] = useState(null);
@@ -21,10 +24,15 @@ function Sidebar({ selectAjob }) {
     fetchJobs();
   }, []);
   return(
-    <div>
+    <div className="sidebar">
       <Button
-       onClick={() => selectAjob(false)}
-       >post a job</Button>
+       onClick={() => selectAjob(false)}>
+      <AddIcon />{' '}
+        post a job</Button>
+      <div className="serachbar">
+        <SearchIcon />
+       <Input placeholder="Search by Job" sx={{outline: 'none'}} />
+      </div>
       {allJobs && allJobs.length > 0 ? (
         allJobs.map((job) => (
           <Grid

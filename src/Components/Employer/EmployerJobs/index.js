@@ -35,30 +35,40 @@ function EmployerJobs() {
     }
   };
   return (
-    <Grid container spacing={2}>
-      <Grid
-        xs={3}
-        sm={3}
-        sx={{
-          display: { xs: mobileSidebar ? "none" : "block", sm: "block" },
-        }}
-      >
-        <Sidebar jobData={jobData} />
+    <div className="jobs">
+      <Grid container sx={{
+        color: 'rgb(31, 93, 117)',
+        background: 'rgb(238, 252, 255)',
+        //  height: '100vh',
+      }}>
+        <Grid
+          xs={3}
+          sm={3.5}
+          sx={{
+            display: { xs: mobileSidebar ? "none" : "block", sm: "block" },
+          }}
+        >
+          <Sidebar jobData={jobData} />
+        </Grid>
+        <Grid
+          xs={12}
+          sm={8.5}
+          sx={{
+            display: { xs: mobileSidebar ? "block" : "none", sm: "block" },
+          }}
+        >
+          <JobForm setJobData={setJobData} />
+        </Grid>
+        <Button
+          onClick={() => setMobileSidebar(!mobileSidebar)}
+          sx={{
+            display: { xs: "block", sm: "none" },
+          }}
+        >
+          Switch
+        </Button>
       </Grid>
-      <Grid
-        xs={12}
-        sm={9}
-        sx={{
-          display: { xs: mobileSidebar ?  "block" : "none", sm: "block" },
-        }}
-      >
-        <JobForm setJobData={setJobData} />
-      </Grid>
-      <Button onClick={() => setMobileSidebar(!mobileSidebar)}
-      sx={{
-        display: {xs: 'block', sm: 'none'}
-      }}>Switch</Button>
-    </Grid>
+    </div>
   );
 }
 

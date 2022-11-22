@@ -1,0 +1,38 @@
+
+.jobs {
+    color: rgb(31, 93, 117);
+    background: rgb(238, 252, 255);
+     height: 100vh;
+}   
+.job-form {
+    /* background: rgba(0,228,255,0.969625350140056); */
+    /* border: 1px solid rgb(31, 93, 117); */
+    height: 100%;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    border-radius: 1rem;
+    padding: 0 1rem;
+    height: 100%;
+    box-shadow: 0px 8px 24px #789;
+}
+.sidebar > button {
+    margin: 1rem;
+    color: rgb(31, 93, 117);
+    border: 1px solid  rgb(13, 61, 87);
+    border-radius: 2.5rem;
+    padding: 10px 15px;
+}
+.sidebar > .serachbar {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 30px;
+    padding: 5px 10px;
+    border: 1px solid gray;
+}

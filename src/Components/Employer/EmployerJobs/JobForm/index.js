@@ -90,8 +90,7 @@ function JobForm() {
     "C++",
   ];
   return (
-    <>
-      <form>
+      <form className="job-form" onSubmit={e=>submitJob(e)}>
         <h1>Job Form</h1>
         <Grid
           container
@@ -99,11 +98,11 @@ function JobForm() {
           sx={{
             padding: "10px",
             maxWidth: "95%",
-            margin: "20px auto",
-            boxShadow: "0px 8px 24px #789",
-            background: "#fff",
+            margin: "auto",
+            // boxShadow: "0px 8px 24px #789",
+            // background: "#fff",
             borderRadius: "8px",
-            
+            // background: 'rgba(0,228,255,1)'
           }}
         >
           <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
@@ -227,11 +226,10 @@ function JobForm() {
             </Select>
           </Grid>
           <Grid item xs={12}>
-            <Button onClick={submitJob}>Submit</Button>
+            <Button>Submit</Button>
           </Grid>
         </Grid>
       </form>
-    </>
   );
 }
 
