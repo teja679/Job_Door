@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import AuthPage from "../Components/AuthPage";
 import Applications from "../Components/Candidate/Applications";
 import CandidateConversation from "../Components/Candidate/CandidateConversation";
@@ -12,6 +18,8 @@ import EmployerJobs from "../Components/Employer/EmployerJobs";
 import EmployerOnboarding from "../Components/Employer/EmployerOnboarding";
 import EmployerConversation from "../Components/Employer/EmployerConversation";
 import LandingPage from "../Components/LandingPage";
+import CandidateHoc from "../Components/CandidateHoc";
+import EmployerHoc from "../Components/EmployerHoc";
 
 function Navs() {
   const CandidateProtactedRotes = () => {
@@ -27,33 +35,58 @@ function Navs() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/candidate/auth" element={<AuthPage type='candidate' />} />
-          <Route path="/employer/auth" element={<AuthPage type='employer' />} />
+          <Route
+            path="/candidate/auth"
+            element={<AuthPage type="candidate" />}
+          />
+          <Route path="/employer/auth" element={<AuthPage type="employer" />} />
           <Route element={<CandidateProtactedRotes />}>
             <Route
               path="candidate/onboarding"
-              element={<CandidateOnboarding />}
+              element={
+                <CandidateHoc>
+                  <CandidateOnboarding />
+                </CandidateHoc>
+              }
             />
-            <Route path="candidate/jobs" element={<CandidateJobs />} />
+            <Route
+              path="candidate/jobs"
+              element={
+                <CandidateHoc>
+                  <CandidateJobs />
+                </CandidateHoc>
+              }
+            />
             <Route
               path="candidate/conversation"
-              element={<CandidateConversation />}
+              element={
+                <CandidateHoc>
+                  <CandidateConversation />
+                </CandidateHoc>
+              }
             />
-            <Route path="candidate/profile" element={<CandidateProfile />} />
+            <Route path="candidate/profile" element={ <CandidateHoc>
+              <CandidateProfile /></CandidateHoc>} />
             <Route path="candidate/applications" element={<Applications />} />
           </Route>
-          <Route element={<EmployerProtactedRotes />}>
+          <Route element={<EmployerProtactedRotes />
+            }>
             <Route
               path="employer/onboarding"
-            element={<EmployerOnboarding />}
+              element={<EmployerHoc><EmployerOnboarding />
+                </EmployerHoc>}
             />
-            <Route path="employer/jobs" element={<EmployerJobs />} />
+            <Route path="employer/jobs" element={<EmployerHoc><EmployerJobs />
+              </EmployerHoc>} />
             <Route
               path="employer/conversation"
-              element={<EmployerConversation />}
+              element={<EmployerHoc><EmployerConversation />
+                </EmployerHoc>}
             />
-            <Route path="employer/profile" element={<EmployerProfile />} />
-            <Route path="employer/applications" element={<Applicants />} />
+            <Route path="employer/profile" element={<EmployerHoc><EmployerProfile />
+              </EmployerHoc>} />
+            <Route path="employer/applications" element={<EmployerHoc><Applicants />
+              </EmployerHoc>} />
           </Route>
         </Routes>
       </BrowserRouter>
