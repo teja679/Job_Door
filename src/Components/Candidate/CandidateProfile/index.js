@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from '../../../firebaseConfig'
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../../../firebaseConfig";
 import {
   Button,
   Chip,
@@ -12,15 +12,16 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function CandidateProfile() {
-  const [edit, setEdit] = useState(false)
-  const userData = JSON.parse(localStorage.getItem('users'))
+  const [loading, setLoading] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const userData = JSON.parse(localStorage.getItem("users"));
 
   const [userInfo, setUserInfo] = useState({
     name: "",
-    email: userData?.email ? userData?.email : "",
+    email: "",
     phone: "",
     experience: "",
     education: "",
@@ -37,17 +38,35 @@ function CandidateProfile() {
       },
     },
   };
-  const submitUserInfo = async (e) => {
-    e.preventDefault()
-    console.log(userData)
-    // localStorage.setItem('userInfo', JSON.stringify(userInfo))
+  async function fetchUserInfo() {
     try {
-      await setDoc(doc(db, 'userData', `${userData.uid}`), {
-        ...userInfo, type: 'candidate'
-      })
+      const docRef = doc(db, "userData", userData.uid);
+
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document Data", docSnap.data());
+        setUserInfo(docSnap.data());
+        setLoading(false)
+      }
+    } catch (err) {
+      console.error(err);
     }
-    catch(e){
-      console.error('Error adding document', e)
+  }
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  const saveInfo = async (e) => {
+    
+    try {
+      await setDoc(doc(db, "userData", `${userData.uid}`), {
+        ...userInfo,
+      }, { merge: true})
+      alert('sucessfully updated')
+      setEdit(false)
+    } catch (e) {
+      console.error("Error adding document", e);
     }
     console.log("submit", userInfo);
   };
@@ -80,17 +99,19 @@ function CandidateProfile() {
     "Java",
     "C++",
   ];
-  return (
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
     <>
       <h1>Profile</h1>
-      <form onSubmit={submitUserInfo}>
+      <form>
         <Grid
           container
           spacing={2}
           sx={{
             padding: "1rem",
             maxWidth: "95%",
-            height: '90%',
+            height: "90%",
             margin: "20px auto",
             boxShadow: "0px 8px 24px #789",
             background: "#fff",
@@ -99,8 +120,8 @@ function CandidateProfile() {
         >
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Name</Typography>
-            <TextField
-              required
+            <TextField disabled={!edit}
+              required 
               variant="outlined"
               fullWidth
               value={userInfo.name}
@@ -111,7 +132,8 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Email</Typography>
-            <TextField disabled
+            <TextField 
+              disabled
               required
               variant="outlined"
               fullWidth
@@ -123,7 +145,7 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Phone</Typography>
-            <TextField
+            <TextField disabled={!edit}
               variant="outlined"
               fullWidth
               value={userInfo.phone}
@@ -134,7 +156,7 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Experience</Typography>
-            <TextField
+            <TextField disabled={!edit}
               variant="outlined"
               fullWidth
               value={userInfo.experience}
@@ -145,7 +167,7 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Education</Typography>
-            <TextField
+            <TextField disabled={!edit}
               required
               variant="outlined"
               fullWidth
@@ -158,7 +180,7 @@ function CandidateProfile() {
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Domain</Typography>
             <Select
-              fullWidth
+              fullWidth disabled={!edit}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={userInfo.domain}
@@ -177,7 +199,7 @@ function CandidateProfile() {
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Skills</Typography>
             <Select
-              required
+              required disabled={!edit}
               fullWidth
               id="demo-multiple-chip"
               multiple
@@ -206,11 +228,11 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12}>
             {!edit ? (
-              <Button onClick={()=>setEdit(!edit)}>Edit</Button>
+              <Button variant="contained" onClick={() => setEdit(true)}>Edit</Button>
             ) : (
               <>
-                <Button onClick={submitUserInfo}>Save</Button>
-                <Button onClick={()=>setEdit(!edit)}>Cancel</Button> 
+                <Button variant="contained" onClick={saveInfo}>Save</Button>
+                <Button variant="contained" onClick={() => setEdit(false)}>Cancel</Button>
               </>
             )}
           </Grid>

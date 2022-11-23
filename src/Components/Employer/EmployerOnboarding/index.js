@@ -10,10 +10,12 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function EmployerOnboarding() {
   const userData = JSON.parse(localStorage.getItem('users'))
-  // console.log(userData)
+  
+  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: userData?.email ? userData?.email : "",
@@ -24,20 +26,7 @@ function EmployerOnboarding() {
     address: '',
     industry: "",
   });
-  async function fetchUserInfo() {
-    try {
-      await setDoc(doc(db, 'userData', userData.uid), {
-        ...userInfo, type: 'candidate'
-      })
-      alert('Successfully submitted')
-    }
-    catch(err){
-      console.error(err)
-    }
-  }
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
+ 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -48,15 +37,19 @@ function EmployerOnboarding() {
       },
     },
   };
-  async function saveInfo () {
+  async function saveInfo (e) {
+    e.preventDefault()
     try {
       await setDoc(doc(db, 'userData', `${userData.uid}`), {
-        ...userInfo,
+        ...userInfo, type: 'employer'
       }, {mergin: true})
+      alert('sucessfully submitted')
+      navigate('/employer/profile')
     }
     catch (e){
       console.error('Error adding document', e)
     }
+    console.log('submit', userInfo)
   }
   const handleSkillChange = (event) => {
     const {
@@ -91,7 +84,7 @@ function EmployerOnboarding() {
   return (
     <>
       <h1>Employer Onboarding</h1>
-      <form>
+      <form onSubmit={saveInfo}>
         <Grid
           container 
           xs={12}
@@ -206,7 +199,7 @@ function EmployerOnboarding() {
             </Select>
           </Grid>
          <Grid xs={12}>
-            <Button onClick={saveInfo}>Submit</Button>
+            <Button type='submit'>Submit</Button>
           </Grid>
         </Grid>
       </form>

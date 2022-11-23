@@ -21,7 +21,7 @@ function Sidebar({ selectAjob }) {
           jobs.push(doc.data());
         });
         setAllJobs(jobs)
-        // console.log("Current jobs: ", jobs);
+        console.log("Current jobs: ", jobs);
     }) 
   }
   useEffect(() => {

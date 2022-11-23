@@ -13,10 +13,12 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CandidateOnboarding() {
   const userData = JSON.parse(localStorage.getItem('users'))
 
+  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: userData?.email ? userData?.email : "",
@@ -39,11 +41,13 @@ function CandidateOnboarding() {
   const submitUserInfo = async (e) => {
     e.preventDefault()
     console.log(userData)
-    // localStorage.setItem('userInfo', JSON.stringify(userInfo))
+
     try {
       await setDoc(doc(db, 'userData', `${userData.uid}`), {
         ...userInfo, type: 'candidate'
       })
+      alert('sucessfully submitted')
+      navigate('/candidate/profile')
     }
     catch(e){
       console.error('Error adding document', e)
@@ -204,7 +208,7 @@ function CandidateOnboarding() {
             </Select>
           </Grid>
           <Grid item xs={12}>
-            <Button onClick={submitUserInfo}>Submit</Button>
+            <Button type='submit'>Submit</Button>
           </Grid>
         </Grid>
       </form>
