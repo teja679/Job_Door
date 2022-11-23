@@ -35,7 +35,7 @@ function Sidebar({ selectAjob }) {
        onClick={() => selectAjob(false)}>
       <AddIcon />{' '}
         post a job</Button>
-      <div className="serachbar">
+      <div className="searchbar">
         <SearchIcon />
        <Input placeholder="Search by Job" sx={{outline: 'none'}} />
       </div>
