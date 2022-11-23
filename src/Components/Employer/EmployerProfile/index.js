@@ -11,7 +11,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 
 function EmployerProfile() {
@@ -36,6 +35,7 @@ function EmployerProfile() {
 
       if(docSnap.exists()) {
         console.log('Document Data', docSnap.data())
+        setUserInfo(docSnap.data())
       }
     }
     catch(err){
@@ -61,7 +61,7 @@ function EmployerProfile() {
         ...userInfo,
       }, {mergin: true})
       alert('Successfully updated');
-      setEdit(!edit);
+      setEdit(false);
     }
     catch (e){
       console.error('Error adding document', e)
@@ -223,11 +223,11 @@ function EmployerProfile() {
           </Grid>
           <Grid item xs={12}>
             {!edit ? (
-              <Button onClick={()=>setEdit(!edit)}>Edit</Button>
+              <Button variant="contained" onClick={()=>setEdit(true)}>Edit</Button>
             ) : (
               <>
-                <Button onClick={saveInfo}>Save</Button>
-                <Button onClick={()=>setEdit(!edit)}>Cancel</Button> 
+                <Button variant="contained" onClick={saveInfo}>Save</Button>
+                <Button variant="contained" onClick={()=>setEdit(false)}>Cancel</Button> 
               </>
             )}
           </Grid>
