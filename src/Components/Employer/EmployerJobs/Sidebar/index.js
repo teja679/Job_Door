@@ -49,8 +49,10 @@ function Sidebar({ selectAjob }) {
               padding: "1rem",
               margin: "10px",
               textAlign: 'left',
+              borderRadius: '10px',
               borderBottom: "1px solid gray",
               fontSize: "16px",
+              boxShadow: '0px -2px 1px #789',
             }}
           >
             <Grid sx={{fontWeight: '600'}} item xs={12}>

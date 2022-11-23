@@ -62,7 +62,7 @@ function EmployerJobs() {
             display: { xs: mobileSidebar ? "none" : "block", sm: "block" },
           }}
         >
-          <Button
+          <Button fullWidth
           sx={{
             display: { xs: 'block', sm : 'none'}
           }} 
