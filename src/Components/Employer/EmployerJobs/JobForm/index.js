@@ -16,12 +16,12 @@ import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
 function JobForm() {
-  const jobsData = JSON.parse(localStorage.getItem("users"));
+  // const jobsData = JSON.parse(localStorage.getItem("users"));
 
   const [jobData, setJobData] = useState({
     name: "",
-    location : "",
-    salary : "",
+    location: "",
+    salary: "",
     experience: "",
     jobType: "",
     desc: "",
@@ -40,15 +40,17 @@ function JobForm() {
   };
   const submitJob = async (e) => {
     e.preventDefault();
+    alert('jobdata')
     const job_id = uuid();
     // localStorage.setItem('jobData', JSON.stringify(jobData))
     try {
+      console.log('Hai')
       if (jobData.job_id) {
         await setDoc(doc(db, "jobsData", jobData.job_id), {
           ...jobData,
         });
       } else {
-        console.log('hai')
+        console.log("hai");
         await setDoc(doc(db, "jobsData", job_id), {
           job_id: job_id,
           ...jobData,
@@ -56,8 +58,7 @@ function JobForm() {
           createdAt: new Date(),
         });
       }
-      alert('Job Data updated')
-      
+      alert("Job Data updated");
     } catch (e) {
       console.error("Error adding document", e);
     }
@@ -93,8 +94,9 @@ function JobForm() {
     "C++",
   ];
   return (
-      <form className="job-form" onSubmit={submitJob}>
-        <h1>Job Form</h1>
+    <>
+      <h1>Job Form</h1>
+      <form className="job-from">
         <Grid
           container
           spacing={2}
@@ -108,19 +110,17 @@ function JobForm() {
             // background: 'rgba(0,228,255,1)'
           }}
         >
-          <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
+          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Name</Typography>
             <TextField
               required
               variant="outlined"
               fullWidth
               value={jobData.name}
-              onChange={(e) =>
-              setJobData({ ...jobData, name: e.target.value })
-              }
+              onChange={(e) => setJobData({ ...jobData, name: e.target.value })}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
+          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Location</Typography>
             <TextField
               required
@@ -128,33 +128,33 @@ function JobForm() {
               fullWidth
               value={jobData.location}
               onChange={(e) =>
-              setJobData({ ...jobData, location: e.target.value })
+                setJobData({ ...jobData, location: e.target.value })
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
+          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Salary</Typography>
             <TextField
               variant="outlined"
               fullWidth
               value={jobData.salary}
               onChange={(e) =>
-              setJobData({ ...jobData, salary: e.target.value })
+                setJobData({ ...jobData, salary: e.target.value })
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
+          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Experience</Typography>
             <TextField
               variant="outlined"
               fullWidth
               value={jobData.experience}
               onChange={(e) =>
-              setJobData({ ...jobData, experience: e.target.value })
+                setJobData({ ...jobData, experience: e.target.value })
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
+          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Job Type</Typography>
             <TextField
               required
@@ -162,23 +162,22 @@ function JobForm() {
               fullWidth
               value={jobData.jobType}
               onChange={(e) =>
-              setJobData({ ...jobData, jobType: e.target.value })
+                setJobData({ ...jobData, jobType: e.target.value })
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
+          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Description</Typography>
             <TextField
-              required row={2}
+              required
+              row={2}
               variant="outlined"
               fullWidth
               value={jobData.desc}
-              onChange={(e) =>
-              setJobData({ ...jobData, desc: e.target.value })
-              }
+              onChange={(e) => setJobData({ ...jobData, desc: e.target.value })}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
+          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Domain</Typography>
             <Select
               fullWidth
@@ -187,7 +186,7 @@ function JobForm() {
               value={jobData.domain}
               label="Age"
               onChange={(e) =>
-              setJobData({ ...jobData, domain: e.target.value })
+                setJobData({ ...jobData, domain: e.target.value })
               }
             >
               {domainItems.map((domain, index) => (
@@ -197,7 +196,7 @@ function JobForm() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12} sm={6} sx={{margin: '1rem 0'}}>
+          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Skills</Typography>
             <Select
               required
@@ -227,11 +226,12 @@ function JobForm() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12} fullWidth>
+          <Grid item xs={12} onClick={submitJob}>
             <Button variant="contained">Submit</Button>
           </Grid>
         </Grid>
       </form>
+    </>
   );
 }
 

@@ -11,9 +11,9 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import logo from "../../assets/logo.png";
+import EngineeringIcon from '@mui/icons-material/Engineering';import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import { Image } from "@mui/icons-material";
 const pages = [
   { label: "Home", path: "/" },
   { label: "Find Jobs", path: "/candidate/auth" },
@@ -111,7 +111,7 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+          <EngineeringIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -142,7 +142,7 @@ function Navbar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 1 }}>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

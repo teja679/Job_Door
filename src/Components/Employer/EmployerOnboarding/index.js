@@ -3,20 +3,17 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from '../../../firebaseConfig'
 import {
   Button,
-  Chip,
   Grid,
   MenuItem,
-  OutlinedInput,
   Select,
   TextField,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 
 function EmployerOnboarding() {
   const userData = JSON.parse(localStorage.getItem('users'))
-
+  // console.log(userData)
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: userData?.email ? userData?.email : "",
@@ -29,13 +26,10 @@ function EmployerOnboarding() {
   });
   async function fetchUserInfo() {
     try {
-      const docRef = doc(db, 'userData', userData.uid)
-
-      const docSnap = await getDoc(docRef)
-
-      if(docSnap.exists()) {
-        console.log('Document Data', docSnap.data())
-      }
+      await setDoc(doc(db, 'userData', userData.uid), {
+        ...userInfo, type: 'candidate'
+      })
+      alert('Successfully submitted')
     }
     catch(err){
       console.error(err)
@@ -99,8 +93,8 @@ function EmployerOnboarding() {
       <h1>Employer Onboarding</h1>
       <form>
         <Grid
-          xs={10}
-          container
+          container 
+          xs={12}
           spacing={2}
           sx={{
             padding: "1rem",
@@ -112,7 +106,7 @@ function EmployerOnboarding() {
             borderRadius: "8px",
           }}
         >
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Name</Typography>
             <TextField
               required 
@@ -124,7 +118,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Email</Typography>
             <TextField disabled
               required
@@ -136,29 +130,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
-            <Typography variant="h6">Company Name</Typography>
-            <TextField 
-                variant="outlined"
-              fullWidth
-              value={userInfo.company}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, company: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
-            <Typography variant="h6">Company Size</Typography>
-            <TextField
-                  variant="outlined"
-              fullWidth
-              value={userInfo.size}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, size: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Phone</Typography>
             <TextField  
               variant="outlined"
@@ -169,7 +141,29 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+            <Typography variant="h6">Company Name</Typography>
+            <TextField 
+                variant="outlined"
+              fullWidth
+              value={userInfo.company}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, company: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+            <Typography variant="h6">Company Size</Typography>
+            <TextField
+                  variant="outlined"
+              fullWidth
+              value={userInfo.size}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, size: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
             <Typography variant="h6">HR Email</Typography>
             <TextField
                   variant="outlined"
@@ -180,8 +174,8 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
-            <Typography variant="h6">Address</Typography>
+          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+            <Typography variant="h6">Company Address</Typography>
             <TextField
               required
               variant="outlined"
@@ -192,8 +186,8 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
-            <Typography variant="h6">Industry</Typography>
+          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+            <Typography variant="h6">Industry Type</Typography>
             <Select
                 fullWidth
               labelId="demo-simple-select-label"
@@ -211,7 +205,7 @@ function EmployerOnboarding() {
               ))}
             </Select>
           </Grid>
-         <Grid item xs={12}>
+         <Grid xs={12}>
             <Button onClick={saveInfo}>Submit</Button>
           </Grid>
         </Grid>

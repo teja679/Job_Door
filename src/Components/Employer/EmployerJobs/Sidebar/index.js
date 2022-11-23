@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, query, onSnapshot, querySnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from '../../../../firebaseConfig'
 import { Button, Grid, Input } from "@mui/material";
 import '../styles.css'
@@ -7,11 +7,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 
 function Sidebar({ selectAjob }) {
-
+  const userInfo = JSON.parse(localStorage.getItem('user'))
+  console.log(userInfo)
   const [allJobs, setAllJobs] = useState(null);
-  const fetchJobs = () => {
+  const fetchJobs = async () => {
     
-    const q = query(collection(db, "jobsData"));
+    const q = await query(collection(db, "jobsData",
+    //  where('employerId'==employerId)
+     ));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const jobs = [];
        querySnapshot.forEach((doc) => {
