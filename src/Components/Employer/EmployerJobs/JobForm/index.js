@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
 function JobForm() {
-  // const jobsData = JSON.parse(localStorage.getItem("users"));
+  const employer = JSON.parse(localStorage.getItem("users"));
 
   const [jobData, setJobData] = useState({
     name: "",
@@ -40,21 +40,19 @@ function JobForm() {
   };
   const submitJob = async (e) => {
     e.preventDefault();
-    alert('jobdata')
-    const job_id = uuid();
+    const Job_id = uuid();
     // localStorage.setItem('jobData', JSON.stringify(jobData))
     try {
-      console.log('Hai')
-      if (jobData.job_id) {
-        await setDoc(doc(db, "jobsData", jobData.job_id), {
+      if (jobData.Job_id) {
+        await setDoc(doc(db, "jobsData", jobData.Job_id), {
           ...jobData,
         });
       } else {
-        console.log("hai");
-        await setDoc(doc(db, "jobsData", job_id), {
-          job_id: job_id,
+        
+        await setDoc(doc(db, "jobsData", Job_id), {
+          Job_id: Job_id,
           ...jobData,
-          empployerId: jobData.uid,
+          empployerId: employer.uid,
           createdAt: new Date(),
         });
       }
@@ -96,18 +94,17 @@ function JobForm() {
   return (
     <>
       <h1>Job Form</h1>
-      <form className="job-from">
+      <form onSubmit={submitJob} className="job-form">
         <Grid
           container
           spacing={2}
           sx={{
-            padding: "10px",
+            // padding: "10px",
             maxWidth: "95%",
             margin: "auto",
             // boxShadow: "0px 8px 24px #789",
             // background: "#fff",
             borderRadius: "8px",
-            // background: 'rgba(0,228,255,1)'
           }}
         >
           <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
@@ -166,11 +163,11 @@ function JobForm() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={12} sx={{ margin: "1rem 0" }}>
             <Typography variant="h6">Description</Typography>
             <TextField
-              required
-              row={2}
+              required multiline
+              rows={4}
               variant="outlined"
               fullWidth
               value={jobData.desc}
@@ -226,8 +223,8 @@ function JobForm() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12} onClick={submitJob}>
-            <Button variant="contained">Submit</Button>
+          <Grid item xs={12}>
+            <Button type='submit' variant="contained">Submit</Button>
           </Grid>
         </Grid>
       </form>

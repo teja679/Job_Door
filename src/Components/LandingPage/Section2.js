@@ -36,6 +36,22 @@ function Section2() {
     },
   ];
   return (
+    // <Grid container className="section-2">
+    //   <Typography variant="h4" sx={{fontWeight: 700, textAlign: 'center'}}>
+    //   One Platform Many Solutions
+    //   </Typography>
+    //   <Grid container sx={{margin: 'auto', justifyContent: 'center'}}>
+    //   {info.map((item) => (
+    //       <div className="item-div">
+    //         {item.icon}
+    //         <div className="data-div">
+    //           <h2>Marketing & Communication</h2>
+    //           <p>237 Jobs Available</p>
+    //         </div>
+    //       </div>
+    //     ))}
+    //   </Grid>
+    // </Grid>
     <div className="section-2">
       <h1>One Platform Many Solutions</h1>
       <div className="container">
