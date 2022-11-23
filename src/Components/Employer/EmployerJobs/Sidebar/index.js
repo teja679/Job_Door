@@ -7,13 +7,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 
 function Sidebar({ selectAjob }) {
-  const userInfo = JSON.parse(localStorage.getItem('user'))
-  console.log(userInfo)
+  const userInfo = JSON.parse(localStorage.getItem('users'))
+  const employerId = userInfo.uid;
+
   const [allJobs, setAllJobs] = useState(null);
   const fetchJobs = async () => {
     
     const q = await query(collection(db, "jobsData",
-    //  where('employerId'==employerId)
+    //  where('employerId' == employerId)
      ));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const jobs = [];
@@ -40,7 +41,7 @@ function Sidebar({ selectAjob }) {
       </div>
       {allJobs && allJobs.length > 0 ? (
         allJobs.map((job) => (
-          <Grid
+          <Grid 
             container
             onClick={() => selectAjob(job)}
             key={job.job_id}

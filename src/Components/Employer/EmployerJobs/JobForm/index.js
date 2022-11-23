@@ -15,19 +15,9 @@ import {
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-function JobForm() {
+function JobForm({ selectAjob, jobData, setJobData}) {
   const employer = JSON.parse(localStorage.getItem("users"));
 
-  const [jobData, setJobData] = useState({
-    name: "",
-    location: "",
-    salary: "",
-    experience: "",
-    jobType: "",
-    desc: "",
-    domain: "",
-    skills: [],
-  });
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -52,10 +42,11 @@ function JobForm() {
         await setDoc(doc(db, "jobsData", Job_id), {
           Job_id: Job_id,
           ...jobData,
-          empployerId: employer.uid,
+          employerId: employer.uid,
           createdAt: new Date(),
         });
       }
+      selectAjob(false)
       alert("Job Data updated");
     } catch (e) {
       console.error("Error adding document", e);
@@ -108,13 +99,13 @@ function JobForm() {
           }}
         >
           <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
-            <Typography variant="h6">Name</Typography>
+            <Typography variant="h6">Title</Typography>
             <TextField
               required
               variant="outlined"
               fullWidth
-              value={jobData.name}
-              onChange={(e) => setJobData({ ...jobData, name: e.target.value })}
+              value={jobData.title}
+              onChange={(e) => setJobData({ ...jobData, title: e.target.value })}
             />
           </Grid>
           <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>

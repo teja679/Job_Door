@@ -1,3 +1,4 @@
+import { Tune } from "@mui/icons-material";
 import { Button, Grid } from "@mui/material";
 import React, { useState } from "react";
 import JobForm from "./JobForm";
@@ -17,6 +18,7 @@ function EmployerJobs() {
     skills: [],
   });
   const selectAjob = (data) => {
+    setPostAjob(true)
     setMobileSidebar(false)
     if (!data) {
       setJobData({
@@ -42,33 +44,32 @@ function EmployerJobs() {
         background: 'rgb(238, 252, 255)',
         //  height: '100vh',
       }}>
-          <Button
-            onClick={() => setMobileSidebar(!mobileSidebar)}
-            sx={{
-              display: { xs: "block", sm: "none" },
-            }}
-          >
-            Switch
-          </Button>
-        <Grid
+         <Grid
           xs={12}
           md={3.5}
           sm={5}
           sx={{
-            display: { xs: mobileSidebar ? "none" : "block", sm: "block" },
+            display: { xs: mobileSidebar ? "block" : "none", sm: "block" },
           }}
         >
-          <Sidebar selectAjob={selectAjob} jobData={jobData} />
+          <Sidebar setPostAjob={setPostAjob} selectAjob={selectAjob} />
         </Grid>
         <Grid
           xs={12}
           md={8.5}
           sm={7}
           sx={{
-            display: { xs: mobileSidebar ? "block" : "none", sm: "block" },
+            display: { xs: mobileSidebar ? "none" : "block", sm: "block" },
           }}
         >
-          <JobForm setJobData={setJobData} />
+          <Button
+          sx={{
+            display: { xs: 'block', sm : 'none'}
+          }} 
+          onClick={() => setMobileSidebar(true)}>
+            Back
+          </Button>
+          <JobForm selectAjob={selectAjob} jobData={jobData} setJobData={setJobData} />
         </Grid>
       </Grid>
     </div>
