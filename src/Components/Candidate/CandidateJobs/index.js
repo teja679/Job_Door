@@ -15,7 +15,6 @@ import { v4 as uuidv4 } from "uuid";
 function CandidateJobs() {
   const [loading, setLoading] = useState(true);
   const userInfo = JSON.parse(localStorage.getItem("users"));
-  const employerId = userInfo.uid;
 
   const [allJobs, setAllJobs] = useState(null);
 
@@ -25,14 +24,13 @@ function CandidateJobs() {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         let jobs = [];
         querySnapshot.forEach((doc) => {
-          // console.log(doc.id, " => ", doc.data());
           jobs.push(doc.data());
         });
         setAllJobs(jobs);
         setLoading(false);
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
   useEffect(() => {
@@ -41,7 +39,6 @@ function CandidateJobs() {
 
   const applyForJob = async (job) => {
     const applicationId = uuidv4();
-    console.log(applicationId)
 
     const q = await query(
       collection(db, "applications"),
@@ -50,14 +47,12 @@ function CandidateJobs() {
     let data = [];
     
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot)
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
       data.push(doc.data());
     });
-    console.log(data)
+    
     const isApplied = data.find((item) => item.jobId === job.Job_id);
-    console.log(isApplied);
+    
     if (isApplied) {
       alert("already applied");
       return;

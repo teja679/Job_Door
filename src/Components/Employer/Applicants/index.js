@@ -7,6 +7,7 @@ import {
   getDocs,
   setDoc,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import CommonTable from "../../common/CommonTable";
@@ -37,24 +38,29 @@ function Applicants() {
   const [allApplications, setAllApplications] = useState(null);
 
   const fetchJobs = async () => {
+    try{
     const q = await query(collection(db, "applications"),
     where("employerId", "==", userInfo.uid));
-    const querySnapshot = await getDocs(q)
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const data = [];
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
-      });
+      })
       setAllApplications(data);
-      // console.log("Current jobs: ", jobs);
+    })
+  } catch (err){
+    console.log(err)
+  }
   };
   useEffect(() => {
     fetchJobs();
   }, []);
-  const handleClick = (action, row) => {
+  const handleClick = async (action, row) => {
     if(action === 'accept'){
       console.log('accept', row)
     }
     else if(action === 'reject') {
+      await deleteDoc(doc(db, "applications", row.applicationId));
       console.log('reject', row)
     }
   }
