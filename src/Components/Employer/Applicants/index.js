@@ -9,6 +9,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../../../firebaseConfig";
 import CommonTable from "../../common/CommonTable";
 
@@ -56,12 +57,30 @@ function Applicants() {
     fetchJobs();
   }, []);
   const handleClick = async (action, row) => {
+    console.log(row)
+    const last_message_id = uuidv4()
     if(action === 'accept'){
-      // we need to update status of the application to approved & disable reject button
+      /// we need to update status of the application to approved & disable reject button
+      // try {
+      //   await setDoc(doc(db, "applications", row.applicationId), {
+      //     status: "approved",
+      //   }, {merge: true});
+      // } catch (e) {
+      //   console.error(e);
+      // }
       try {
-        await setDoc(doc(db, "applications", row.applicationId), {
-          status: "approved",
-        }, {merge: true});
+        await setDoc(doc(db, "last_messages", last_message_id), {
+          lastMessage: 'hey hello!',
+          createdAt: new Date(),
+          employerId: row.employerId,
+          candidateId: row.candidateId,
+          jobId: row.jobId,
+          applicationId: row.applicationId,
+          last_message_id: last_message_id,
+          candidate_name: row.candidate_name,
+          employer_name: userInfo.displayName,
+          conversationId: `${row.employerId}-${row.candidateId}`
+        });
       } catch (e) {
         console.error(e);
       }
