@@ -22,15 +22,16 @@ function Applications() {
   const fetchJobs = async () => {
     const q = await query(collection(db, "applications"),
     where("candidateId", "==", userInfo.uid))
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const data = [];
+    const data = [];
+
+    const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
       });
       setAllApllications(data);
       setLoading(false)
       // console.log("Current jobs: ", jobs);
-    });
+  
   };
   useEffect(() => {
     fetchJobs();

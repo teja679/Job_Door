@@ -46,8 +46,7 @@ function EmployerJobs() {
       }}>
          <Grid
           xs={12}
-          md={3.5}
-          sm={5}
+          sm={3}
           sx={{
             display: { xs: mobileSidebar ? "block" : "none", sm: "block" },
           }}
@@ -56,8 +55,7 @@ function EmployerJobs() {
         </Grid>
         <Grid
           xs={12}
-          md={8.5}
-          sm={7}
+          sm={9}
           sx={{
             display: { xs: mobileSidebar ? "none" : "block", sm: "block" },
           }}

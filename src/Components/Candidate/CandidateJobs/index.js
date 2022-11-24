@@ -62,9 +62,9 @@ function CandidateJobs() {
         location: job.location,
         createdAt: new Date(),
         candidateId: userInfo.uid,
+        status: 'applied'
       });
 
-      // selectAjob(false)
       alert("Job applied successfully");
     } catch (e) {
       console.error("Error adding document", e);

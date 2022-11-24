@@ -65,28 +65,57 @@ function Navs() {
                 </CandidateHoc>
               }
             />
-            <Route path="candidate/profile" element={ <CandidateHoc>
-              <CandidateProfile /></CandidateHoc>} />
+            <Route
+              path="candidate/profile"
+              element={
+                <CandidateHoc>
+                  <CandidateProfile />
+                </CandidateHoc>
+              }
+            />
             <Route path="candidate/applications" element={<Applications />} />
           </Route>
-          <Route element={<EmployerProtactedRotes />
-            }>
+          <Route element={<EmployerProtactedRotes />}>
             <Route
               path="employer/onboarding"
-              element={<EmployerHoc><EmployerOnboarding />
-                </EmployerHoc>}
+              element={
+                <EmployerHoc>
+                  <EmployerOnboarding />
+                </EmployerHoc>
+              }
             />
-            <Route path="employer/jobs" element={<EmployerHoc><EmployerJobs />
-              </EmployerHoc>} />
+            <Route
+              path="employer/jobs"
+              element={
+                <EmployerHoc>
+                  <EmployerJobs />
+                </EmployerHoc>
+              }
+            />
             <Route
               path="employer/conversation"
-              element={<EmployerHoc><EmployerConversation />
-                </EmployerHoc>}
+              element={
+                <EmployerHoc>
+                  <EmployerConversation />
+                </EmployerHoc>
+              }
             />
-            <Route path="employer/profile" element={<EmployerHoc><EmployerProfile />
-              </EmployerHoc>} />
-            <Route path="employer/applications" element={<EmployerHoc><Applicants />
-              </EmployerHoc>} />
+            <Route
+              path="employer/profile"
+              element={
+                <EmployerHoc>
+                  <EmployerProfile />
+                </EmployerHoc>
+              }
+            />
+            <Route
+              path="employer/applicants"
+              element={
+                <EmployerHoc>
+                  <Applicants />
+                </EmployerHoc>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>

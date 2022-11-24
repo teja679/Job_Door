@@ -21,7 +21,7 @@ import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function CandidateHoc({ children }) {
+function EmployerHoc({ children }) {
   const [value, setValue] = React.useState("");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -171,7 +171,7 @@ function CandidateHoc({ children }) {
       </Box>
       <Box display={{ xs: "block", md: "none", position: 'fixed',
     bottom: 0, width: '100%', background: 'white', zIndex: '2' }}>
-        <Box sx={{ width: '100%' }}>
+
           <BottomNavigation
             showLabels
             value={value}
@@ -184,11 +184,10 @@ function CandidateHoc({ children }) {
             <BottomNavigationAction label="NearBy" icon={<LocationOnIcon />} />
           </BottomNavigation>
         </Box>
-      </Box>
       {children}
     </>
    
   );
 }
 
-export default CandidateHoc;
+export default EmployerHoc;
