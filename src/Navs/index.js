@@ -18,8 +18,8 @@ import EmployerJobs from "../Components/Employer/EmployerJobs";
 import EmployerOnboarding from "../Components/Employer/EmployerOnboarding";
 import EmployerConversation from "../Components/Employer/EmployerConversation";
 import LandingPage from "../Components/LandingPage";
-import CandidateHoc from "../Components/CandidateHoc";
-import EmployerHoc from "../Components/EmployerHoc";
+import CandidateHoc from "../Components/Hoc/CandidateHoc";
+import EmployerHoc from "../Components/Hoc/EmployerHoc";
 
 function Navs() {
   const CandidateProtactedRotes = () => {
