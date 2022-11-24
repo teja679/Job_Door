@@ -4,7 +4,7 @@ import LastMessage from './LastMessage'
 import MessageArea from './MessageArea'
 
 function EmployerConversation() {
-  const [lastMessageMobile, setLastMessageMobile] = useState(true)
+  const [lastMessageMobile, setLastMessageMobile] = useState(false)
   const selectAConversation = (data) => {
     console.log(data)
     setLastMessageMobile(false)

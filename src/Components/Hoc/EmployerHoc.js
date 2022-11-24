@@ -17,11 +17,12 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const pages = [
   {
-    label: "Products",
-    key: "products",
+    label: "Profile",
+    key: "profile",
   },
   {
     label: "Jobs",
@@ -33,16 +34,15 @@ const pages = [
   },
   {
     label: 'conversation',
-    
+    key: 'conversation'
   }
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function EmployerHoc({ children }) {
   const [value, setValue] = React.useState("");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate()
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -57,7 +57,11 @@ function EmployerHoc({ children }) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const reRoute = (page) => {
+    console.log(page)
+    handleCloseNavMenu()
+    navigate(`../employer/${page}`)
+  }
   return (
     <>
       <Box sx={{ display: { xs: "none", md: "block" } }}>
@@ -113,8 +117,8 @@ function EmployerHoc({ children }) {
                   }}
                 >
                   {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
+                    <MenuItem key={page.key}  onClick={()=>reRoute(page.key)}>
+                      <Typography textAlign="center">{page.label}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -141,11 +145,11 @@ function EmployerHoc({ children }) {
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
                   <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
+                    key={page.key}
+                    onClick={()=>reRoute(page.key)}
                     sx={{ my: 2, color: "white", display: "block" }}
                   >
-                    {page}
+                    {page.label}
                   </Button>
                 ))}
               </Box>
@@ -159,33 +163,12 @@ function EmployerHoc({ children }) {
                     />
                   </IconButton>
                 </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
+               
               </Box>
             </Toolbar>
           </Container>
         </AppBar>
-      </Box>
+                  </Box>
       <Box
         display={{
           xs: "block",
@@ -208,7 +191,7 @@ function EmployerHoc({ children }) {
           <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
           <BottomNavigationAction label="NearBy" icon={<LocationOnIcon />} />
         </BottomNavigation>
-      </Box>
+      </Box> 
       {children}
     </>
   );
