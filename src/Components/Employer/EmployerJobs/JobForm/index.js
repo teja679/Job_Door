@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
 function JobForm({ selectAjob, jobData, setJobData}) {
-  const employer = JSON.parse(localStorage.getItem("users"));
+  const userInfo = JSON.parse(localStorage.getItem("users"));
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -42,8 +42,9 @@ function JobForm({ selectAjob, jobData, setJobData}) {
         await setDoc(doc(db, "jobsData", Job_id), {
           Job_id: Job_id,
           ...jobData,
-          employerId: employer.uid,
+          employerId: userInfo.uid,
           createdAt: new Date(),
+          employerName: userInfo.displayName
         });
       }
       selectAjob(false)

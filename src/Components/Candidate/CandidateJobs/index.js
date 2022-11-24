@@ -10,7 +10,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { Button, Grid, Input } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import { v4 as uuid } from "uuid";
 
 function CandidateJobs() {
@@ -19,35 +18,39 @@ function CandidateJobs() {
   const employerId = userInfo.uid;
 
   const [allJobs, setAllJobs] = useState(null);
+
   const fetchJobs = async () => {
     const q = await query(collection(db, "jobsData"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const jobs = [];
-      querySnapshot.forEach((doc) => {
-        jobs.push(doc.data());
-      });
+   
+    const querySnapshot = await getDocs(q);
+    let jobs = [];
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.id, " => ", doc.data());
+      jobs.push(doc.data());
+    });
       setAllJobs(jobs);
       setLoading(false)
       // console.log("Current jobs: ", jobs);
-    });
   };
   useEffect(() => {
     fetchJobs();
   }, []);
+
   const applyJob = async (job) => {
     const applicationId = uuid();
-
     const q = query(
       collection(db, "applications"),
       where("candidateId", "==", userInfo.uid)
     );
-    const querySnapshot = await getDocs(q);
-    let arr = [];
-    querySnapshot.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data());
-      arr.push(doc.data());
-    });
-    const isApplied = arr.find(item => item.jobId === job.Job_id)
+    let jobsData = [];
+     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        jobsData.push(doc.data());
+      });
+    })
+    console.log(jobsData)
+    const isApplied = jobsData.find(item => item.jobId === job.Job_id)
     if(isApplied){
       alert('already applied')
       return;
@@ -62,7 +65,9 @@ function CandidateJobs() {
         location: job.location,
         createdAt: new Date(),
         candidateId: userInfo.uid,
-        status: 'applied'
+        status: 'applied',
+        candidate_name: userInfo.displayName,
+        company_name: job.company_name
       });
 
       alert("Job applied successfully");
@@ -70,27 +75,20 @@ function CandidateJobs() {
       console.error("Error adding document", e);
     }
   } 
-  };
+}
   return (
     loading ? <div>Loading...</div> : 
     <div className="sidebar">
-      {/* <div className="searchbar">
-        <SearchIcon />
-       <Input placeholder="Search by Job" sx={{outline: 'none'}} />
-      </div> */}
       {allJobs && allJobs.length > 0 ? (
         allJobs.map((job) => (
           <Grid
             container
-            onClick={() => applyJob(job)}
             key={job.applicationId}
             sx={{
               maxWidth: "600px",
               width: "90%",
-              padding: "1rem",
-              margin: "auto",
+              margin: "0",
               display: "flex",
-              // flexDirection: 'column',
               borderRadius: "10px",
               fontSize: "16px",
               boxShadow: "0px -2px 1px #789",
@@ -114,7 +112,7 @@ function CandidateJobs() {
             <Grid item xs={12}>
               {job.domain}
             </Grid>
-            <Button variant="contained" fullWidth>
+            <Button variant="contained" fullWidth onClick={() => applyJob(job)}>
               Apply
             </Button>
           </Grid>

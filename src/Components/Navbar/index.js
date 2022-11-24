@@ -23,7 +23,7 @@ const pages = [
 const pages2 = [ {label: 'Log In', path: '/loginIn'}, { label: 'Sign Up', path: '/signUp'},]
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function Navbar() {
+function NavbarComp() {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -172,4 +172,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarComp;
