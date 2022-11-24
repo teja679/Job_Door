@@ -18,7 +18,24 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = [
+  {
+    label: "Products",
+    key: "products",
+  },
+  {
+    label: "Jobs",
+    key: "jobs",
+  },
+  {
+    label: "Applicants",
+    key: "applicants",
+  },
+  {
+    label: 'conversation',
+    
+  }
+];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function EmployerHoc({ children }) {
@@ -169,24 +186,31 @@ function EmployerHoc({ children }) {
           </Container>
         </AppBar>
       </Box>
-      <Box display={{ xs: "block", md: "none", position: 'fixed',
-    bottom: 0, width: '100%', background: 'white', zIndex: '2' }}>
-
-          <BottomNavigation
-            showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-            <BottomNavigationAction label="NearBy" icon={<LocationOnIcon />} />
-          </BottomNavigation>
-        </Box>
+      <Box
+        display={{
+          xs: "block",
+          md: "none",
+          position: "fixed",
+          bottom: 0,
+          width: "100%",
+          background: "white",
+          zIndex: "2",
+        }}
+      >
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+          <BottomNavigationAction label="NearBy" icon={<LocationOnIcon />} />
+        </BottomNavigation>
+      </Box>
       {children}
     </>
-   
   );
 }
 

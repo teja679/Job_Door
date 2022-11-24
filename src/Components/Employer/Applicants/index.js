@@ -57,7 +57,14 @@ function Applicants() {
   }, []);
   const handleClick = async (action, row) => {
     if(action === 'accept'){
-      console.log('accept', row)
+      // we need to update status of the application to approved & disable reject button
+      try {
+        await setDoc(doc(db, "applications", row.applicationId), {
+          status: "approved",
+        }, {merge: true});
+      } catch (e) {
+        console.error(e);
+      }
     }
     else if(action === 'reject') {
       await deleteDoc(doc(db, "applications", row.applicationId));
