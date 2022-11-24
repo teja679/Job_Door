@@ -91,15 +91,11 @@ function JobForm({ selectAjob, jobData, setJobData}) {
           container
           spacing={2}
           sx={{
-            // padding: "10px",
             maxWidth: "95%",
             margin: "auto",
-            // boxShadow: "0px 8px 24px #789",
-            // background: "#fff",
-            borderRadius: "8px",
           }}
         >
-          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6">Title</Typography>
             <TextField
               required
@@ -109,7 +105,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               onChange={(e) => setJobData({ ...jobData, title: e.target.value })}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6">Location</Typography>
             <TextField
               required
@@ -121,7 +117,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6">Salary</Typography>
             <TextField
               variant="outlined"
@@ -132,7 +128,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6">Experience</Typography>
             <TextField
               variant="outlined"
@@ -143,7 +139,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6">Job Type</Typography>
             <TextField
               required
@@ -155,7 +151,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={12} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={12}>
             <Typography variant="h6">Description</Typography>
             <TextField
               required multiline
@@ -166,7 +162,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               onChange={(e) => setJobData({ ...jobData, desc: e.target.value })}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6">Domain</Typography>
             <Select
               fullWidth
@@ -185,7 +181,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ margin: "1rem 0" }}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6">Skills</Typography>
             <Select
               required

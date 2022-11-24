@@ -10,74 +10,81 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { Button, Grid, Input } from "@mui/material";
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 function CandidateJobs() {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const userInfo = JSON.parse(localStorage.getItem("users"));
   const employerId = userInfo.uid;
 
   const [allJobs, setAllJobs] = useState(null);
 
   const fetchJobs = async () => {
-    const q = await query(collection(db, "jobsData"));
-   
-    const querySnapshot = await getDocs(q);
-    let jobs = [];
-    querySnapshot.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data());
-      jobs.push(doc.data());
-    });
-      setAllJobs(jobs);
-      setLoading(false)
-      // console.log("Current jobs: ", jobs);
+    try {
+      const q = await query(collection(db, "jobsData"));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        let jobs = [];
+        querySnapshot.forEach((doc) => {
+          // console.log(doc.id, " => ", doc.data());
+          jobs.push(doc.data());
+        });
+        setAllJobs(jobs);
+        setLoading(false);
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     fetchJobs();
   }, []);
 
-  const applyJob = async (job) => {
-    const applicationId = uuid();
-    const q = query(
+  const applyForJob = async (job) => {
+    const applicationId = uuidv4();
+    console.log(applicationId)
+
+    const q = await query(
       collection(db, "applications"),
       where("candidateId", "==", userInfo.uid)
     );
-    let jobsData = [];
-     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        jobsData.push(doc.data());
-      });
-    })
-    console.log(jobsData)
-    const isApplied = jobsData.find(item => item.jobId === job.Job_id)
-    if(isApplied){
-      alert('already applied')
+    let data = [];
+    
+    const querySnapshot = await getDocs(q);
+    console.log(querySnapshot)
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+      data.push(doc.data());
+    });
+    console.log(data)
+    const isApplied = data.find((item) => item.jobId === job.Job_id);
+    console.log(isApplied);
+    if (isApplied) {
+      alert("already applied");
       return;
     } else {
-      
-    try {
-      await setDoc(doc(db, "applications", applicationId), {
-        applicationId,
-        jobId: job.Job_id,
-        employerId: job.employerId,
-        title: job.title,
-        location: job.location,
-        createdAt: new Date(),
-        candidateId: userInfo.uid,
-        status: 'applied',
-        candidate_name: userInfo.displayName,
-        company_name: job.company_name
-      });
+      try {
+        await setDoc(doc(db, "applications", applicationId), {
+          applicationId,
+          jobId: job.Job_id,
+          employerId: job.employerId,
+          title: job.title,
+          location: job.location,
+          createdAt: new Date(),
+          candidateId: userInfo.uid,
+          status: "applied",
+          candidate_name: userInfo.displayName,
+          // company_name: job.company_name,
+        });
 
-      alert("Job applied successfully");
-    } catch (e) {
-      console.error("Error adding document", e);
+        alert("Job applied successfully");
+      } catch (e) {
+        console.error("Error adding document", e);
+      }
     }
-  } 
-}
-  return (
-    loading ? <div>Loading...</div> : 
+  };
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
     <div className="sidebar">
       {allJobs && allJobs.length > 0 ? (
         allJobs.map((job) => (
@@ -112,7 +119,7 @@ function CandidateJobs() {
             <Grid item xs={12}>
               {job.domain}
             </Grid>
-            <Button variant="contained" fullWidth onClick={() => applyJob(job)}>
+            <Button variant="contained" fullWidth onClick={() => applyForJob(job)}>
               Apply
             </Button>
           </Grid>

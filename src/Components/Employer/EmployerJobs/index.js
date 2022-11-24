@@ -41,7 +41,7 @@ function EmployerJobs() {
     <div className="jobs">
       <Grid container sx={{
         color: 'rgb(31, 93, 117)',
-        background: 'rgb(238, 252, 255)',
+        // background: 'rgb(238, 252, 255)',
         //  height: '100vh',
       }}>
          <Grid

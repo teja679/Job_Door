@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,7 +41,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-function CommonTable({ data, columnsName})  {
+function CommonTable({ data, columnsName, handleClick})  {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -55,7 +56,13 @@ function CommonTable({ data, columnsName})  {
           {data.map((row, i) => (
             <StyledTableRow key={i}>
                 {columnsName.map((item) => {
+                  if(item.key === 'buttons'){
+                    return <>
+                    <Button onClick={()=>handleClick('accept', row)}>Accept</Button>
+                    <Button onClick={()=>handleClick('reject', row)}>Reject</Button></>
+                  }else {
                     return <StyledTableCell>{row[item.key]}</StyledTableCell>
+                  }
                 })}
             </StyledTableRow>
           ))}

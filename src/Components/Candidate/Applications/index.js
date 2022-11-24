@@ -39,10 +39,6 @@ function Applications() {
   return (
     loading ? <div>Loading...</div> : 
     <div className="sidebar">
-      {/* <div className="searchbar">
-        <SearchIcon />
-       <Input placeholder="Search by Job" sx={{outline: 'none'}} />
-      </div> */}
       {allApllications && allApllications.length > 0 ? (
         allApllications.map((job) => (
           <Grid
@@ -85,7 +81,7 @@ function Applications() {
           </Grid>
         ))
       ) : allApllications && allApllications.length === 0 ? (
-        <div>No data posted</div>
+        <div>No data f</div>
       ) : (
         <div>No data available</div>
       )}

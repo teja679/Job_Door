@@ -21,7 +21,11 @@ const columnName = [
   },{
     title: 'Status',
     key: 'status'
+  },{
+    title: 'Buttons',
+    key: 'buttons'
   },
+
   // {
   //   title: 'Applied On',
   //   key: 'createdAt'
@@ -46,12 +50,20 @@ function Applicants() {
   useEffect(() => {
     fetchJobs();
   }, []);
+  const handleClick = (action, row) => {
+    if(action === 'accept'){
+      console.log('accept', row)
+    }
+    else if(action === 'reject') {
+      console.log('reject', row)
+    }
+  }
   return (
     
       allApplications && allApplications.length > 0 ? (
         <div>
           <CommonTable data={allApplications}
-          columnsName={columnName} />
+          columnsName={columnName} handleClick={handleClick} />
         </div>
       ) : allApplications && allApplications.length === 0 ? (
         <div>No data posted</div>
