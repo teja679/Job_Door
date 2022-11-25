@@ -20,7 +20,7 @@ function EmployerOnboarding() {
     name: "",
     email: userData?.email ? userData?.email : "",
     phone: "",
-    comnpany: "",
+    company: "",
     size: '',
     hrEmail: '',
     address: '',

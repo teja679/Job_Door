@@ -68,7 +68,7 @@ function CandidateJobs() {
           candidateId: userInfo.uid,
           status: "applied",
           candidate_name: userInfo.displayName,
-          // company_name: job.company_name,
+          // company_name: job.company,
         });
 
         alert("Job applied successfully");

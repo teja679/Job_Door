@@ -17,7 +17,7 @@ import { v4 as uuid } from "uuid";
 
 function JobForm({ selectAjob, jobData, setJobData}) {
   const userInfo = JSON.parse(localStorage.getItem("users"));
-
+  console.log(userInfo)
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -44,7 +44,8 @@ function JobForm({ selectAjob, jobData, setJobData}) {
           ...jobData,
           employerId: userInfo.uid,
           createdAt: new Date(),
-          employerName: userInfo.displayName
+          employerName: userInfo.displayName,
+
         });
       }
       selectAjob(false)
