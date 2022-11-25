@@ -20,13 +20,12 @@ function EmployerConversation() {
   const [allLastMessages, setAllLastMessages] = useState(null);
   const [allCoversations, setAllCoversations] = useState(null);
   const userInfo = JSON.parse(localStorage.getItem("users"));
-  console.log("userInfo", userInfo);
 
-  const selectAConversation = (data) => {
+   const selectAConversation = (data) => {
     console.log(data);
     try {
       const q = query(
-        collection(db, "one-to-one-messages"),
+        collection(db, "oneToOneMessages"),
         where("conversationId", "==", data.conversationId)
       );
 
@@ -36,18 +35,20 @@ function EmployerConversation() {
           data.push(doc.data());
         });
         setAllCoversations(data);
+        
+        console.log(data)
       });
     } catch (err) {
       console.log(err);
     }
-    setLastMessageMobile(true);
+    setLastMessageMobile(false);
   };
 
   const fetchJobs = async () => {
     try {
-      const q = await query(
+      const q = query(
         collection(db, "last_messages"),
-        where("employerId", "==", userInfo.uid)
+        // where("employerId", "==", userInfo.uid)
       );
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const data = [];
