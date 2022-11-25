@@ -91,7 +91,7 @@ function Applicants() {
           employer_name: userInfo.displayName,
           conversationId: `${row.employerId}-${row.candidateId}`,
         });
-        await setDoc(doc(db, "oneToOneMessages", oneToOneMessageId), {
+        await setDoc(doc(db, "one-to-one-messages", oneToOneMessageId), {
           message: "hey hello!",
           createdAt: new Date(),
           conversationId: `${row.employerId}-${row.candidateId}`,

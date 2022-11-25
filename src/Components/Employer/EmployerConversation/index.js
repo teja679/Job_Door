@@ -12,20 +12,21 @@ import {
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../../../firebaseConfig";
-import LastMessage from "./LastMessage";
-import MessageArea from "./MessageArea";
+import LastMessage from "../../common/LastMessage";
+import MessageArea from "../../common/MessageArea";
 
 function EmployerConversation() {
-  const [lastMessageMobile, setLastMessageMobile] = useState(false);
+   const [lastMessageMobile, setLastMessageMobile] = useState(true);
+   const [selectConversation, setSelectConversation] = useState(null)
   const [allLastMessages, setAllLastMessages] = useState(null);
   const [allCoversations, setAllCoversations] = useState(null);
   const userInfo = JSON.parse(localStorage.getItem("users"));
 
    const selectAConversation = (data) => {
-    console.log(data);
+    setSelectConversation(data);
     try {
       const q = query(
-        collection(db, "oneToOneMessages"),
+        collection(db, "one-to-one-messages"),
         where("conversationId", "==", data.conversationId)
       );
 
@@ -48,7 +49,7 @@ function EmployerConversation() {
     try {
       const q = query(
         collection(db, "last_messages"),
-        // where("employerId", "==", userInfo.uid)
+        where("employerId", "==", userInfo.uid)
       );
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const data = [];
@@ -65,6 +66,35 @@ function EmployerConversation() {
     fetchJobs();
   }, []);
 
+  const postMessage = async (message) => {
+    console.log(selectConversation)
+    const oneToOneMessageId = uuidv4()
+    try {
+      await setDoc(
+        doc(db, "last_messages", selectConversation.last_message_id),
+        {
+          last_message : message,
+          createdAt: new Date()
+        },
+        { merge: true }
+      );
+      await setDoc(
+        doc(db, "one-to-one-messages", oneToOneMessageId),
+        {
+          message : message,
+          createdAt: new Date(),
+          conversationId: selectConversation.conversationId,
+          userId: userInfo.uid,
+          userType: 'employer'
+          // employerId: selectConversation.employerId,
+          // candidateId: selectConversation.candidateId,
+          
+        },
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return allLastMessages && allLastMessages.length > 0 ? (
     <Grid container>
       <Grid
@@ -87,7 +117,7 @@ function EmployerConversation() {
         }}
       >
         <Button onClick={() => setLastMessageMobile(true)}>Back</Button>
-        <MessageArea allCoversations={allCoversations} />
+        <MessageArea postMessage={postMessage} allCoversations={allCoversations} />
       </Grid>
     </Grid>
   ) : allLastMessages && allLastMessages.length === 0 ? (
