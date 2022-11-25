@@ -92,16 +92,11 @@ function Applicants() {
           conversationId: `${row.employerId}-${row.candidateId}`,
         });
         await setDoc(doc(db, "one-to-one-messages", oneToOneMessageId), {
-          message: "hey hello!",
           createdAt: new Date(),
           conversationId: `${row.employerId}-${row.candidateId}`,
-          employerId: row.employerId,
-          candidateId: row.candidateId,
-          jobId: row.jobId,
-          applicationId: row.applicationId,
-          last_message_id: last_message_id,
-          candidate_name: row.candidate_name,
-          employer_name: userInfo.displayName,
+          userType: 'employer',
+          userId: userInfo.uid,
+          message: `hey hello! ${row.title}`,
         });
       } catch (e) {
         console.error(e);

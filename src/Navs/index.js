@@ -22,11 +22,15 @@ import CandidateHoc from "../Components/Hoc/CandidateHoc";
 import EmployerHoc from "../Components/Hoc/EmployerHoc";
 
 function Navs() {
+  // const user = JSON.parse(localStorage.getItem("user")) || null;
+  // const userinfo = JSON.parse(localStorage.getItem("userinfo")) || null;
   const CandidateProtactedRotes = () => {
+    // if (user && userinfo?.type === "candidate")
     if ("a" === "a") return <Outlet />;
     else return <Navigate to="/" />;
   };
   const EmployerProtactedRotes = () => {
+    // if (user && userinfo?.type === "employer")
     if ("a" === "a") return <Outlet />;
     else return <Navigate to="/" />;
   };
@@ -40,15 +44,15 @@ function Navs() {
             element={<AuthPage type="candidate" />}
           />
           <Route path="/employer/auth" element={<AuthPage type="employer" />} />
+          <Route
+            path="candidate/onboarding"
+            element={
+              <CandidateHoc>
+                <CandidateOnboarding />
+              </CandidateHoc>
+            }
+          />
           <Route element={<CandidateProtactedRotes />}>
-            <Route
-              path="candidate/onboarding"
-              element={
-                <CandidateHoc>
-                  <CandidateOnboarding />
-                </CandidateHoc>
-              }
-            />
             <Route
               path="candidate/jobs"
               element={
@@ -73,17 +77,25 @@ function Navs() {
                 </CandidateHoc>
               }
             />
-            <Route path="candidate/applications" element={<Applications />} />
-          </Route>
-          <Route element={<EmployerProtactedRotes />}>
+
             <Route
-              path="employer/onboarding"
+              path="candidate/applications"
               element={
-                <EmployerHoc>
-                  <EmployerOnboarding />
-                </EmployerHoc>
+                <CandidateHoc>
+                  <Applications />
+                </CandidateHoc>
               }
             />
+          </Route>
+          <Route
+            path="employer/onboarding"
+            element={
+              <EmployerHoc>
+                <EmployerOnboarding />
+              </EmployerHoc>
+            }
+          />
+          <Route element={<EmployerProtactedRotes />}>
             <Route
               path="employer/jobs"
               element={

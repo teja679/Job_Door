@@ -12,7 +12,7 @@ function MessageArea({ postMessage, allCoversations }) {
         <Grid container>
           <Grid item xs={12} sx={{display: 'flex', flexDirection: 'column'}}>
             {
-              allCoversations.map(item => (
+              allCoversations.map((item, index) => (
                 <div style={{
                   background: '#eaeaea',
                   borderRadius: '0px 16px 16px 16px',

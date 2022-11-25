@@ -56,7 +56,7 @@ function LastMessage({ allLastMessages, selectAConversation }) {
             {item.candidate_name}
           </Grid>
           <Grid item xs={12}>
-            {item.lastMessage}
+            {item.last_message}
           </Grid>
         </Grid>
       ))}

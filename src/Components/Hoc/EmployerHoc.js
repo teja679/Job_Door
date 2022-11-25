@@ -5,11 +5,11 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import RestoreIcon from "@mui/icons-material/Restore";
 import MenuIcon from "@mui/icons-material/Menu";
-
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Person4Icon from "@mui/icons-material/Person4";
+import WorkIcon from "@mui/icons-material/Work";
+import SmsIcon from "@mui/icons-material/Sms";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -18,31 +18,35 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import { auth } from "../../firebaseConfig";
 const pages = [
   {
     label: "Profile",
     key: "profile",
+    icon: <AccountCircleIcon />,
   },
   {
     label: "Jobs",
     key: "jobs",
+    icon: <WorkIcon />,
   },
   {
     label: "Applicants",
     key: "applicants",
+    icon: <Person4Icon />,
   },
   {
-    label: 'conversation',
-    key: 'conversation'
-  }
+    label: "conversation",
+    key: "conversation",
+    icon: <SmsIcon />,
+  },
 ];
 
 function EmployerHoc({ children }) {
   const [value, setValue] = React.useState("");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -58,10 +62,15 @@ function EmployerHoc({ children }) {
     setAnchorElUser(null);
   };
   const reRoute = (page) => {
-    console.log(page)
-    handleCloseNavMenu()
-    navigate(`../employer/${page}`)
-  }
+    console.log(page);
+    handleCloseNavMenu();
+    navigate(`../employer/${page}`);
+  };
+  const logoutFunction = () => {
+    localStorage.clear();
+    auth.signOut();
+    navigate("/");
+  };
   return (
     <>
       <Box sx={{ display: { xs: "none", md: "block" } }}>
@@ -117,7 +126,7 @@ function EmployerHoc({ children }) {
                   }}
                 >
                   {pages.map((page) => (
-                    <MenuItem key={page.key}  onClick={()=>reRoute(page.key)}>
+                    <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
                       <Typography textAlign="center">{page.label}</Typography>
                     </MenuItem>
                   ))}
@@ -146,7 +155,7 @@ function EmployerHoc({ children }) {
                 {pages.map((page) => (
                   <Button
                     key={page.key}
-                    onClick={()=>reRoute(page.key)}
+                    onClick={() => reRoute(page.key)}
                     sx={{ my: 2, color: "white", display: "block" }}
                   >
                     {page.label}
@@ -156,19 +165,13 @@ function EmployerHoc({ children }) {
 
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
-                    />
-                  </IconButton>
+                  <Button onClick={logoutFunction}>Logout</Button>
                 </Tooltip>
-               
               </Box>
             </Toolbar>
           </Container>
         </AppBar>
-                  </Box>
+      </Box>
       <Box
         display={{
           xs: "block",
@@ -187,11 +190,15 @@ function EmployerHoc({ children }) {
             setValue(newValue);
           }}
         >
-          <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-          <BottomNavigationAction label="NearBy" icon={<LocationOnIcon />} />
-        </BottomNavigation>
-      </Box> 
+          {pages.map((page) => (
+            <BottomNavigationAction
+              onClick={() => reRoute(page.key)}
+              key={page.key}
+              label={page.label}
+              icon={page.icon}
+            />
+          ))}</BottomNavigation>
+      </Box>
       {children}
     </>
   );
