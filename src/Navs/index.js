@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -20,18 +20,22 @@ import EmployerConversation from "../Components/Employer/EmployerConversation";
 import LandingPage from "../Components/LandingPage";
 import CandidateHoc from "../Components/Hoc/CandidateHoc";
 import EmployerHoc from "../Components/Hoc/EmployerHoc";
+import { UserContext } from "../Components/context/UserContext";
 
 function Navs() {
+  const [state, dispatch] = useContext(UserContext)
   // const user = JSON.parse(localStorage.getItem("user")) || null;
   // const userinfo = JSON.parse(localStorage.getItem("userinfo")) || null;
   const CandidateProtactedRotes = () => {
-    // if (user && userinfo?.type === "candidate")
-    if ("a" === "a") return <Outlet />;
+    // if ("a" === "a")
+    if (state.user && state.userInfo?.type === "candidate")
+     return <Outlet />;
     else return <Navigate to="/" />;
   };
   const EmployerProtactedRotes = () => {
-    // if (user && userinfo?.type === "employer")
-    if ("a" === "a") return <Outlet />;
+    // if ("a" === "a")
+    if (state.user && state.userInfo?.type === "employer")
+     return <Outlet />;
     else return <Navigate to="/" />;
   };
   return (

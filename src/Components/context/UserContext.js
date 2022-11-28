@@ -4,20 +4,21 @@ export const UserContext = createContext();
 
 const initialState = {
     user: JSON.parse(localStorage.getItem('user')) || null,
-    userinfo: JSON.parse(localStorage.getItem('userinfo')) || null,
+    userInfo: JSON.parse(localStorage.getItem('userInfo')) || null,
 }
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'Make_dark':
+        case 'SET_USER':
             localStorage.setItem('user', JSON.stringify(action.payload))
             return {
                 user: action.payload,
             };
-        case 'Make_light':
-            localStorage.setItem('userinfo', JSON.stringify(action.payload))
+        case 'SET_USER_INFO':
+            localStorage.setItem('userInfo', JSON.stringify(action.payload))
             return {
-                user: action.payload,
+                ...state,
+                userInfo: action.payload,
             };
         default:
             throw new Error()
