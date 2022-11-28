@@ -15,8 +15,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import { DarkModeContext } from "../context/DarkMode";
 import AdbIcon from "@mui/icons-material/Adb";
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Switch,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebaseConfig";
 const pages = [
@@ -46,6 +51,7 @@ function EmployerHoc({ children }) {
   const [value, setValue] = React.useState("");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [state, dispatch] = React.useContext(DarkModeContext);
   const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -74,7 +80,13 @@ function EmployerHoc({ children }) {
   return (
     <>
       <Box sx={{ display: { xs: "none", md: "block" } }}>
-        <AppBar position="sticky">
+        <AppBar
+          position="sticky"
+          sx={{
+            color: state.darkMode ? "#fff" : "gray",
+            bgcolor: state.darkMode ? "#252525" : "#fff",
+          }}
+        >
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -96,7 +108,9 @@ function EmployerHoc({ children }) {
                 LOGO
               </Typography>
 
-              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <Box sx={{ color: state.darkMode ? "#fff" : "gray",
+                  bgcolor: state.darkMode ? "#252525" : "#fff",
+                  flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                 <IconButton
                   size="large"
                   aria-label="account of current user"
@@ -126,7 +140,8 @@ function EmployerHoc({ children }) {
                   }}
                 >
                   {pages.map((page) => (
-                    <MenuItem key={page.key} onClick={() => reRoute(page.key)}>
+                    <MenuItem key={page.key}
+                    color="inherit" onClick={() => reRoute(page.key)}>
                       <Typography textAlign="center">{page.label}</Typography>
                     </MenuItem>
                   ))}
@@ -151,19 +166,46 @@ function EmployerHoc({ children }) {
               >
                 LOGO
               </Typography>
-              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <Box
+                sx={{
+                  color: state.darkMode ? "#fff" : "gray",
+                  bgcolor: state.darkMode ? "#222" : "#fff",
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                }}
+              >
                 {pages.map((page) => (
                   <Button
                     key={page.key}
                     onClick={() => reRoute(page.key)}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{
+                      // color: state.darkMode ? "#fff" : "gray",
+                      // bgcolor: state.darkMode ? "#252525" : "#fff",
+                      my: 2,
+                      display: "block",
+                    }}
                   >
                     {page.label}
                   </Button>
                 ))}
               </Box>
 
-              <Box sx={{ flexGrow: 0 }}>
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  color: state.darkMode ? "#fff" : "gray",
+                  bgcolor: state.darkMode ? "#252525" : "#fff",
+                }}
+              >
+                <Tooltip title="Open settings">
+                  <Switch
+                    onChange={() => {
+                      state.darkMode
+                        ? dispatch({ type: "Make_light" })
+                        : dispatch({ type: "Make_dark" });
+                    }}
+                  />
+                </Tooltip>
                 <Tooltip title="Open settings">
                   <Button onClick={logoutFunction}>Logout</Button>
                 </Tooltip>
@@ -197,7 +239,8 @@ function EmployerHoc({ children }) {
               label={page.label}
               icon={page.icon}
             />
-          ))}</BottomNavigation>
+          ))}
+        </BottomNavigation>
       </Box>
       {children}
     </>

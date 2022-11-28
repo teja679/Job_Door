@@ -25,8 +25,8 @@ import Person4Icon from "@mui/icons-material/Person4";
 import WorkIcon from "@mui/icons-material/Work";
 import SmsIcon from "@mui/icons-material/Sms";
 import { useNavigate } from "react-router-dom";
+import { DarkModeContext } from "../context/DarkMode";
 import { auth } from "../../firebaseConfig";
-import { DarkModeContext } from "../../App";
 const pages = [
   {
     label: "Profile",
@@ -53,7 +53,7 @@ function CandidateHoc({ children }) {
   const [value, setValue] = React.useState("");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [darkMode, setDarkMode] = React.useContext(DarkModeContext);
+  const [state, dispatch] = React.useContext(DarkModeContext);
   const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -89,8 +89,8 @@ function CandidateHoc({ children }) {
         <AppBar
           position="sticky"
           sx={{
-            color: darkMode ? "#fff" : "gray",
-            bgcolor: darkMode ? "#252525" : "#fff",
+            color: state.darkMode ? "#fff" : "gray",
+            bgcolor: state.darkMode ? "#252525" : "#fff",
           }}
         >
           <Container maxWidth="xl">
@@ -114,7 +114,14 @@ function CandidateHoc({ children }) {
                 LOGO
               </Typography>
 
-              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <Box
+                sx={{
+                  color: state.darkMode ? "#fff" : "gray",
+                  bgcolor: state.darkMode ? "#252525" : "#fff",
+                  flexGrow: 1,
+                  display: { xs: "flex", md: "none" },
+                }}
+              >
                 <IconButton
                   size="large"
                   aria-label="account of current user"
@@ -140,8 +147,8 @@ function CandidateHoc({ children }) {
                   open={Boolean(anchorElNav)}
                   onClose={handleCloseNavMenu}
                   sx={{
-                    color: darkMode ? "#fff" : "gray",
-                    bgcolor: darkMode ? "#222" : "#fff",
+                    color: "gray",
+                    bgcolor: "#fff",
                     display: { xs: "block", md: "none" },
                   }}
                 >
@@ -177,8 +184,8 @@ function CandidateHoc({ children }) {
               </Typography>
               <Box
                 sx={{
-                  color: darkMode ? "#fff" : "gray",
-                  bgcolor: darkMode ? "#222" : "#fff",
+                  color: state.darkMode ? "#fff" : "gray",
+                  bgcolor: state.darkMode ? "#222" : "#fff",
                   flexGrow: 1,
                   display: { xs: "none", md: "flex" },
                 }}
@@ -187,31 +194,42 @@ function CandidateHoc({ children }) {
                   <MenuItem
                     key={page.key}
                     onClick={() => reRoute(page.key)}
-                    sx={{ my: 2, display: "block", color: darkMode ? "#fff" : "gray",
-                    bgcolor: darkMode ? "#222" : "#fff", }}
+                    sx={{
+                      // color: state.darkMode ? "#fff" : "gray",
+                      // bgcolor: state.darkMode ? "#252525" : "#fff",
+                      my: 2,
+                      display: "block",
+                    }}
                   >
                     <Typography textAlign="center">{page.label}</Typography>
                   </MenuItem>
                 ))}
               </Box>
 
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Logout">
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  color: state.darkMode ? "#fff" : "gray",
+                  bgcolor: state.darkMode ? "#252525" : "#fff",
+                }}
+              >
+                <Tooltip title="Open settings">
                   <Switch
-                    value={darkMode}
-                    sx={{
-                      color: darkMode ? "#fff" : "gray",
-                      bgcolor: darkMode ? "#222" : "#fff",
+                    onChange={() => {
+                      state.darkMode
+                        ? dispatch({ type: "Make_light" })
+                        : dispatch({ type: "Make_dark" });
                     }}
-                    onClick={() => setDarkMode((p) => !p)}
                   />
                 </Tooltip>
                 <Tooltip>
                   <Button
-                    sx={{
-                      color: darkMode ? "#fff" : "gray",
-                      bgcolor: darkMode ? "#222" : "#fff",
-                    }}
+                    sx={
+                      {
+                        // color: state.darkMode ? "#fff" : "gray",
+                        // bgcolor: state.darkMode ? "#252525" : "#fff",
+                      }
+                    }
                     onClick={logoutFunction}
                   >
                     Logout

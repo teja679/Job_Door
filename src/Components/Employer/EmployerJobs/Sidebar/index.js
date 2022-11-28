@@ -1,45 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { collection, query, onSnapshot, where } from "firebase/firestore";
-import { db } from '../../../../firebaseConfig'
+import { db } from "../../../../firebaseConfig";
 import { Button, Grid, Input } from "@mui/material";
-import '../styles.css'
-import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/Add';
+import "../styles.css";
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
 
 function Sidebar({ selectAjob }) {
-  const userInfo = JSON.parse(localStorage.getItem('users'))
+  const userInfo = JSON.parse(localStorage.getItem("users"));
   const employerId = userInfo.uid;
 
   const [allJobs, setAllJobs] = useState(null);
   const fetchJobs = async () => {
-    
-    const q = await query(collection(db, "jobsData",
-    //  where('employerId' == employerId)
-     ));
+    const q = await query(
+      collection(
+        db,
+        "jobsData"
+        //  where('employerId' == employerId)
+      )
+    );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const jobs = [];
-       querySnapshot.forEach((doc) => {
-          jobs.push(doc.data());
-        });
-        setAllJobs(jobs)
-        console.log("Current jobs: ", jobs);
-    }) 
-  }
+      querySnapshot.forEach((doc) => {
+        jobs.push(doc.data());
+      });
+      setAllJobs(jobs);
+      console.log("Current jobs: ", jobs);
+    });
+  };
   useEffect(() => {
     fetchJobs();
   }, []);
-  
-  return(
+
+  return (
     <div className="sidebar">
-      <Button fullWidth
-       onClick={() => selectAjob(false)}>
-      <AddIcon />{' '}
-        post a job</Button>
+      <Button fullWidth onClick={() => selectAjob(false)}>
+        <AddIcon /> post a job
+      </Button>
       <div className="searchbar">
         <SearchIcon />
-       <Input placeholder="Search by Job" sx={{outline: 'none'}} />
+        <Input placeholder="Search by Job" sx={{ outline: "none" }} />
       </div>
-      {allJobs && allJobs.length > 0 ? (
+      {/* {allJobs && allJobs.length > 0 ? (
         allJobs.map((job) => (
           <Grid 
             container
@@ -79,7 +81,7 @@ function Sidebar({ selectAjob }) {
         <div>No data posted</div>
       ) : (
         <div>No data available</div>
-      )}
+      )} */}
     </div>
   );
 }

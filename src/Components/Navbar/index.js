@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import { DarkModeContext } from "../../App";
+import { DarkModeContext } from "../context/DarkMode";
 import { Switch } from "@mui/material";
 const pages = [
   { label: "Home", path: "/" },
@@ -32,7 +32,7 @@ function NavbarComp() {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [darkMode, setDarkMode] = React.useContext(DarkModeContext);
+  const [state, dispatch] = React.useContext(DarkModeContext);
   
   const navigateToPage = (path) => {
     // console.log(path)
@@ -54,12 +54,12 @@ function NavbarComp() {
   };
 
   return (
-    <AppBar position="sticky" sx={{ color: darkMode ? '#fff':'gray', bgcolor: darkMode ? '#252525' : '#fff' }}
+    <AppBar position="sticky" sx={{ color: state.darkMode ? '#fff':'gray', bgcolor: state.darkMode ? '#252525' : '#fff' }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <img src={logo} alt="logo" width="75" /> */}
-          <IconButton sx={{ display: { xs: "none", md: "block" },color: darkMode ? '#fff':'gray', mr: 1 }}>
+          <IconButton sx={{ display: { xs: "none", md: "block" },color: state.darkMode ? '#fff':'gray', mr: 1 }}>
             {/* <img
               width="75"
               src="https://media.istockphoto.com/id/1152471926/vector/creative-yellow-hardhat-construction-helmet-logo-design-illustration.jpg?s=612x612&w=0&k=20&c=7kGXoI3PSPKnkjBuqgJ6QPCm2PoGHgbtKUIatsbnfOo="
@@ -128,7 +128,7 @@ function NavbarComp() {
             </Menu>
           </Box>
           <EngineeringIcon
-            sx={{ display: { xs: "flex", md: "none" }, color: darkMode ? '#fff':'gray', mr: 1 }}
+            sx={{ display: { xs: "flex", md: "none" }, color: state.darkMode ? '#fff':'gray', mr: 1 }}
           />
           <Typography
             variant="h5"
@@ -159,7 +159,7 @@ function NavbarComp() {
               <Button
                 key={page.label}
                 onClick={() => navigateToPage(page.path)}
-                sx={{ my: 2, color: darkMode ? '#fff':'gray', display: "block" }}
+                sx={{ my: 2, color: state.darkMode ? '#fff':'gray', display: "block" }}
               >
                 {page.label}
               </Button>
@@ -168,7 +168,11 @@ function NavbarComp() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <Switch value={darkMode} sx={{ color: darkMode ? '#fff':'gray', bgcolor: darkMode ? '#222' : '#fff' }} onChange={()=> setDarkMode(p => !p)} />
+              <Switch value={state.darkMode} sx={{ color: state.darkMode ? '#fff':'gray', 
+              bgcolor: state.darkMode ? '#222' : '#fff' }} 
+              onChange={()=> {
+                state.darkMode ? dispatch({ type: 'Make_light' }) : dispatch({ type: 'Make_dark'})
+              }} />
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}

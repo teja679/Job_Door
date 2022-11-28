@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
@@ -16,77 +16,82 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import {UserContext} from "../context/UserContext";
 function AuthPage({ type }) {
+  const [state, dispatch] = useContext(UserContext);
   const navigate = useNavigate();
   const signIn = () => {
     const provider = new GoogleAuthProvider();
 
-    signInWithPopup(auth, provider).then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      console.log(user);
-      // localStorage.setItem("users", JSON.stringify(user));
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user);
+        localStorage.setItem("users", JSON.stringify(user));
 
-      // const docRef = doc(db, "userData", user.uid);
+        const docRef = doc(db, "userData", user.uid);
 
-      // const docSnap = await getDoc(docRef);
+        const docSnap = await getDoc(docRef);
 
-      // if (docSnap.exists()) {
-      //   localStorage.setItem("users", JSON.stringify(user, ...docSnap.data()));
+        if (docSnap.exists()) {
+          localStorage.setItem(
+            "users",
+            JSON.stringify(user, ...docSnap.data())
+          );
 
-      //   const userInfo = docSnap.data();
-      //   const userType = userInfo.type;
-      //   localStorage.setItem("userinfo", JSON.stringify(userInfo));
-      //   if (type === "candidate") {
-      //     if (userType === type) {
-      //       setTimeout(() => {
-      //         navigate("/candidate/profile");
-      //       }, 1200)
-      //     } else {
-      //       alert("you are already onboarded as employer");
-      //       return;
-      //     }
-      //   } else {
-      //     if (userType === type) {
-      //       setTimeout(() => {
-      //         navigate("/employer/profile");
-      //       }, 1200)
-      //     } else {
-      //       alert("you are already onboarded as candidate");
-      //       return;
-      //     }
-      //   }
-      // } else {
-      //   if (type === "candidate") {
-      //     navigate("/candidate/onboarding");
-      //   } else  {
-      //     navigate("/employer/onboarding");
-      //   }
-      // }
-      // }
-        if (type === "candidate") {
-          if (!true) {
-            navigate("/candidate/profile");
+          const userInfo = docSnap.data();
+          const userType = userInfo.type;
+          localStorage.setItem("userinfo", JSON.stringify(userInfo));
+          if (type === "candidate") {
+            if (userType === type) {
+              setTimeout(() => {
+                navigate("/candidate/profile");
+              }, 1200);
+            } else {
+              alert("you are already onboarded as employer");
+              return;
+            }
           } else {
-            navigate("/candidate/onboarding");
+            if (userType === type) {
+              setTimeout(() => {
+                navigate("/employer/profile");
+              }, 1200);
+            } else {
+              alert("you are already onboarded as candidate");
+              return;
+            }
           }
         } else {
-          if (!true) {
-            navigate("/employer/profile");
+          if (type === "candidate") {
+            navigate("/candidate/onboarding");
           } else {
             navigate("/employer/onboarding");
           }
         }
-        console.log(user);
+        // }
+        // if (type === "candidate") {
+        //   if (!true) {
+        //     navigate("/candidate/profile");
+        //   } else {
+        //     navigate("/candidate/onboarding");
+        //   }
+        // } else {
+        //   if (!true) {
+        //     navigate("/employer/profile");
+        //   } else {
+        //     navigate("/employer/onboarding");
+        //   }
+        // }
+        // console.log(user);
       })
       .catch((error) => {
         console.log(error);
       });
-    }
-  
+  };
 
   return (
     <div className="auth-page">
