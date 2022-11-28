@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   collection,
   query,
@@ -12,6 +12,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../../../firebaseConfig";
 import CommonTable from "../../common/CommonTable";
+import { UserContext } from "../../context/UserContext";
 
 const columnName = [
   {
@@ -37,7 +38,8 @@ const columnName = [
   // },
 ];
 function Applicants() {
-  const userInfo = JSON.parse(localStorage.getItem("users"));
+  const [state, dispatch] = useContext(UserContext)
+  const userInfo = state.user
 
   const [allApplications, setAllApplications] = useState(null);
 

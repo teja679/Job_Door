@@ -9,11 +9,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 
 function EmployerOnboarding() {
-  const userData = JSON.parse(localStorage.getItem('users'))
+  const [state, dispatch] = useContext(UserContext)
+  const userData = state.user
   
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({

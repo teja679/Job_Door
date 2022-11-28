@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "../../../../firebaseConfig";
 import { Button, Grid, Input } from "@mui/material";
 import "../styles.css";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
+import { UserContext } from "../../../context/UserContext";
 
 function Sidebar({ selectAjob }) {
-  const userInfo = JSON.parse(localStorage.getItem("users"));
+  const [state, dispatch] = useContext(UserContext)
+  const userInfo = state.user
+  console.log(userInfo)
   const employerId = userInfo.uid;
 
   const [allJobs, setAllJobs] = useState(null);
   const fetchJobs = async () => {
-    const q = await query(
+    const q = query(
       collection(
         db,
-        "jobsData"
-        //  where('employerId' == employerId)
+        "jobsData",
+         where('employerId' == employerId)
       )
     );
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const unsubscribe = await onSnapshot(q, (querySnapshot) => {
       const jobs = [];
       querySnapshot.forEach((doc) => {
         jobs.push(doc.data());
@@ -41,7 +44,7 @@ function Sidebar({ selectAjob }) {
         <SearchIcon />
         <Input placeholder="Search by Job" sx={{ outline: "none" }} />
       </div>
-      {/* {allJobs && allJobs.length > 0 ? (
+      {allJobs && allJobs.length > 0 ? (
         allJobs.map((job) => (
           <Grid 
             container
@@ -81,7 +84,7 @@ function Sidebar({ selectAjob }) {
         <div>No data posted</div>
       ) : (
         <div>No data available</div>
-      )} */}
+      )}
     </div>
   );
 }

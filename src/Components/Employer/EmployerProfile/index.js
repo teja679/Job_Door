@@ -11,11 +11,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/UserContext";
 
 function EmployerProfile() {
   const [edit, setEdit] = useState(false)
-  const userData = JSON.parse(localStorage.getItem('users'))
+  const [state, dispatch] = useContext(UserContext)
+  const userData = state.user
 
   const [userInfo, setUserInfo] = useState({
     name: "",

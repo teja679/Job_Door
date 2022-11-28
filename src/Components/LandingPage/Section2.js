@@ -55,8 +55,8 @@ function Section2() {
     <div className="section-2">
       <h1>One Platform Many Solutions</h1>
       <div className="container">
-        {info.map((item) => (
-          <div className="item-div">
+        {info.map((item, index) => (
+          <div className="item-div" key={index}>
             {item.icon}
             <div className="data-div">
               <h2>Marketing & Communication</h2>

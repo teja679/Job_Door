@@ -16,7 +16,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import {UserContext} from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 function AuthPage({ type }) {
   const [state, dispatch] = useContext(UserContext);
   const navigate = useNavigate();
@@ -31,40 +31,42 @@ function AuthPage({ type }) {
         // The signed-in user info.
         const user = result.user;
         console.log(user);
-        localStorage.setItem("users", JSON.stringify(user));
-
+        // localStorage.setItem("users", JSON.stringify(user));
+        dispatch({ type: "SET_USER", payload: user });
+        // console.log('user', user)
         const docRef = doc(db, "userData", user.uid);
 
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          localStorage.setItem(
-            "users",
-            JSON.stringify(user, ...docSnap.data())
-          );
+          // localStorage.setItem(
+          //   "users",
+          //   JSON.stringify(user, ...docSnap.data())
+          // );
 
           const userInfo = docSnap.data();
           const userType = userInfo.type;
-          localStorage.setItem("userinfo", JSON.stringify(userInfo));
+          // localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          dispatch({ type: "SET_USER_INFO", payload: userInfo });
+          // console.log('userInfo', userInfo)
           if (type === "candidate") {
             if (userType === type) {
-              setTimeout(() => {
-                navigate("/candidate/profile");
-              }, 1200);
+              navigate("/candidate/profile");
             } else {
               alert("you are already onboarded as employer");
+              // navigate('/')
               return;
             }
           } else {
             if (userType === type) {
-              setTimeout(() => {
-                navigate("/employer/profile");
-              }, 1200);
+              navigate("/employer/profile");
             } else {
               alert("you are already onboarded as candidate");
+              // navigate('/')
               return;
             }
           }
+          console.log("document data", docSnap.data());
         } else {
           if (type === "candidate") {
             navigate("/candidate/onboarding");
@@ -114,12 +116,6 @@ function AuthPage({ type }) {
         </Button>
       </div>
     </div>
-    //   <div>
-    //   <h3>SignIn with google</h3>
-    //   <Button
-    //    onClick={signIn}
-    //    >SignIn</Button>
-    // </div>
   );
 }
 

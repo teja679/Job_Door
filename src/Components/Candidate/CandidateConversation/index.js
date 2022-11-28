@@ -1,5 +1,5 @@
 import { Button, Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   collection,
   query,
@@ -14,13 +14,15 @@ import { v4 as uuidv4 } from "uuid";
 import { db } from "../../../firebaseConfig";
 import LastMessage from "../../common/LastMessage";
 import MessageArea from "../../common/MessageArea";
+import { UserContext } from "../../context/UserContext";
 
 function CandidateConversation() {
    const [lastMessageMobile, setLastMessageMobile] = useState(true);
    const [selectConversation, setSelectConversation] = useState(null)
   const [allLastMessages, setAllLastMessages] = useState(null);
   const [allCoversations, setAllCoversations] = useState(null);
-  const userInfo = JSON.parse(localStorage.getItem("users"));
+  const [state, dispatch] = useContext(UserContext)
+  const userInfo = state.user;
 
    const selectAConversation = (data) => {
     setSelectConversation(data);

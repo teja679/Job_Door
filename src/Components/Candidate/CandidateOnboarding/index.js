@@ -12,12 +12,16 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 
 function CandidateOnboarding() {
-  const userData = JSON.parse(localStorage.getItem('users'))
-
+  
+  const [state, dispatch] = useContext(UserContext)
+  // const userData = JSON.parse(localStorage.getItem('users'))
+  const userData = state.user;
+  // console.log(userData)
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -40,14 +44,14 @@ function CandidateOnboarding() {
   };
   const submitUserInfo = async (e) => {
     e.preventDefault()
-    console.log(userData)
+    // console.log(userData)
 
     try {
       await setDoc(doc(db, 'userData', `${userData.uid}`), {
         ...userInfo, type: 'candidate'
       })
       alert('sucessfully submitted')
-      navigate('/candidate/profile')
+      navigate('../../candidate/profile')
     }
     catch(e){
       console.error('Error adding document', e)

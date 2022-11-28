@@ -12,12 +12,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { UserContext } from "../../../context/UserContext";
 
 function JobForm({ selectAjob, jobData, setJobData}) {
-  const userInfo = JSON.parse(localStorage.getItem("users"));
-  console.log(userInfo)
+  const [state, dispatch] = useContext(UserContext)
+  const userInfo = state.user
+  
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {

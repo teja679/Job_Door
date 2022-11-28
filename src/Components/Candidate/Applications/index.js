@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   collection,
   query,
@@ -12,10 +12,12 @@ import { db } from "../../../firebaseConfig";
 import { Button, Grid, Input } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { v4 as uuid } from "uuid";
+import { UserContext } from "../../context/UserContext";
 
 function Applications() {
   const [loading, setLoading] = useState(true)
-  const userInfo = JSON.parse(localStorage.getItem("users"));
+  const [state, dispatch] = useContext(UserContext)
+  const userInfo = state.user;
   const employerId = userInfo.uid;
 
   const [allApllications, setAllApllications] = useState(null);
