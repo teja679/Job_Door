@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './styles.css'
 import Navbar from '../Navbar'
+import { UserContext } from '../context/UserContext';
 
 function HeaderSection() {
+  const [state, dispatch] = useContext(UserContext)
+  const userInfo = state.user;
+  if(userInfo){
+    console.log(userInfo)
+  }else {
+    console.log('NO')
+  }
   return (
     <div>
       <Navbar />

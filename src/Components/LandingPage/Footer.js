@@ -1,8 +1,21 @@
-import { Grid, Typography } from "@mui/material";
-import React from "react";
+import { Button, Grid, Typography } from "@mui/material";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 import { EmployersList, JobSeekersList, QuickLinksList } from "../text/data";
 
 function Footer() {
+  
+  const [state, dispatch] = useContext(UserContext)
+  console.log(state)
+  const navigate = useNavigate();
+  const reRoute = (page) => {
+    console.log(page);
+    if(state.user){
+      navigate(`${page}`);
+    }
+    else navigate('candidate/auth')
+  };
   return (
     <div style={{ backgroundColor: '#232323', color: 'white'}}>
       <Grid container spacing={5} sx={{padding: '4rem', textAlign: 'left'}}>
@@ -40,7 +53,7 @@ function Footer() {
         <Grid item xs={12} sm={6} md={2}>
           <Typography sx={{fontWeight: 600, fontSize: '1.4rem'}}>Job Seekers</Typography> <br/>
           {JobSeekersList.map((item, index) => (
-            <Grid sx={{fontSize: '20px'}} key={index}>{item}</Grid>
+            <Button fullwidth onClick={()=>reRoute(item.link)} sx={{fontSize: '15px', color: '#fff'}} key={index}>{item.title}</Button>
           ))}
         </Grid>
       </Grid>

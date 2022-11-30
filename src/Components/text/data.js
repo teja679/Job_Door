@@ -1,14 +1,23 @@
 export const JobSeekersList = [
-  "Create Account",
-  "Matching Jobs",
-  "Apply for Job",
-  "Applied Jobs",
+  {
+    title: "Create Account",
+    link: '/candidate/auth',
+  },{
+    title: "Edit Profile",
+    link: '/candidate/profile',
+  },{
+    title:"Apply for Job",
+    link: '/candidate/jobs',
+  },{
+    title: "Applied Jobs",
+    link: '/candidate/applications',
+  },
 ];
 export const EmployersList = [
-  "Pricing Plans",
   "Create Account",
+  "Edit Profile",
   "Post a Job",
-  "Contact Us",
+  "Applications",
 ];
 
 export const QuickLinksList = [
@@ -20,7 +29,7 @@ export const QuickLinksList = [
 
 export const section2_info = [
   {
-    img: "https://www.waytojob.in/assets/img/o11.png",
+    img: "https:/candidate/auth/www.waytojob.in/assets/img/o11.png",
     text: "Accounting",
   },
   {
