@@ -9,7 +9,7 @@ function Section2() {
         variant="h4"
         sx={{ fontWeight: 700, width: "100%", textAlign: "center" }}
       >
-        One Platform <br /> Many{" "}
+        One Platform Many{" "}
         <span style={{ color: "blue" }}> Solutions</span>
       </Typography>
       <Grid
@@ -30,6 +30,7 @@ function Section2() {
             sx={{
               margin: '1.5rem',
               padding: '1.5rem',
+              border: '1px solid lightgray',
               borderRadius: '1rem',
               display: "flex",
               backgroundColor: "#fff",
@@ -37,15 +38,10 @@ function Section2() {
               gap: '1rem'
             }}
           >
-            <Grid item md={2}>
-              {item.icon}
-            </Grid>
-            <Grid item md={10} zeroMinWidth sx={{padding: '1rem'}}>
-              <Typography variant="h5" >
-                {item.header}
-              </Typography>
-              <Typography variant="p">{item.para}</Typography>
-            </Grid>
+            <img src={item.img} alt='item' />
+            <Typography variant="h5">
+              {item.text}
+            </Typography>
           </Grid>
         ))}
       </Grid>

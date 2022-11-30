@@ -1,4 +1,3 @@
-import CampaignIcon from "@mui/icons-material/Campaign";
 
 export const JobSeekersList = [
   "Create Account",
@@ -22,32 +21,26 @@ export const QuickLinksList = [
   
   export const section2_info = [
     {
-      icon: <CampaignIcon  sx={{fontSize: '3rem', color: 'gray'}}/>,
-      header: "Marketing & Communication",
-      para: "237 Jobs Available",
+      img: 'https://www.waytojob.in/assets/img/o11.png',
+      text: "Accounting",
     },
     {
-      icon: <CampaignIcon  sx={{fontSize: '3rem', color: 'gray'}}/>,
-      header: "Marketing & Communication",
-      para: "237 Jobs Available",
+      img: 'https://www.waytojob.in/assets/img/o22.png',
+      text: "Construction",
     },
     {
-      icon: <CampaignIcon  sx={{fontSize: '3rem', color: 'gray'}}/>,
-      header: "Marketing & Communication",
-      para: "237 Jobs Available",
+      img: 'https://www.waytojob.in/assets/img/o33.png',
+      text: "Technology",
     },
     {
-      icon: <CampaignIcon  sx={{fontSize: '3rem', color: 'gray'}}/>,
-      header: "Marketing & Communication",
-      para: "237 Jobs Available",
+      img: 'https://www.waytojob.in/assets/img/o44.png',
+      text: "Sales",
     },
     {
-      icon: <CampaignIcon  sx={{fontSize: '3rem', color: 'gray'}}/>,
-      header: "Marketing & Communication",
-      para: "237 Jobs Available",
+      img: 'https://www.waytojob.in/assets/img/o5.png',
+      text: "Medical",
     },{
-      icon: <CampaignIcon />,
-      header: "Marketing & Communication",
-      para: "237 Jobs Available",
+      img: 'https://www.waytojob.in/assets/img/o6.png',
+      text: "Engineering",
     },
   ];
