@@ -55,8 +55,9 @@ function NavbarComp() {
 
   return (
     <AppBar
-      position="sticky"
+      position="fixed"
       sx={{
+        zIndex: 100, top: 0, 
         color: state.darkMode ? "#fff" : "#111",
         bgcolor: state.darkMode ? "#252525" : "#fff",
       }}
@@ -187,6 +188,11 @@ function NavbarComp() {
                   fontWeight: '500',
                   color: `${page.c ? page.c : '#111'}`,
                   display: "block",
+                  
+                    "&:hover": {
+                      color: state.darkMode ? '#fff': '#111'
+                    }
+                  
                 }}
               >
                 {page.label}

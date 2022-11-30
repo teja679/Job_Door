@@ -6,6 +6,7 @@ function HeaderSection() {
   return (
     <div>
       <Navbar />
+      <br/> <br/>
       <div className='heading'>
         <h1>Get The <span>Right Job</span></h1>
         <h1>You Deserve</h1>
