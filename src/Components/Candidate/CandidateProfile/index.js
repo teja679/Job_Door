@@ -153,20 +153,22 @@ function CandidateProfile() {
       <form>
         <Grid
           container
-          spacing={2}
+          spacing={2} 
           sx={{
             padding: "1rem",
             maxWidth: "95%",
             height: "90%",
             margin: "20px auto",
-            boxShadow: "0px 8px 24px #789",
-            background: "#fff",
+            // boxShadow: "0px 8px 24px #789",
+            // background: "#fff",
             borderRadius: "8px",
+            textAlign: 'left',
+            marginBottom: '4rem'
           }}
         >
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6">Name</Typography>
-            <TextField
+            <Typography item md={6} variant="h6">Name</Typography>
+            <TextField  item md={6} 
               disabled={!edit}
               required
               variant="outlined"
@@ -279,12 +281,12 @@ function CandidateProfile() {
             </Select>
           </Grid>
           <Grid item xs={6}>
-            <form onSubmit={submitFile}>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
               <input type="file" />
-              <Button type="submit">Upload</Button>
-            </form>
+              <Button onChange={submitFile}>Upload</Button>
+            </div>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center', gap: '2rem'}}>
             {!edit ? (
               <Button variant="contained" onClick={() => setEdit(true)}>
                 Edit

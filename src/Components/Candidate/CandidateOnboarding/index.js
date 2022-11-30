@@ -99,9 +99,10 @@ function CandidateOnboarding() {
             maxWidth: "95%",
             height: '90%',
             margin: "20px auto",
-            boxShadow: "0px 8px 24px #789",
-            background: "#fff",
+            // boxShadow: "0px 8px 24px #789",
+            // background: "#fff",
             borderRadius: "8px",
+            marginBottom: '4rem'
           }}
         >
           <Grid item xs={12} sm={6}>
@@ -212,7 +213,7 @@ function CandidateOnboarding() {
             </Select>
           </Grid>
           <Grid item xs={12}>
-            <Button type='submit'>Submit</Button>
+            <Button variant="contained" type='submit'>Submit</Button>
           </Grid>
         </Grid>
       </form>

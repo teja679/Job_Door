@@ -17,9 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../context/DarkMode";
 import { Switch } from "@mui/material";
 const pages = [
-  { label: "Home", path: "/" },
-  { label: "Find Jobs", path: "/candidate/auth" },
-  { label: "Find Candidates", path: "/employer/auth" },
+  { label: "Home", path: "/", bgc: '#999', c: '#fff'},
+  { label: "Find Jobs", path: "/candidate/auth",bgc: '#f99d1c', c: '#fff' },
+  { label: "Find Candidates", path: "/employer/auth",bgc: '#5ba3d9', c: '#fff' },
   // { label: 'Articles', path: '/articles'},
 ];
 const pages2 = [
@@ -33,7 +33,7 @@ function NavbarComp() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [state, dispatch] = React.useContext(DarkModeContext);
-  
+
   const navigateToPage = (path) => {
     // console.log(path)
     navigate(path);
@@ -54,20 +54,28 @@ function NavbarComp() {
   };
 
   return (
-    <AppBar position="sticky" sx={{ color: state.darkMode ? '#fff':'gray', bgcolor: state.darkMode ? '#252525' : '#fff' }}
+    <AppBar
+      position="sticky"
+      sx={{
+        color: state.darkMode ? "#fff" : "#111",
+        bgcolor: state.darkMode ? "#252525" : "#fff",
+      }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* <img src={logo} alt="logo" width="75" /> */}
-          <IconButton sx={{ display: { xs: "none", md: "block" },color: state.darkMode ? '#fff':'gray', mr: 1 }}>
-            {/* <img
-              width="75"
-              src="https://media.istockphoto.com/id/1152471926/vector/creative-yellow-hardhat-construction-helmet-logo-design-illustration.jpg?s=612x612&w=0&k=20&c=7kGXoI3PSPKnkjBuqgJ6QPCm2PoGHgbtKUIatsbnfOo="
+        <Toolbar container disableGutters>
+          <IconButton
+            sx={{
+              display: { xs: "none", md: "block" },
+              color: state.darkMode ? "#fff" : "#111",
+              mr: 1,
+            }}
+          >
+            <img
+              width="50"
+              style={{ borderRadius: "50%" }}
+              src="https://img.favpng.com/3/19/25/search-logo-png-favpng-m99bRGyXRSuw3yU7NMxS9cYqR.jpg"
               alt="logo"
-            /> */}
-            <EngineeringIcon
-            // sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
+            />
           </IconButton>
           <Typography
             variant="h6"
@@ -85,7 +93,7 @@ function NavbarComp() {
               marginLeft: 2,
             }}
           >
-            Work-Place
+            Job Door
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -122,14 +130,25 @@ function NavbarComp() {
                   key={page.label}
                   onClick={() => navigateToPage(page.path)}
                 >
-                  <Typography textAlign="center">{page.label}</Typography>
+                  <Typography textAlign="center">{page.label}1</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <EngineeringIcon
-            sx={{ display: { xs: "flex", md: "none" }, color: state.darkMode ? '#fff':'gray', mr: 1 }}
-          />
+          <IconButton
+            sx={{
+              display: { xs: "flex", md: "none" },
+              color: state.darkMode ? "#fff" : "#111",
+              mr: 1,
+            }}
+          >
+            <img
+              width="50"
+              style={{ borderRadius: "50%" }}
+              src="https://img.favpng.com/3/19/25/search-logo-png-favpng-m99bRGyXRSuw3yU7NMxS9cYqR.jpg"
+              alt="logo"
+            />
+          </IconButton>
           <Typography
             variant="h5"
             noWrap
@@ -150,16 +169,25 @@ function NavbarComp() {
           </Typography>
           <Box
             sx={{
-              flexGrow: 1,
+              flexGrow: 1, color: '#111',
               textAlign: "center",
               display: { xs: "none", md: "flex" },
+              gap: '1rem'
             }}
           >
             {pages.map((page) => (
               <Button
                 key={page.label}
                 onClick={() => navigateToPage(page.path)}
-                sx={{ my: 2, color: state.darkMode ? '#fff':'gray', display: "block" }}
+                sx={{
+                  my: 2,
+                  borderRadius: '0',
+                  backgroundColor: `${page.bgc}`,
+                  fontFamily: 'roboto',
+                  fontWeight: '500',
+                  color: `${page.c ? page.c : '#111'}`,
+                  display: "block",
+                }}
               >
                 {page.label}
               </Button>
@@ -168,11 +196,18 @@ function NavbarComp() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <Switch value={state.darkMode} sx={{ color: state.darkMode ? '#fff':'gray', 
-              bgcolor: state.darkMode ? '#222' : '#fff' }} 
-              onChange={()=> {
-                state.darkMode ? dispatch({ type: 'Make_light' }) : dispatch({ type: 'Make_dark'})
-              }} />
+              <Switch
+                value={state.darkMode}
+                sx={{
+                  color: state.darkMode ? "#fff" : "#111",
+                  bgcolor: state.darkMode ? "#222" : "#fff",
+                }}
+                onChange={() => {
+                  state.darkMode
+                    ? dispatch({ type: "Make_light" })
+                    : dispatch({ type: "Make_dark" });
+                }}
+              />
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}

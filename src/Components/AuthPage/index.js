@@ -53,17 +53,17 @@ function AuthPage({ type }) {
             if (userType === type) {
               navigate("/candidate/profile");
             } else {
+              navigate('/')
               alert("you are already onboarded as employer");
-              // navigate('/')
-              return;
+              // return;
             }
           } else {
             if (userType === type) {
               navigate("/employer/profile");
             } else {
+              navigate('/')
               alert("you are already onboarded as candidate");
-              // navigate('/')
-              return;
+              // return;
             }
           }
           console.log("document data", docSnap.data());

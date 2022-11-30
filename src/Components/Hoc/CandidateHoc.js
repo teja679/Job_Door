@@ -14,6 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AdbIcon from "@mui/icons-material/Adb";
 import {
   BottomNavigation,
@@ -55,6 +56,7 @@ function CandidateHoc({ children }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [state, dispatch] = React.useContext(DarkModeContext);
   const navigate = useNavigate();
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -266,6 +268,45 @@ function CandidateHoc({ children }) {
               icon={page.icon}
             />
           ))}
+         {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem
+                  key={page.label}
+                  // onClick={() => navigateToPage(page.path)}
+                >
+                  <Typography textAlign="center">{page.label}1</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box> */}
         </BottomNavigation>
       </Box>
       {children}
