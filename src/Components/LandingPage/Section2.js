@@ -4,12 +4,12 @@ import "./styles.css";
 import { section2_info } from "../text/data";
 function Section2() {
   return (
-    <Grid container className="section-2">
+    <Grid container sx={{padding: '3rem 0', border: '1px solid lightgray'}} className="section-2">
       <Typography
-        variant="h4"
+        variant="h3"
         sx={{ fontWeight: 700, width: "100%", textAlign: "center" }}
       >
-        One Platform Many{" "}
+        One Platform <br /> Many{" "}
         <span style={{ color: "blue" }}> Solutions</span>
       </Typography>
       <Grid

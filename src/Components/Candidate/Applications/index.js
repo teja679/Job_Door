@@ -39,7 +39,8 @@ function Applications() {
     fetchJobs();
   }, []);
   return (
-    loading ? <div>Loading...</div> : 
+    <>
+    {loading ? <div>Loading...</div> : 
     <div className="sidebar">
       {allApllications && allApllications.length > 0 ? (
         allApllications.map((job) => (
@@ -50,13 +51,11 @@ function Applications() {
             sx={{
               maxWidth: "600px",
               width: "90%",
-              padding: "1rem",
-              margin: "auto",
-              display: "flex",
-              // flexDirection: 'column',
-              borderRadius: "10px",
+              // padding: "1rem",
+              // margin: "auto",
+              // display: "flex",
+              marginBottom: '4rem',
               fontSize: "16px",
-              boxShadow: "0px -2px 1px #789",
             }}
           >
             <Grid sx={{ fontWeight: "600" }} item xs={12}>
@@ -83,11 +82,12 @@ function Applications() {
           </Grid>
         ))
       ) : allApllications && allApllications.length === 0 ? (
-        <div>No data f</div>
+        <div>No data found</div>
       ) : (
         <div>No data available</div>
       )}
-    </div>
+    </div>}
+    </>
   );
 }
 
