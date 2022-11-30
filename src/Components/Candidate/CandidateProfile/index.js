@@ -1,6 +1,11 @@
 import { useTheme } from "@emotion/react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "../../../firebaseConfig";
+import {
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
+import { uploadBytesResumable, ref } from "firebase/storage";
+import { db, storage } from "../../../firebaseConfig";
 import {
   Button,
   Chip,
@@ -12,13 +17,14 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
+import { getDownloadURL } from "firebase/storage";
 
 function CandidateProfile() {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [state, dispatch] = useContext(UserContext)
+  const [state, dispatch] = useContext(UserContext);
   const userData = state.user;
 
   const [userInfo, setUserInfo] = useState({
@@ -49,7 +55,7 @@ function CandidateProfile() {
       if (docSnap.exists()) {
         console.log("Document Data", docSnap.data());
         setUserInfo(docSnap.data());
-        setLoading(false)
+        setLoading(false);
       }
     } catch (err) {
       console.error(err);
@@ -59,28 +65,66 @@ function CandidateProfile() {
     fetchUserInfo();
   }, []);
 
+  const [pdfUrl, setPdfUrl] = useState("");
+  const [progresspercent, setProgresspercent] = useState(0);
+
+  const submitFile = (e) => {
+    e.preventDefault();
+    console.log(e.target[0].files[0]);
+    const file = e.target[0]?.files[0];
+
+    if (!file) return;
+
+    const storageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgresspercent(progress);
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setPdfUrl(downloadURL);
+          console.log(downloadURL, "url");
+        });
+      }
+    );
+  };
+
   const saveInfo = async (e) => {
-    
     try {
-      await setDoc(doc(db, "userData", `${userData.uid}`), {
-        ...userInfo,
-      }, { merge: true})
-      alert('sucessfully updated')
-      setEdit(false)
+      await setDoc(
+        doc(db, "userData", `${userData.uid}`),
+        {
+          ...userInfo,
+        },
+        { merge: true }
+      );
+      alert("sucessfully updated");
+      setEdit(false);
     } catch (e) {
       console.error("Error adding document", e);
     }
     console.log("submit", userInfo);
   };
-  const handleSkillChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setUserInfo({
-      ...userInfo,
-      skills: typeof value === "string" ? value.split(",") : value,
-    });
-  };
+  const handleSkillChange = useCallback(
+    (event) => {
+      const {
+        target: { value },
+      } = event;
+      setUserInfo({
+        ...userInfo,
+        skills: typeof value === "string" ? value.split(",") : value,
+      });
+    },
+    [userInfo]
+  );
   const theme = useTheme();
 
   const skillSet = [
@@ -122,8 +166,9 @@ function CandidateProfile() {
         >
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Name</Typography>
-            <TextField disabled={!edit}
-              required 
+            <TextField
+              disabled={!edit}
+              required
               variant="outlined"
               fullWidth
               value={userInfo.name}
@@ -134,7 +179,7 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Email</Typography>
-            <TextField 
+            <TextField
               disabled
               required
               variant="outlined"
@@ -147,7 +192,8 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Phone</Typography>
-            <TextField disabled={!edit}
+            <TextField
+              disabled={!edit}
               variant="outlined"
               fullWidth
               value={userInfo.phone}
@@ -158,7 +204,8 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Experience</Typography>
-            <TextField disabled={!edit}
+            <TextField
+              disabled={!edit}
               variant="outlined"
               fullWidth
               value={userInfo.experience}
@@ -169,7 +216,8 @@ function CandidateProfile() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Education</Typography>
-            <TextField disabled={!edit}
+            <TextField
+              disabled={!edit}
               required
               variant="outlined"
               fullWidth
@@ -182,7 +230,8 @@ function CandidateProfile() {
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Domain</Typography>
             <Select
-              fullWidth disabled={!edit}
+              fullWidth
+              disabled={!edit}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={userInfo.domain}
@@ -201,7 +250,8 @@ function CandidateProfile() {
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">Skills</Typography>
             <Select
-              required disabled={!edit}
+              required
+              disabled={!edit}
               fullWidth
               id="demo-multiple-chip"
               multiple
@@ -228,13 +278,25 @@ function CandidateProfile() {
               ))}
             </Select>
           </Grid>
+          <Grid item xs={6}>
+            <form onSubmit={submitFile}>
+              <input type="file" />
+              <Button type="submit">Upload</Button>
+            </form>
+          </Grid>
           <Grid item xs={12}>
             {!edit ? (
-              <Button variant="contained" onClick={() => setEdit(true)}>Edit</Button>
+              <Button variant="contained" onClick={() => setEdit(true)}>
+                Edit
+              </Button>
             ) : (
               <>
-                <Button variant="contained" onClick={saveInfo}>Save</Button>
-                <Button variant="contained" onClick={() => setEdit(false)}>Cancel</Button>
+                <Button variant="contained" onClick={saveInfo}>
+                  Save
+                </Button>
+                <Button variant="contained" onClick={() => setEdit(false)}>
+                  Cancel
+                </Button>
               </>
             )}
           </Grid>
