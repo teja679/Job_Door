@@ -89,24 +89,38 @@ function EmployerHoc({ children }) {
         >
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-              <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                href="/"
-                sx={{
-                  mr: 2,
-                  display: { xs: "none", md: "flex" },
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  letterSpacing: ".3rem",
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-                LOGO
-              </Typography>
+            <IconButton
+            sx={{
+              display: { xs: "none", md: "block" },
+              color: state.darkMode ? "#fff" : "#111",
+              mr: 1,
+            }}
+          >
+            <img
+              width="50"
+              style={{ borderRadius: "50%" }}
+              src="https://img.favpng.com/3/19/25/search-logo-png-favpng-m99bRGyXRSuw3yU7NMxS9cYqR.jpg"
+              alt="logo"
+            />
+          </IconButton>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+              marginLeft: 2,
+            }}
+          >
+            Job Door
+          </Typography>
 
               <Box sx={{ color: state.darkMode ? "#fff" : "gray",
                   bgcolor: state.darkMode ? "#252525" : "#fff",

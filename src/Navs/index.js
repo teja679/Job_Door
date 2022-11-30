@@ -51,9 +51,9 @@ function Navs() {
           <Route
             path="candidate/onboarding"
             element={
-              <CandidateHoc>
                 <CandidateOnboarding />
-              </CandidateHoc>
+              // <CandidateHoc>
+              // </CandidateHoc>
             }
           />
           <Route element={<CandidateProtactedRotes />}>

@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from '../../../firebaseConfig'
+import { db } from "../../../firebaseConfig";
 import {
   Button,
   Chip,
@@ -17,12 +17,11 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
 function CandidateOnboarding() {
-  
-  const [state, dispatch] = useContext(UserContext)
+  const [state, dispatch] = useContext(UserContext);
   // const userData = JSON.parse(localStorage.getItem('users'))
   const userData = state.user;
   // console.log(userData)
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: userData?.email ? userData?.email : "",
@@ -43,18 +42,18 @@ function CandidateOnboarding() {
     },
   };
   const submitUserInfo = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // console.log(userData)
 
     try {
-      await setDoc(doc(db, 'userData', `${userData.uid}`), {
-        ...userInfo, type: 'candidate'
-      })
-      alert('sucessfully submitted')
-      navigate('../../candidate/profile')
-    }
-    catch(e){
-      console.error('Error adding document', e)
+      await setDoc(doc(db, "userData", `${userData.uid}`), {
+        ...userInfo,
+        type: "candidate",
+      });
+      alert("sucessfully submitted");
+      navigate("../../candidate/profile");
+    } catch (e) {
+      console.error("Error adding document", e);
     }
     console.log("submit", userInfo);
   };
@@ -97,15 +96,15 @@ function CandidateOnboarding() {
           sx={{
             padding: "1rem",
             maxWidth: "95%",
-            height: '90%',
+            height: "90%",
             margin: "20px auto",
-            // boxShadow: "0px 8px 24px #789",
-            // background: "#fff",
+            display: "flex",
+            justifyContent: "center",
             borderRadius: "8px",
-            marginBottom: '4rem'
+            marginBottom: "4rem",
           }}
         >
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6} sm={9}>
             <Typography variant="h6">Name</Typography>
             <TextField
               required
@@ -117,9 +116,10 @@ function CandidateOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6} sm={9}>
             <Typography variant="h6">Email</Typography>
-            <TextField disabled
+            <TextField
+              disabled
               required
               variant="outlined"
               fullWidth
@@ -129,7 +129,7 @@ function CandidateOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6} sm={9}>
             <Typography variant="h6">Phone</Typography>
             <TextField
               variant="outlined"
@@ -140,7 +140,7 @@ function CandidateOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6} sm={9}>
             <Typography variant="h6">Experience</Typography>
             <TextField
               variant="outlined"
@@ -151,7 +151,7 @@ function CandidateOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6} sm={9}>
             <Typography variant="h6">Education</Typography>
             <TextField
               required
@@ -163,7 +163,7 @@ function CandidateOnboarding() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6} sm={9}>
             <Typography variant="h6">Domain</Typography>
             <Select
               fullWidth
@@ -182,7 +182,7 @@ function CandidateOnboarding() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={6} sm={9}>
             <Typography variant="h6">Skills</Typography>
             <Select
               required
@@ -212,8 +212,10 @@ function CandidateOnboarding() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" type='submit'>Submit</Button>
+          <Grid item xs={12} md={6}>
+            <Button variant="contained" type="submit">
+              Submit
+            </Button>
           </Grid>
         </Grid>
       </form>
