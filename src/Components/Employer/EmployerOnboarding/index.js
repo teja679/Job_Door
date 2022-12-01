@@ -95,10 +95,13 @@ function EmployerOnboarding() {
             padding: "1rem",
             maxWidth: "95%",
             height: '90%',
+            display: 'flex',
+            textAlign: 'left',
+            justifyContent: 'center',
             margin: "20px auto",
           }}
         >
-          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Name</Typography>
             <TextField
               required 
@@ -110,7 +113,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Email</Typography>
             <TextField disabled
               required
@@ -122,7 +125,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Phone</Typography>
             <TextField  
               variant="outlined"
@@ -133,7 +136,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Company Name</Typography>
             <TextField 
                 variant="outlined"
@@ -144,7 +147,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Company Size</Typography>
             <TextField
                   variant="outlined"
@@ -155,7 +158,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">HR Email</Typography>
             <TextField
                   variant="outlined"
@@ -166,7 +169,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Company Address</Typography>
             <TextField
               required
@@ -178,7 +181,7 @@ function EmployerOnboarding() {
               }
             />
           </Grid>
-          <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item={true} xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Industry Type</Typography>
             <Select
                 fullWidth
@@ -197,8 +200,8 @@ function EmployerOnboarding() {
               ))}
             </Select>
           </Grid>
-         <Grid xs={12}>
-            <Button type='submit'>Submit</Button>
+         <Grid xs={12} sx={{textAlign: 'center', margin: '1rem', marginBottom: '4rem'}}>
+            <Button variant="contained" type='submit'>Submit</Button>
           </Grid>
         </Grid>
       </form>

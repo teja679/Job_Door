@@ -17,7 +17,7 @@ function Section2() {
         sx={{
           display: "flex",
           padding: "2rem",
-          justifyContent: "space-between",
+          justifyContent: "center",
           textAlign: 'left',
         }}
       >
@@ -38,7 +38,7 @@ function Section2() {
               gap: '1rem'
             }}
           >
-            <img src={item.img} alt='item' />
+            <img width='64' src={item.img} alt='item' />
             <Typography variant="h5">
               {item.text}
             </Typography>

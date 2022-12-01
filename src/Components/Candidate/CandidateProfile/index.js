@@ -1,9 +1,5 @@
 import { useTheme } from "@emotion/react";
-import {
-  doc,
-  getDoc,
-  setDoc,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { uploadBytesResumable, ref } from "firebase/storage";
 import { db, storage } from "../../../firebaseConfig";
 import {
@@ -153,22 +149,26 @@ function CandidateProfile() {
       <form>
         <Grid
           container
-          spacing={2} 
+          spacing={2}
           sx={{
             padding: "1rem",
             maxWidth: "95%",
             height: "90%",
             margin: "20px auto",
-            // boxShadow: "0px 8px 24px #789",
-            // background: "#fff",
+            display: 'flex',
+            justifyContent: 'center',
             borderRadius: "8px",
-            textAlign: 'left',
-            marginBottom: '4rem'
+            textAlign: "left",
+            marginBottom: "4rem",
           }}
         >
-          <Grid item xs={12} sm={6}>
-            <Typography item md={6} variant="h6">Name</Typography>
-            <TextField  item md={6} 
+          <Grid item xs={12} sm={9} md={6}>
+            <Typography item md={6} variant="h6">
+              Name
+            </Typography>
+            <TextField
+              item
+              md={6}
               disabled={!edit}
               required
               variant="outlined"
@@ -179,7 +179,7 @@ function CandidateProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={9} md={6}>
             <Typography variant="h6">Email</Typography>
             <TextField
               disabled
@@ -192,7 +192,7 @@ function CandidateProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={9} md={6}>
             <Typography variant="h6">Phone</Typography>
             <TextField
               disabled={!edit}
@@ -204,7 +204,7 @@ function CandidateProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={9} md={6}>
             <Typography variant="h6">Experience</Typography>
             <TextField
               disabled={!edit}
@@ -216,7 +216,7 @@ function CandidateProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={9} md={6}>
             <Typography variant="h6">Education</Typography>
             <TextField
               disabled={!edit}
@@ -229,7 +229,7 @@ function CandidateProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={9} md={6}>
             <Typography variant="h6">Domain</Typography>
             <Select
               fullWidth
@@ -249,7 +249,7 @@ function CandidateProfile() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={9} md={6}>
             <Typography variant="h6">Skills</Typography>
             <Select
               required
@@ -280,13 +280,23 @@ function CandidateProfile() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={6}>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-              <input type="file" />
-              <Button onChange={submitFile}>Upload</Button>
-            </div>
+          <Grid item xs={12} sm={9} md={6}>
+            <Typography variant="h6">Upload Resume</Typography>
+            <Grid item sx={{ display: "flex" }}>
+              <TextField type="file" variant="outlined" />
+              <Button variant="outlined" onChange={submitFile}>Upload</Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center', gap: '2rem'}}>
+          {/* <Grid xs={6} style={{display: 'flex', justifyContent: 'space-between'}}>
+              <TextField type="file" />
+              <Button onChange={submitFile}>Upload</Button>
+            </Grid> */}
+
+          <Grid
+            item
+            xs={12}
+            sx={{ display: "flex", justifyContent: "center", gap: "2rem" }}
+          >
             {!edit ? (
               <Button variant="contained" onClick={() => setEdit(true)}>
                 Edit

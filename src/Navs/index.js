@@ -94,9 +94,9 @@ function Navs() {
           <Route
             path="employer/onboarding"
             element={
-              <EmployerHoc>
                 <EmployerOnboarding />
-              </EmployerHoc>
+              // <EmployerHoc>
+              // </EmployerHoc>
             }
           />
           <Route element={<EmployerProtactedRotes />}>

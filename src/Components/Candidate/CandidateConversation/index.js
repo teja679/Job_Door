@@ -104,7 +104,7 @@ function CandidateConversation() {
           display: { xs: lastMessageMobile ? "block" : "none", sm: "block" },
         }}
       >
-        <LastMessage
+        <LastMessage type='candidate'
           allLastMessages={allLastMessages}
           selectAConversation={selectAConversation}
         />
@@ -116,7 +116,7 @@ function CandidateConversation() {
           display: { xs: lastMessageMobile ? "none" : "block", sm: "block" },
         }}
       >
-        <Button onClick={() => setLastMessageMobile(true)}>Back</Button>
+        <Button sx={{ display: { xs: 'block', sm: 'none'}}} onClick={() => setLastMessageMobile(true)}>Back</Button>
         <MessageArea postMessage={postMessage} allCoversations={allCoversations} />
       </Grid>
     </Grid>

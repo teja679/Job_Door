@@ -14,22 +14,25 @@ export const JobSeekersList = [
   },
 ];
 export const EmployersList = [
-  "Create Account",
-  "Edit Profile",
-  "Post a Job",
-  "Applications",
+  {
+    title: "Create Account",
+    link: '/employer/auth',
+  },{
+    title: "Edit Profile",
+    link: '/employer/profile',
+  },{
+    title:"Post a Job",
+    link: '/employer/jobs',
+  },{
+    title: "Applications",
+    link: '/employer/applicants',
+  },
 ];
 
-export const QuickLinksList = [
-  "Pricing Plans",
-  "Create Account",
-  "Post a Job",
-  "Contact Us",
-];
 
 export const section2_info = [
   {
-    img: "https:/candidate/auth/www.waytojob.in/assets/img/o11.png",
+    img: "https://png.pngtree.com/template/20191014/ourmid/pngtree-colorful-diagram-business-and-accounting-logo-image_318295.jpg",
     text: "Accounting",
   },
   {

@@ -19,7 +19,7 @@ import { UserContext } from "../../../context/UserContext";
 function JobForm({ selectAjob, jobData, setJobData}) {
   const [state, dispatch] = useContext(UserContext)
   const userInfo = state.user
-  
+  console.log(userInfo)
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -147,7 +147,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
           <Grid item xs={12} sm={12} md={6}>
             <Typography variant="h6">Company Name</Typography>
             <TextField
-              required
+              required 
               variant="outlined"
               fullWidth
               value={jobData.company}

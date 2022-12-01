@@ -26,6 +26,7 @@ function EmployerJobs() {
         title: "",
         location: "",
         salary: "",
+        company: '',
         experience: "",
         jobType: "",
         desc: "",

@@ -23,7 +23,7 @@ function EmployerConversation() {
   const [allCoversations, setAllCoversations] = useState(null);
   const [state, dispatch] = useContext(UserContext)
   const userInfo = state.user
-
+  
    const selectAConversation = (data) => {
     setSelectConversation(data);
     try {
@@ -100,25 +100,27 @@ function EmployerConversation() {
   return allLastMessages && allLastMessages.length > 0 ? (
     <Grid container>
       <Grid
-        sm={4}
+        sm={6}
+        md={4}
         xs={12}
         sx={{
           display: { xs: lastMessageMobile ? "block" : "none", sm: "block" },
         }}
       >
-        <LastMessage
+        <LastMessage type='employer'
           allLastMessages={allLastMessages}
           selectAConversation={selectAConversation}
         />
       </Grid>
       <Grid
-        sm={8}
+        sm={6}
+        dm={8}
         xs={12}
         sx={{
           display: { xs: lastMessageMobile ? "none" : "block", sm: "block" },
         }}
       >
-        <Button onClick={() => setLastMessageMobile(true)}>Back</Button>
+        <Button sx={{ display: { xs: 'block', sm: 'none'}}} onClick={() => setLastMessageMobile(true)}>Back</Button>
         <MessageArea postMessage={postMessage} allCoversations={allCoversations} />
       </Grid>
     </Grid>

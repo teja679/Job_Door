@@ -12,7 +12,6 @@ import { Box } from "@mui/system";
 function Sidebar({ selectAjob }) {
   const [state, dispatch] = useContext(UserContext);
   const userInfo = state.user;
-  console.log(userInfo.uid);
   const employerId = userInfo.uid;
 
   const [allJobs, setAllJobs] = useState(null);
@@ -21,7 +20,7 @@ function Sidebar({ selectAjob }) {
       collection(
         db,
         "jobsData"
-        //  where('employerId' == userInfo.uid)
+        //  where('employerId' == employerId)
       )
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -29,8 +28,8 @@ function Sidebar({ selectAjob }) {
       querySnapshot.forEach((doc) => {
         jobs.push(doc.data());
       });
-      setAllJobs(jobs);
-      console.log("Current jobs: ", jobs);
+      const filterdJobs = jobs.filter((job) => job.employerId == employerId);
+      setAllJobs(filterdJobs);
     });
   };
   useEffect(() => {
@@ -38,7 +37,7 @@ function Sidebar({ selectAjob }) {
   }, []);
 
   return (
-    <div className="sidebar" style={{overflow: 'scroll', height: '90vh'}}>
+    <div className="sidebar" style={{ overflow: "scroll", height: "90vh" }}>
       <Button onClick={() => selectAjob(false)}>
         <AddIcon /> post a job
       </Button>
@@ -53,7 +52,7 @@ function Sidebar({ selectAjob }) {
             onClick={() => selectAjob(job)}
             key={job.job_id}
             sx={{
-              maxWidth: '350px',
+              maxWidth: "350px",
               padding: "1rem",
               margin: "20px 0",
               textAlign: "left",
@@ -83,10 +82,12 @@ function Sidebar({ selectAjob }) {
                 gap: "1rem",
                 width: "100%",
                 margin: "0.5rem 0",
+                overflow: "hidden",
+                flexWrap: 'nowrap'
               }}
             >
-              <Grid item xs={12} sx={{ display: "flex", color: "navy" }}>
-                <RoomRoundedIcon /> {job.location}
+              <Grid item xs={12} sx={{ display: "flex", alignItems: 'center', color: "navy" }}>
+                <RoomRoundedIcon sx={{ fontSize: '1.3rem'}} /> {job.location}
               </Grid>
               <Grid item xs={12} sx={{ display: "flex", color: "orange" }}>
                 <CurrencyRupeeRoundedIcon /> {job.salary}

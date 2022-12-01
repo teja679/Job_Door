@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
+
+import RoomRoundedIcon from "@mui/icons-material/RoomRounded";
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
 import {
   collection,
   query,
@@ -8,16 +13,17 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import RoomIcon from "@mui/icons-material/Room";
 import { db } from "../../../firebaseConfig";
-import { Button, Grid, Input } from "@mui/material";
+import { Box, Button, Chip, Grid, Input, Typography } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+import { UserContext } from "../../context/UserContext";
 
 function CandidateJobs() {
   const [loading, setLoading] = useState(true);
-  const userInfo = JSON.parse(localStorage.getItem("users"));
-
+  const [state, dispatch] = useContext(UserContext);
+  const userInfo = state.user;
+  const [applied, setApplied] = useState(false)
   const [allJobs, setAllJobs] = useState(null);
 
   const fetchJobs = async () => {
@@ -29,6 +35,7 @@ function CandidateJobs() {
           jobs.push(doc.data());
         });
         setAllJobs(jobs);
+        console.log(jobs)
         setLoading(false);
       });
     } catch (err) {
@@ -40,6 +47,7 @@ function CandidateJobs() {
   }, []);
 
   const applyForJob = async (job) => {
+    console.log('job',job)
     const applicationId = uuidv4();
 
     const q = await query(
@@ -68,7 +76,11 @@ function CandidateJobs() {
           location: job.location,
           createdAt: new Date(),
           candidateId: userInfo.uid,
+          company: job.company,
+          salary: job.salary,
+          experience: job.experience,
           status: "applied",
+          skills: job.skills,
           candidate_name: userInfo.displayName,
           // company_name: job.company,
         });
@@ -86,51 +98,81 @@ function CandidateJobs() {
       <h1>Jobs</h1>
       <Grid
         container
-        sx={{ display: "flex", justifyContent: "center", marginBottom: '4rem' }}
+        sx={{ display: "flex", justifyContent: "center",alignItems: 'center', marginBottom: "4rem" }}
         className="sidebar"
       >
         {allJobs && allJobs.length > 0 ? (
           allJobs.map((job) => (
             <Grid
-              md={4}
-              container
-              key={job.applicationId}
               sx={{
-                maxWidth: "400px",
-                width: "90%",
+                width: "350px",
+                minWidth: "350px",
+                maxWidth: "350px",
+                maxHeight: "350px",
                 padding: "1rem",
-                margin: "1rem",
-                display: "flex",
+                margin: "20px",
                 textAlign: "left",
-                fontSize: "16px",
-                justifyContent: "center",
+                borderRadius: "10px",
                 border: "1px solid lightgray",
-                borderRadius: "0.7rem",
+                fontSize: "16px",
               }}
             >
-              <Grid sx={{ fontWeight: "600", textAlign: "left" }} item xs={12}>
+              <Grid sx={{ fontWeight: "600", fontSize: "1.5rem" }} item xs={12}>
+                {job.company}
+              </Grid>
+              <Grid sx={{ fontWeight: "400" }} item xs={12}>
+                <Typography
+                  sx={{
+                    fontSize: "0.8rem",
+                    margin: "0.5rem 0",
+                    color: "lightgray",
+                  }}
+                >
+                  OPEN POSITIONS:
+                </Typography>{" "}
                 {job.title}
               </Grid>
-                <Grid item xs={6} sx={{ fontSize: "15px", color: 'primary.main' }}>
-                  <RoomIcon />
-                  {job.location}
+              <Grid
+                sx={{
+                  display: "flex",
+                  gap: "1rem",
+                  width: "100%",
+                  margin: "0.5rem 0",
+                }}
+              >
+                <Grid item xs={12} sx={{ display: "flex", color: "navy" }}>
+                  <RoomRoundedIcon /> {job.location}
                 </Grid>
-                <Grid item xs={6}  sx={{ fontSize: "15px", color: 'primary.main' }}>
-                  <CurrencyRupeeIcon />
-                  {job.salary}
+                <Grid item xs={12} sx={{ display: "flex", color: "orange" }}>
+                  <CurrencyRupeeRoundedIcon /> {job.salary}
                 </Grid>
-              <Grid item xs={12}>
-                {job.experience}
+                <Grid item xs={12}>
+                  {job.experience}
+                </Grid>
               </Grid>
               <Grid item xs={12}>
                 {job.jobType}
               </Grid>
-              <Grid item xs={12}>
-                {job.domain}
+              <Grid sx={{ color: "lightgray", fontSize: "0.8rem" }}>
+                <Typography sx={{ fontSize: "0.8rem", margin: "0.5rem 0" }}>
+                  SKILLS REQUIRED
+                </Typography>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {job.skills.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
               </Grid>
-              <Button variant="contained" onClick={() => applyForJob(job)}>
-                Apply
-              </Button>
+              <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
+                <Button
+                  sx={{ margin: "10px 0", display: "block" }}
+                  
+                  variant="outlined"
+                  onClick={() => applyForJob(job)}
+                >
+                 Apply
+                </Button>
+              </Grid>
             </Grid>
           ))
         ) : allJobs && allJobs.length === 0 ? (

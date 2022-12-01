@@ -99,6 +99,7 @@ function CandidateOnboarding() {
             height: "90%",
             margin: "20px auto",
             display: "flex",
+            // textAlign: 'left',
             justifyContent: "center",
             borderRadius: "8px",
             marginBottom: "4rem",
@@ -212,7 +213,7 @@ function CandidateOnboarding() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={12} sx={{textAlign: 'center'}}>
             <Button variant="contained" type="submit">
               Submit
             </Button>
