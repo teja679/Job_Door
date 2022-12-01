@@ -96,9 +96,6 @@ function EmployerOnboarding() {
             maxWidth: "95%",
             height: '90%',
             margin: "20px auto",
-            boxShadow: "0px 8px 24px #789",
-            background: "#fff",
-            borderRadius: "8px",
           }}
         >
           <Grid item={true} xs={12} sm={6} sx={{padding: '10px'}}>

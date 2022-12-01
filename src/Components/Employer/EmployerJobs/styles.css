@@ -1,4 +1,4 @@
-
+ 
 .jobs {
     margin: 0;
     padding: 0;
@@ -6,11 +6,8 @@
     color: rgb(31, 93, 117);
 }   
 .job-form {
-    /* border-left: 1px solid black; */
-    /* background: rgba(0,228,255,0.969625350140056); */
-    /* border: 1px solid rgb(31, 93, 117); */
-    /* height: 90vh; */
     max-height: 100%;
+    margin-bottom: 4rem;
 }
 .sidebar {
     width: 95%;
@@ -18,21 +15,27 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    /* margin: 0 1rem; */
     border-radius: 1rem;
     padding: 0 1rem;
-    /* height: 100vh; */
-    /* overflow-x: auto;*/
-    overflow-y: auto; 
-    /* box-shadow: 0px 8px 24px #789; */
 }
+.sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  .sidebar::-webkit-scrollbar {
+    display: none;
+  }
 .sidebar > button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin: 1rem;
-    color: rgb(31, 93, 117);
+    font-size: 1rem;
+    color: rgb(13, 61, 87);
     border: 1px solid  rgb(13, 61, 87);
-    border-radius: 2.5rem;
+    border-radius: 0.5rem;
     padding: 10px 15px;
 }
+/*
 .sidebar > .serachbar {
     margin: 1rem;
     display: flex;
@@ -42,4 +45,4 @@
     padding: 5px 10px;
     border: 1px solid gray;
     width: 90%;
-}
+} */

@@ -110,14 +110,16 @@ function EmployerProfile() {
           sx={{
             padding: "1rem",
             maxWidth: "95%",
+            display: 'flex',
+            justifyContent: 'center',
             height: '90%',
             margin: "20px auto",
-            boxShadow: "0px 8px 24px #789",
-            background: "#fff",
+            textAlign: 'left',
+            // border: '1px solid gray',
             borderRadius: "8px",
           }}
         >
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Name</Typography>
             <TextField
               required 
@@ -130,7 +132,7 @@ function EmployerProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Email</Typography>
             <TextField disabled
               required
@@ -142,7 +144,7 @@ function EmployerProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Company Name</Typography>
             <TextField 
             disabled={!edit}
@@ -154,7 +156,7 @@ function EmployerProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Company Size</Typography>
             <TextField
               disabled={!edit}
@@ -166,7 +168,7 @@ function EmployerProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Phone</Typography>
             <TextField  
             disabled={!edit}
@@ -178,7 +180,7 @@ function EmployerProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">HR Email</Typography>
             <TextField
               disabled={!edit}
@@ -190,7 +192,7 @@ function EmployerProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Address</Typography>
             <TextField
             disabled={!edit}
@@ -203,7 +205,7 @@ function EmployerProfile() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{padding: '10px'}}>
+          <Grid item xs={12} sm={9} md={6} sx={{padding: '10px'}}>
             <Typography variant="h6">Industry</Typography>
             <Select
             disabled={!edit}
@@ -223,7 +225,7 @@ function EmployerProfile() {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{display: 'flex', gap: '1.5rem',marginBottom: '4rem', justifyContent: 'center'}}>
             {!edit ? (
               <Button variant="contained" onClick={()=>setEdit(true)}>Edit</Button>
             ) : (

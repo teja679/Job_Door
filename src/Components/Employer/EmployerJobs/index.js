@@ -12,6 +12,7 @@ function EmployerJobs() {
     location: "",
     salary: "",
     experience: "",
+    company: '',
     jobType: "",
     desc: "",
     domain: "",
@@ -38,13 +39,14 @@ function EmployerJobs() {
     }
   };
   return (
-    <div className="jobs">
+    <div className="jobs"  style={{ height: '80vh'}}>
       <Grid container sx={{
         color: 'rgb(31, 93, 117)',
       }}>
          <Grid
           xs={12}
-          sm={3}
+          md={3}
+          sm={6}
           sx={{
             display: { xs: mobileSidebar ? "block" : "none", sm: "block" },
           }}
@@ -53,7 +55,8 @@ function EmployerJobs() {
         </Grid>
         <Grid
           xs={12}
-          sm={9}
+          md={9}
+          sm={6}
           sx={{
             display: { xs: mobileSidebar ? "none" : "block", sm: "block" },
           }}

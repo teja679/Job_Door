@@ -78,10 +78,10 @@ function EmployerHoc({ children }) {
     navigate("/");
   };
   return (
-    <>
-      <Box sx={{ display: { xs: "none", md: "block" } }}>
+    <div style={{height: '100vh'}}>
+      <Box sx={{ display: { xs: "none", md: "block", height: '10vh' } }}>
         <AppBar
-          position="sticky"
+          position="fixed"
           sx={{
             color: state.darkMode ? "#fff" : "gray",
             bgcolor: state.darkMode ? "#252525" : "#fff",
@@ -193,7 +193,7 @@ function EmployerHoc({ children }) {
                     key={page.key}
                     onClick={() => reRoute(page.key)}
                     sx={{
-                      // color: state.darkMode ? "#fff" : "gray",
+                      color: state.darkMode ? "#fff" : "gray",
                       // bgcolor: state.darkMode ? "#252525" : "#fff",
                       my: 2,
                       display: "block",
@@ -257,7 +257,7 @@ function EmployerHoc({ children }) {
         </BottomNavigation>
       </Box>
       {children}
-    </>
+    </div>
   );
 }
 

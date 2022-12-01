@@ -87,7 +87,9 @@ function JobForm({ selectAjob, jobData, setJobData}) {
     "C++",
   ];
   return (
-    <>
+    <div
+    // sx={{ display: "flex", color: "orange" }}
+    >
       <h1>Job Form</h1>
       <form onSubmit={submitJob} className="job-form">
         <Grid
@@ -98,8 +100,8 @@ function JobForm({ selectAjob, jobData, setJobData}) {
             margin: "auto",
           }}
         >
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h6">Title</Typography>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="h6">Job Title</Typography>
             <TextField
               required
               variant="outlined"
@@ -108,7 +110,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               onChange={(e) => setJobData({ ...jobData, title: e.target.value })}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography variant="h6">Location</Typography>
             <TextField
               required
@@ -120,7 +122,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography variant="h6">Salary</Typography>
             <TextField
               variant="outlined"
@@ -131,7 +133,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography variant="h6">Experience</Typography>
             <TextField
               variant="outlined"
@@ -142,7 +144,19 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant="h6">Company Name</Typography>
+            <TextField
+              required
+              variant="outlined"
+              fullWidth
+              value={jobData.company}
+              onChange={(e) =>
+                setJobData({ ...jobData, company: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography variant="h6">Job Type</Typography>
             <TextField
               required
@@ -165,7 +179,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               onChange={(e) => setJobData({ ...jobData, desc: e.target.value })}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography variant="h6">Domain</Typography>
             <Select
               fullWidth
@@ -184,7 +198,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography variant="h6">Skills</Typography>
             <Select
               required
@@ -219,7 +233,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
           </Grid>
         </Grid>
       </form>
-    </>
+    </div>
   );
 }
 
