@@ -30,15 +30,19 @@ function MessageArea({ postMessage, allCoversations }) {
                   }}
                   key={item.conversationId}
                 >
-                  <div
+                  <Typography
                     style={{
+
+                      width: '80%',
                       background: "#e6ffe6",
                       padding: "8px 16px",
+                      display: 'flex',
                       borderRadius: "5px",
+                      flexWrap: 'wrap',
                     }}
                   >
                     {item.message}
-                  </div>
+                  </Typography>
                   {/* <div>{item.time}</div> */}
                 </div>
               );
@@ -63,14 +67,14 @@ function MessageArea({ postMessage, allCoversations }) {
                 bottom: { xs: "3.5rem", sm: "3.5rem", md: 0 },
               }}
             >
-              <Grid item md={10} sm={6}>
+              <Grid item md={10} sm={10} xs={10} sx={{bgcolor:'#fff'}}>
                 <TextField
-                  fullWidth
+                  fullWidth 
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 />
               </Grid>
-              <Grid item md={2} sm={2} sx={{zIndex: '100'}}>
+              <Grid item md={2} sm={2} xs={2} sx={{zIndex: '100'}}>
                 <Button
                   fullWidth
                   sx={{ p: 2 }}

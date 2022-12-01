@@ -64,8 +64,7 @@ function CandidateProfile() {
   const [pdfUrl, setPdfUrl] = useState("");
   const [progresspercent, setProgresspercent] = useState(0);
 
-  const submitFile = (e) => {
-    e.preventDefault();
+  const submitFile = (e) => { 
     console.log(e.target[0].files[0]);
     const file = e.target[0]?.files[0];
 
@@ -87,7 +86,8 @@ function CandidateProfile() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setPdfUrl(downloadURL);
-          console.log(downloadURL, "url");
+          setUserInfo({ ...userInfo, pdfUrl: downloadURL})
+          console.log(userInfo, "userInfo");
         });
       }
     );
@@ -98,7 +98,7 @@ function CandidateProfile() {
       await setDoc(
         doc(db, "userData", `${userData.uid}`),
         {
-          ...userInfo,
+          ...userInfo, pdfUrl : pdfUrl
         },
         { merge: true }
       );
@@ -283,7 +283,7 @@ function CandidateProfile() {
           <Grid item xs={12} sm={9} md={6}>
             <Typography variant="h6">Upload Resume</Typography>
             <Grid item sx={{ display: "flex" }}>
-              <TextField type="file" variant="outlined" />
+              <TextField value={pdfUrl} type="file" variant="outlined" />
               <Button variant="outlined" onChange={submitFile}>Upload</Button>
             </Grid>
           </Grid>
