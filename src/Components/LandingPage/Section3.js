@@ -20,7 +20,7 @@ function Section3() {
         sx={{
           display: "flex",
           padding: "2rem",
-          justifyContent: "space-between",
+          justifyContent: 'center',
           textAlign: "left",
         }}
       >
@@ -34,6 +34,7 @@ function Section3() {
             sx={{
               margin: "1.5rem",
               padding: "1rem",
+              width: '300px',
               border: "1px solid lightgray",
               borderRadius: "1rem",
               display: "flex",
@@ -43,14 +44,22 @@ function Section3() {
               gap: "1rem",
             }}
           >
-            <div style={{display: "flex", alignItems: "center", justifyContent: 'flex-start' }}>
-              <img src={item.img} width="60" alt="logo" />
-              <div style={{margin: 0}}>
-                <h2>{item.company}</h2>
-                <p>{item.jobType}</p>
-              </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                padding: '1rem',
+                justifyContent: "flex-start",
+              }}
+            >
+              <img src={item.img} width="160" alt="logo" />
+              <Typography variant="p">{item.jobType}</Typography>
+              <div style={{ margin: 0 }}>{/* <h2>{item.company}</h2> */}</div>
             </div>
-            <Grid sm={12}>{item.title}</Grid>
+            <Typography typography="h6" sm={12}>
+              {item.title}
+            </Typography>
           </Grid>
         ))}
       </Grid>

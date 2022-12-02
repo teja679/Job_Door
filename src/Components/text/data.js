@@ -39,25 +39,70 @@ export const EmployersList = [
     link: "/employer/applicants",
   },
   {
-    title: "Conversations",
-    link: "/candidate/conversations",
+    title: "Employer conversations",
+    link: "/employer/conversations",
   },
 ];
-
+export const quickList = [
+  {
+    title: "Candidate Profile",
+    link: "/candidate/profile",
+  },
+  {
+    title: "Apply for Job",
+    link: "/candidate/jobs",
+  },
+  {
+    title: "Applied Jobs",
+    link: "/candidate/applications",
+  },
+  {
+    title: "Candidate Chat",
+    link: "/candidate/conversation",
+  },
+  {
+    title: "Login",
+    link: "/employer/auth",
+  },
+  {
+    title: "Employer Profile",
+    link: "/employer/profile",
+  },
+  {
+    title: "Post a Job",
+    link: "/employer/jobs",
+  },
+  {
+    title: "Applications",
+    link: "/employer/applicants",
+  },
+  {
+    title: "Employer Chat",
+    link: "/employer/conversation",
+  },
+]
 export const pages = [
   {
+    id: 0,
+    label: "Home",
+    path: "/",
+    bgc: "#f99d1c",
+    c: "#fff",
+  },
+ 
+  {
+    id: 1,
     label: "Find Jobs",
     path: "/candidate/auth",
     bgc: "#f99d1c",
     c: "#fff",
-    list: JobSeekersList,
   },
-  {
+   {
+    id: 2,
     label: "Find Candidates",
     path: "/employer/auth",
     bgc: "#5ba3d9",
     c: "#fff",
-    list: EmployersList,
   },
 ];
 
@@ -90,7 +135,7 @@ export const section2_info = [
 export const section3_info = [
   {
     company: "Microsoft",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+    img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/microsoft.png",
     jobType: "Freelance",
     title: "Senior UI Designer",
     workType: "Fulltime",
@@ -98,13 +143,13 @@ export const section3_info = [
     salary: "2500",
   },
   {
-    company: "Microsoft",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
-    jobType: "Freelance",
-    title: "Senior UI Designer",
+    company: "Adobe",
+    img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/adobe-1.png",
+    jobType: "Remote",
+    title: "Backend Engineer",
     workType: "Fulltime",
     desc: " gewegteg",
-    salary: "2500",
+    salary: "3000",
   },
   {
     company: "Microsoft",

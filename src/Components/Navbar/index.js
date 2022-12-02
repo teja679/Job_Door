@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../context/DarkMode";
 import { Switch } from "@mui/material";
 import { pages } from "../text/data";
+import BasicMenu from "../muiComponents/BasicMenu";
 
 function NavbarComp() {
   const navigate = useNavigate();
@@ -180,8 +181,7 @@ function NavbarComp() {
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
-                  // onClick={() => navigateToPage(page.path)}
-                  onClick={openMenu}
+                  onClick={() => navigateToPage(page.path)}
                   sx={{
                     my: 2,
                     borderRadius: "0",
@@ -198,29 +198,13 @@ function NavbarComp() {
                 >
                   {page.label}
                 </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={CloseMenu}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  {page.list.map((item) => (
-                    <MenuItem
-                      onClick={() => navigateToPage(item.link)}
-                      key={item.link}
-                    >
-                      {item.title}
-                    </MenuItem>
-                  ))}
-                </Menu>
+             
               </div>
             ))}
           </Box>
 
-          {/* <Box sx={{ flexGrow: 0 }}>
+            <BasicMenu />
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <Switch
                 value={state.darkMode}
@@ -235,7 +219,7 @@ function NavbarComp() {
                 }}
               />
             </Tooltip>
-          </Box> */}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
