@@ -30,6 +30,7 @@ function CandidateProfile() {
     experience: "",
     education: "",
     domain: "",
+    resume: "",
     skills: [],
   });
   const ITEM_HEIGHT = 48;
@@ -42,7 +43,7 @@ function CandidateProfile() {
       },
     },
   };
-  async function fetchUserInfo() {
+  const fetchUserInfo = useCallback(async () => {
     try {
       const docRef = doc(db, "userData", userData.uid);
 
@@ -56,49 +57,22 @@ function CandidateProfile() {
     } catch (err) {
       console.error(err);
     }
-  }
+  }, []);
   useEffect(() => {
     fetchUserInfo();
   }, []);
 
   const [pdfUrl, setPdfUrl] = useState("");
   const [progresspercent, setProgresspercent] = useState(0);
+  console.log(progresspercent);
 
-  const submitFile = (e) => { 
-    console.log(e.target[0].files[0]);
-    const file = e.target[0]?.files[0];
-
-    if (!file) return;
-
-    const storageRef = ref(storage, `files/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgresspercent(progress);
-      },
-      (error) => {
-        alert(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setPdfUrl(downloadURL);
-          setUserInfo({ ...userInfo, pdfUrl: downloadURL})
-          console.log(userInfo, "userInfo");
-        });
-      }
-    );
-  };
-
-  const saveInfo = async (e) => {
+  const saveInfo = async () => {
+    console.log(userInfo, "userInfo");
     try {
       await setDoc(
-        doc(db, "userData", `${userData.uid}`),
+        doc(db, "userData", userData.uid),
         {
-          ...userInfo, pdfUrl : pdfUrl
+          ...userInfo,
         },
         { merge: true }
       );
@@ -107,8 +81,41 @@ function CandidateProfile() {
     } catch (e) {
       console.error("Error adding document", e);
     }
-    console.log("submit", userInfo);
   };
+  const submitFile = (e) => {
+    e.preventDefault();
+    console.log(e.target[0].files[0]);
+    const file = e.target[0]?.files[0];
+
+    if (!file) return;
+
+    const storageRef = ref(storage, `resume/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgresspercent(progress);
+        console.log(progresspercent);
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setPdfUrl(downloadURL);
+          console.log(downloadURL, "url");
+          setUserInfo({ ...userInfo, resume: downloadURL });
+        });
+        console.log(userInfo, "userInfo");
+        setProgresspercent(0);
+        console.log(progresspercent);
+      }
+    );
+  };
+
   const handleSkillChange = useCallback(
     (event) => {
       const {
@@ -146,174 +153,181 @@ function CandidateProfile() {
   ) : (
     <>
       <h1>Profile</h1>
-      <form>
-        <Grid
-          container
-          spacing={2}
-          sx={{
-            padding: "1rem",
-            maxWidth: "95%",
-            height: "90%",
-            margin: "20px auto",
-            display: 'flex',
-            justifyContent: 'center',
-            borderRadius: "8px",
-            textAlign: "left",
-            marginBottom: "4rem",
-          }}
-        >
-          <Grid item xs={12} sm={9} md={6}>
-            <Typography item md={6} variant="h6">
-              Name
-            </Typography>
-            <TextField
-              item
-              md={6}
-              disabled={!edit}
-              required
-              variant="outlined"
-              fullWidth
-              value={userInfo.name}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, name: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={9} md={6}>
-            <Typography variant="h6">Email</Typography>
-            <TextField
-              disabled
-              required
-              variant="outlined"
-              fullWidth
-              value={userInfo.email}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, email: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={9} md={6}>
-            <Typography variant="h6">Phone</Typography>
-            <TextField
-              disabled={!edit}
-              variant="outlined"
-              fullWidth
-              value={userInfo.phone}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, phone: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={9} md={6}>
-            <Typography variant="h6">Experience</Typography>
-            <TextField
-              disabled={!edit}
-              variant="outlined"
-              fullWidth
-              value={userInfo.experience}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, experience: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={9} md={6}>
-            <Typography variant="h6">Education</Typography>
-            <TextField
-              disabled={!edit}
-              required
-              variant="outlined"
-              fullWidth
-              value={userInfo.education}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, education: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={9} md={6}>
-            <Typography variant="h6">Domain</Typography>
-            <Select
-              fullWidth
-              disabled={!edit}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={userInfo.domain}
-              label="Age"
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, domain: e.target.value })
-              }
-            >
-              {domainItems.map((domain, index) => (
-                <MenuItem key={index} value={domain}>
-                  {domain}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
-          <Grid item xs={12} sm={9} md={6}>
-            <Typography variant="h6">Skills</Typography>
-            <Select
-              required
-              disabled={!edit}
-              fullWidth
-              id="demo-multiple-chip"
-              multiple
-              value={userInfo.skills}
-              onChange={handleSkillChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-              MenuProps={MenuProps}
-            >
-              {skillSet.map((skill) => (
-                <MenuItem
-                  key={skill}
-                  value={skill}
-                  // style={getStyles(skill, userInfo.skills, theme)}
-                >
-                  {skill}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
-          <Grid item xs={12} sm={9} md={6}>
-            <Typography variant="h6">Upload Resume</Typography>
-            <Grid item sx={{ display: "flex" }}>
-              <TextField value={pdfUrl} type="file" variant="outlined" />
-              <Button variant="outlined" onChange={submitFile}>Upload</Button>
-            </Grid>
-          </Grid>
-          {/* <Grid xs={6} style={{display: 'flex', justifyContent: 'space-between'}}>
-              <TextField type="file" />
-              <Button onChange={submitFile}>Upload</Button>
-            </Grid> */}
 
-          <Grid
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          padding: "1rem",
+          maxWidth: "95%",
+          height: "90%",
+          margin: "20px auto",
+          display: "flex",
+          justifyContent: "center",
+          borderRadius: "8px",
+          textAlign: "left",
+          marginBottom: "4rem",
+        }}
+      >
+        <Grid item xs={12} sm={9} md={6}>
+          <Typography item md={6} variant="h6">
+            Name
+          </Typography>
+          <TextField
             item
-            xs={12}
-            sx={{ display: "flex", justifyContent: "center", gap: "2rem" }}
+            md={6}
+            disabled={!edit}
+            required
+            variant="outlined"
+            fullWidth
+            value={userInfo.name}
+            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+          />
+        </Grid>
+        <Grid item xs={12} sm={9} md={6}>
+          <Typography variant="h6">Email</Typography>
+          <TextField
+            disabled
+            required
+            variant="outlined"
+            fullWidth
+            value={userInfo.email}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, email: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={9} md={6}>
+          <Typography variant="h6">Phone</Typography>
+          <TextField
+            disabled={!edit}
+            variant="outlined"
+            fullWidth
+            value={userInfo.phone}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, phone: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={9} md={6}>
+          <Typography variant="h6">Experience</Typography>
+          <TextField
+            disabled={!edit}
+            variant="outlined"
+            fullWidth
+            value={userInfo.experience}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, experience: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={9} md={6}>
+          <Typography variant="h6">Education</Typography>
+          <TextField
+            disabled={!edit}
+            required
+            variant="outlined"
+            fullWidth
+            value={userInfo.education}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, education: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={9} md={6}>
+          <Typography variant="h6">Domain</Typography>
+          <Select
+            fullWidth
+            disabled={!edit}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={userInfo.domain}
+            label="Age"
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, domain: e.target.value })
+            }
           >
-            {!edit ? (
-              <Button variant="contained" onClick={() => setEdit(true)}>
-                Edit
+            {domainItems.map((domain, index) => (
+              <MenuItem key={index} value={domain}>
+                {domain}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} sm={9} md={6}>
+          <Typography variant="h6">Skills</Typography>
+          <Select
+            required
+            disabled={!edit}
+            fullWidth
+            id="demo-multiple-chip"
+            multiple
+            value={userInfo.skills}
+            onChange={handleSkillChange}
+            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {skillSet.map((skill) => (
+              <MenuItem
+                key={skill}
+                value={skill}
+                // style={getStyles(skill, userInfo.skills, theme)}
+              >
+                {skill}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} sm={9} md={6}>
+          <Typography variant="h6">Upload Resume</Typography>
+          <Grid item sx={{ display: "flex" }}>
+            {edit ? (
+              <form onSubmit={submitFile}>
+                <input accept="application/pdf" type="file" />
+                {progresspercent > 0 && progresspercent <= 100 ? (
+                  <div>{progresspercent}</div>
+                ) : (
+                  <Button type="submit">Upload</Button>
+                )}
+              </form>
+            ) : userInfo.resume ? (
+              <Button onClick={() => window.open(userInfo.resume, "_blank")}>
+                View Resume
               </Button>
             ) : (
-              <>
-                <Button variant="contained" onClick={saveInfo}>
-                  Save
-                </Button>
-                <Button variant="contained" onClick={() => setEdit(false)}>
-                  Cancel
-                </Button>
-              </>
+              <Button>Upload Resume</Button>
             )}
           </Grid>
         </Grid>
-      </form>
+
+        <Grid
+          item
+          xs={12}
+          sx={{ display: "flex", justifyContent: "center", gap: "2rem" }}
+        >
+          {!edit ? (
+            <Button variant="contained" onClick={() => setEdit(true)}>
+              Edit
+            </Button>
+          ) : (
+            <>
+              <Button variant="contained" onClick={saveInfo}>
+                Save
+              </Button>
+              <Button variant="contained" onClick={() => setEdit(false)}>
+                Cancel
+              </Button>
+            </>
+          )}
+        </Grid>
+      </Grid>
     </>
   );
 }

@@ -29,6 +29,7 @@ function Section2() {
             flexGrow={1}
             sx={{
               margin: '1.5rem',
+              minWidth: '250px',
               padding: '1.5rem',
               border: '1px solid lightgray',
               borderRadius: '1rem',
