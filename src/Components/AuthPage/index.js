@@ -33,7 +33,7 @@ function AuthPage({ type }) {
         console.log(user);
         // localStorage.setItem("users", JSON.stringify(user));
         dispatch({ type: "SET_USER", payload: user });
-        // console.log('user', user)
+  
         const docRef = doc(db, "userData", user.uid);
 
         const docSnap = await getDoc(docRef);
@@ -48,7 +48,7 @@ function AuthPage({ type }) {
           const userType = userInfo.type;
           // localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch({ type: "SET_USER_INFO", payload: userInfo });
-          // console.log('userInfo', userInfo)
+      
           if (type === "candidate") {
             if (userType === type) {
               navigate("/candidate/profile");
@@ -66,7 +66,6 @@ function AuthPage({ type }) {
               // return;
             }
           }
-          console.log("document data", docSnap.data());
         } else {
           if (type === "candidate") {
             navigate("/candidate/onboarding");
@@ -74,21 +73,6 @@ function AuthPage({ type }) {
             navigate("/employer/onboarding");
           }
         }
-        // }
-        // if (type === "candidate") {
-        //   if (!true) {
-        //     navigate("/candidate/profile");
-        //   } else {
-        //     navigate("/candidate/onboarding");
-        //   }
-        // } else {
-        //   if (!true) {
-        //     navigate("/employer/profile");
-        //   } else {
-        //     navigate("/employer/onboarding");
-        //   }
-        // }
-        // console.log(user);
       })
       .catch((error) => {
         console.log(error);

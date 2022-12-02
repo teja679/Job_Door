@@ -1,6 +1,6 @@
 export const JobSeekersList = [
   {
-    title: "Create Account",
+    title: "Login",
     link: "/candidate/auth",
   },
   {
@@ -15,29 +15,15 @@ export const JobSeekersList = [
     title: "Applied Jobs",
     link: "/candidate/applications",
   },
-];
-export const skillSet = [
-  "Java",
-  "JavaScript",
-  "React",
-  "HTML",
-  "Angular",
-  "CSS",
-  "Bootstrap",
-];
-export const domainItems = [
-  "Frontend",
-  "Backend",
-  "Full Stack",
-  "React",
-  "JavsScript",
-  "Java",
-  "C++",
+  {
+    title: "Conversations",
+    link: "/candidate/conversations",
+  },
 ];
 
 export const EmployersList = [
   {
-    title: "Create Account",
+    title: "Login",
     link: "/employer/auth",
   },
   {
@@ -51,6 +37,10 @@ export const EmployersList = [
   {
     title: "Applications",
     link: "/employer/applicants",
+  },
+  {
+    title: "Conversations",
+    link: "/candidate/conversations",
   },
 ];
 
@@ -170,4 +160,22 @@ export const section3_info = [
     desc: " gewegteg",
     salary: "2500",
   },
+];
+export const skillSet = [
+  "Java",
+  "JavaScript",
+  "React",
+  "HTML",
+  "Angular",
+  "CSS",
+  "Bootstrap",
+];
+export const domainItems = [
+  "Frontend",
+  "Backend",
+  "Full Stack",
+  "React",
+  "JavsScript",
+  "Java",
+  "C++",
 ];

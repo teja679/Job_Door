@@ -68,7 +68,7 @@ function EmployerHoc({ children }) {
     setAnchorElUser(null);
   };
   const reRoute = (page) => {
-    console.log(page);
+    
     handleCloseNavMenu();
     navigate(`../employer/${page}`);
   };

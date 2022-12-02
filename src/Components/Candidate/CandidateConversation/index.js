@@ -43,7 +43,7 @@ function CandidateConversation() {
         
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
     setLastMessageMobile(false);
   };
@@ -62,7 +62,7 @@ function CandidateConversation() {
         setAllLastMessages(data);
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
   useEffect(() => {

@@ -7,26 +7,13 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import EngineeringIcon from "@mui/icons-material/Engineering";
-import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../context/DarkMode";
 import { Switch } from "@mui/material";
-const pages = [
-  { label: "Home", path: "/", bgc: '#999', c: '#fff'},
-  { label: "Find Jobs", path: "/candidate/auth",bgc: '#f99d1c', c: '#fff' },
-  { label: "Find Candidates", path: "/employer/auth",bgc: '#5ba3d9', c: '#fff' },
-  // { label: 'Articles', path: '/articles'},
-];
-const pages2 = [
-  { label: "Log In", path: "/loginIn" },
-  { label: "Sign Up", path: "/signUp" },
-];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { pages } from "../text/data";
 
 function NavbarComp() {
   const navigate = useNavigate();
@@ -35,7 +22,7 @@ function NavbarComp() {
   const [state, dispatch] = React.useContext(DarkModeContext);
 
   const navigateToPage = (path) => {
-    
+    console.log(path)
     navigate(path);
   };
   const handleOpenNavMenu = (event) => {
@@ -44,7 +31,15 @@ function NavbarComp() {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const openMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+    // navigateToPage(page.path)
+  };
+  const CloseMenu = () => {
+    setAnchorEl(null);
+  };
   const handleCloseNavMenu = (event) => {
     setAnchorElNav(null);
   };
@@ -52,12 +47,12 @@ function NavbarComp() {
   const handleCloseUserMenu = (event) => {
     setAnchorElUser(null);
   };
-
   return (
     <AppBar
       position="fixed"
       sx={{
-        zIndex: 100, top: 0, 
+        zIndex: 100,
+        top: 0,
         color: state.darkMode ? "#fff" : "#111",
         bgcolor: state.darkMode ? "#252525" : "#fff",
       }}
@@ -170,37 +165,62 @@ function NavbarComp() {
           </Typography>
           <Box
             sx={{
-              flexGrow: 1, color: '#111',
+              flexGrow: 1,
+              color: "#111",
               textAlign: "center",
               display: { xs: "none", md: "flex" },
-              gap: '1rem'
+              gap: "1rem",
             }}
           >
             {pages.map((page) => (
-              <Button
-                key={page.label}
-                onClick={() => navigateToPage(page.path)}
-                sx={{
-                  my: 2,
-                  borderRadius: '0',
-                  backgroundColor: `${page.bgc}`,
-                  fontFamily: 'roboto',
-                  fontWeight: '500',
-                  color: `${page.c ? page.c : '#111'}`,
-                  display: "block",
-                  
+              <div key={page.label}>
+                <Button
+                  key={page.label}
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  // onClick={() => navigateToPage(page.path)}
+                  onClick={openMenu}
+                  sx={{
+                    my: 2,
+                    borderRadius: "0",
+                    // backgroundColor: `${page.bgc}`,
+                    fontFamily: "roboto",
+                    fontWeight: "500",
+                    // color: `${page.c ? page.c : "#111"}`,
+                    display: "block",
+
                     "&:hover": {
-                      color: state.darkMode ? '#fff': '#111'
-                    }
-                  
-                }}
-              >
-                {page.label}
-              </Button>
+                      // color: state.darkMode ? "#fff" : "#111",
+                    },
+                  }}
+                >
+                  {page.label}
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={CloseMenu}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  {page.list.map((item) => (
+                    <MenuItem
+                      onClick={() => navigateToPage(item.link)}
+                      key={item.link}
+                    >
+                      {item.title}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </div>
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <Switch
                 value={state.darkMode}
@@ -215,29 +235,7 @@ function NavbarComp() {
                 }}
               />
             </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>

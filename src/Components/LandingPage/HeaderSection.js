@@ -6,11 +6,11 @@ import { UserContext } from '../context/UserContext';
 function HeaderSection() {
   const [state, dispatch] = useContext(UserContext)
   const userInfo = state.user;
-  if(userInfo){
-    console.log(userInfo)
-  }else {
-    console.log('NO')
-  }
+  // if(userInfo){
+  //   console.log(userInfo)
+  // }else {
+  //   console.log('NO')
+  // }
   return (
     <div>
       <Navbar />

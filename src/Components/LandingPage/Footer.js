@@ -22,7 +22,7 @@ function Footer() {
         <Grid item xs={12} sm={8} md={5}>
           <Typography sx={{fontWeight: 600, fontSize: '1.4rem'}}>About Us</Typography> <br />
           <Grid sx={{fontSize: '18px'}}>
-            Way to Job is a global online employment platform, which connects
+            Job Door is a global online employment platform, which connects
             students, freshers and professionals who are in search of excellent
             job opportunities with the top companies who are in need of talented
             workforce. Way to job provides an exclusive opportunity for the
@@ -39,14 +39,14 @@ function Footer() {
         <Grid item xs={12} sm={4} md={3}>
           <Typography sx={{fontWeight: 600, fontSize: '1.4rem'}}>Employers</Typography> <br/>
           {EmployersList.map((item, index) => (
-           <Button fullwidth onClick={()=>reRoute(item.link)} sx={{fontSize: '15px', color: '#fff'}} key={index}>{item.title}</Button>
+           <Button fullWidth onClick={()=>reRoute(item.link)} sx={{fontSize: '15px', color: '#fff'}} key={index}>{item.title}</Button>
           ))}
         </Grid>
 
         <Grid item xs={12} sm={4} md={3}>
           <Typography sx={{fontWeight: 600, fontSize: '1.4rem'}}>Job Seekers</Typography> <br/>
           {JobSeekersList.map((item, index) => (
-            <Button fullwidth onClick={()=>reRoute(item.link)} sx={{fontSize: '15px', color: '#fff'}} key={index}>{item.title}</Button>
+            <Button fullWidth onClick={()=>reRoute(item.link)} sx={{fontSize: '15px', color: '#fff'}} key={index}>{item.title}</Button>
           ))}
         </Grid>
       </Grid>
