@@ -176,8 +176,6 @@ function NavbarComp() {
             {pages.map((page) => (
               <div key={page.label}>
                 <Button
-                  // color={state.darkMode ? "#fff" : "#111"}
-                  // bgcolor={state.darkMode ? "#252525" : "#fff"}
                   key={page.label}
                   size="large"
                   aria-label="account of current user"
@@ -185,6 +183,8 @@ function NavbarComp() {
                   aria-haspopup="true"
                   onClick={() => navigateToPage(page.path)}
                   sx={{
+                    color: state.darkMode ? "#fff" : "#111",
+
                     my: 2,
                     borderRadius: "0",
                     // backgroundColor: `${page.bgc}`,

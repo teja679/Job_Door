@@ -1,10 +1,17 @@
 import { Grid, IconButton, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import "./styles.css";
 import { section2_info } from "../text/data";
+import { UserContext } from "../context/UserContext";
 function Section2() {
+  
+  const [state, dispatch] = useContext(UserContext);
   return (
-    <Grid container sx={{padding: '3rem 0', border: '1px solid lightgray'}} className="section-2">
+    <Grid container  style={{
+      margin: "4rem 0",
+      color: state.darkMode ? "#fff" : "#111",
+      backgroundColor: state.darkMode ? "#111" : "#fff",
+     padding: '3rem 0', border: '1px solid lightgray'}} className="section-2">
       <Typography
         variant="h3"
         sx={{ fontWeight: 700, width: "100%", textAlign: "center" }}

@@ -4,9 +4,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { quickList } from '../text/data';
 import { useNavigate } from 'react-router-dom';
+import { DarkModeContext } from '../context/DarkMode';
 
-export default function BasicMenu() {
+export default function BasicMenu() { 
   
+  const [state, dispatch] = React.useContext(DarkModeContext);
   const navigate = useNavigate();
   const navigateToPage = (path) => {
     console.log(path)
@@ -24,6 +26,9 @@ export default function BasicMenu() {
   return (
     <div>
       <Button
+      sx={{
+        color: state.darkMode ? "#fff" : "#111",
+      }}
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
@@ -36,13 +41,14 @@ export default function BasicMenu() {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
+      
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
       >{quickList.map(list => (
 
-        <MenuItem onClick={()=>navigateToPage(list.link)}>{list.title}</MenuItem>
+        <MenuItem  onClick={()=>navigateToPage(list.link)}>{list.title}</MenuItem>
       ))}
        
       </Menu>
