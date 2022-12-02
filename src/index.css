@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;800&display=swap");
 
 body {
+  
+  color: #111 ;
   background-color: #fff;
   margin: 0;
   font-family: poppins-medium-webfont-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

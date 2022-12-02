@@ -80,7 +80,7 @@ export const quickList = [
     title: "Employer Chat",
     link: "/employer/conversation",
   },
-]
+];
 export const pages = [
   {
     id: 0,
@@ -89,7 +89,7 @@ export const pages = [
     bgc: "#f99d1c",
     c: "#fff",
   },
- 
+
   {
     id: 1,
     label: "Find Jobs",
@@ -97,7 +97,7 @@ export const pages = [
     bgc: "#f99d1c",
     c: "#fff",
   },
-   {
+  {
     id: 2,
     label: "Find Candidates",
     path: "/employer/auth",
@@ -153,7 +153,7 @@ export const section3_info = [
   },
   {
     company: "Microsoft",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+    img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/Twilio-1.png",
     jobType: "Freelance",
     title: "Senior UI Designer",
     workType: "Fulltime",
@@ -162,7 +162,7 @@ export const section3_info = [
   },
   {
     company: "Microsoft",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+    img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/genesys-1.jpg",
     jobType: "Freelance",
     title: "Senior UI Designer",
     workType: "Fulltime",
@@ -171,7 +171,7 @@ export const section3_info = [
   },
   {
     company: "Microsoft",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+    img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/Nutanix.png",
     jobType: "Freelance",
     title: "Senior UI Designer",
     workType: "Fulltime",
@@ -180,7 +180,7 @@ export const section3_info = [
   },
   {
     company: "Microsoft",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+    img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/mathworks.png",
     jobType: "Freelance",
     title: "Senior UI Designer",
     workType: "Fulltime",
@@ -189,7 +189,7 @@ export const section3_info = [
   },
   {
     company: "Microsoft",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+    img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/Qualtrics.jpg",
     jobType: "Freelance",
     title: "Senior UI Designer",
     workType: "Fulltime",
@@ -198,7 +198,7 @@ export const section3_info = [
   },
   {
     company: "Microsoft",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+    img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/Cvent.png",
     jobType: "Freelance",
     title: "Senior UI Designer",
     workType: "Fulltime",

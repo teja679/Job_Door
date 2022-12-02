@@ -17,13 +17,12 @@ import { pages } from "../text/data";
 import BasicMenu from "../muiComponents/BasicMenu";
 
 function NavbarComp() {
-  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [state, dispatch] = React.useContext(DarkModeContext);
 
+  const navigate = useNavigate();
   const navigateToPage = (path) => {
-    console.log(path)
     navigate(path);
   };
   const handleOpenNavMenu = (event) => {
@@ -87,7 +86,7 @@ function NavbarComp() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
-              marginLeft: 2,
+              marginLeft: 0,
             }}
           >
             Job Door
@@ -167,15 +166,18 @@ function NavbarComp() {
           <Box
             sx={{
               flexGrow: 1,
-              color: "#111",
               textAlign: "center",
               display: { xs: "none", md: "flex" },
               gap: "1rem",
+              color: state.darkMode ? "#fff" : "#111",
+              bgcolor: state.darkMode ? "#252525" : "#fff",
             }}
           >
             {pages.map((page) => (
               <div key={page.label}>
                 <Button
+                  // color={state.darkMode ? "#fff" : "#111"}
+                  // bgcolor={state.darkMode ? "#252525" : "#fff"}
                   key={page.label}
                   size="large"
                   aria-label="account of current user"
@@ -198,13 +200,12 @@ function NavbarComp() {
                 >
                   {page.label}
                 </Button>
-             
               </div>
             ))}
           </Box>
 
-            <BasicMenu />
-          <Box sx={{ flexGrow: 0 }}>
+          <BasicMenu />
+          <Box sx={{ flexGrow: 0, marginLeft: 3 }}>
             <Tooltip title="Open settings">
               <Switch
                 value={state.darkMode}

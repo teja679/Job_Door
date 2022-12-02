@@ -12,7 +12,7 @@ function HeaderSection() {
   //   console.log('NO')
   // }
   return (
-    <div>
+    <div style={{margin: '4rem 0'}}>
       <Navbar />
       <br/> <br/>
       <div className='heading'>

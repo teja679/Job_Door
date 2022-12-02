@@ -53,7 +53,7 @@ function Section3() {
                 justifyContent: "flex-start",
               }}
             >
-              <img src={item.img} width="160" alt="logo" />
+              <img src={item.img} width="fit-content" alt="logo" />
               <Typography variant="p">{item.jobType}</Typography>
               <div style={{ margin: 0 }}>{/* <h2>{item.company}</h2> */}</div>
             </div>
