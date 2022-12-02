@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { uploadBytesResumable, ref } from "firebase/storage";
 import { db, storage } from "../../../firebaseConfig";
+import { domainItems, skillSet } from '../../text/data'
 import {
   Button,
   Chip,
@@ -16,6 +17,7 @@ import { Box } from "@mui/system";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { getDownloadURL } from "firebase/storage";
+import Loader from "../../muiComponents/Loader";
 
 function CandidateProfile() {
   const [loading, setLoading] = useState(false);
@@ -50,7 +52,7 @@ function CandidateProfile() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        console.log("Document Data", docSnap.data());
+        
         setUserInfo(docSnap.data());
         setLoading(false);
       }
@@ -64,10 +66,10 @@ function CandidateProfile() {
 
   const [pdfUrl, setPdfUrl] = useState("");
   const [progresspercent, setProgresspercent] = useState(0);
-  console.log(progresspercent);
+  
 
   const saveInfo = async () => {
-    console.log(userInfo, "userInfo");
+    
     try {
       await setDoc(
         doc(db, "userData", userData.uid),
@@ -84,7 +86,7 @@ function CandidateProfile() {
   };
   const submitFile = (e) => {
     e.preventDefault();
-    console.log(e.target[0].files[0]);
+    
     const file = e.target[0]?.files[0];
 
     if (!file) return;
@@ -106,12 +108,12 @@ function CandidateProfile() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setPdfUrl(downloadURL);
-          console.log(downloadURL, "url");
+          
           setUserInfo({ ...userInfo, resume: downloadURL });
         });
-        console.log(userInfo, "userInfo");
+        
         setProgresspercent(0);
-        console.log(progresspercent);
+        
       }
     );
   };
@@ -130,26 +132,9 @@ function CandidateProfile() {
   );
   const theme = useTheme();
 
-  const skillSet = [
-    "Java",
-    "JavaScript",
-    "React",
-    "HTML",
-    "Angular",
-    "CSS",
-    "Bootstrap",
-  ];
-  const domainItems = [
-    "Frontend",
-    "Backend",
-    "Full Stack",
-    "React",
-    "JavsScript",
-    "Java",
-    "C++",
-  ];
+ 
   return loading ? (
-    <div>Loading...</div>
+    <Loader />
   ) : (
     <>
       <h1>Profile</h1>
@@ -169,12 +154,12 @@ function CandidateProfile() {
           marginBottom: "4rem",
         }}
       >
-        <Grid item xs={12} sm={9} md={6}>
-          <Typography item md={6} variant="h6">
+        <Grid item={true} xs={12} sm={9} md={6}>
+          <Typography item={true} md={6} variant="h6">
             Name
           </Typography>
           <TextField
-            item
+            item={true}
             md={6}
             disabled={!edit}
             required
@@ -184,7 +169,7 @@ function CandidateProfile() {
             onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
           />
         </Grid>
-        <Grid item xs={12} sm={9} md={6}>
+        <Grid item={true} xs={12} sm={9} md={6}>
           <Typography variant="h6">Email</Typography>
           <TextField
             disabled
@@ -197,7 +182,7 @@ function CandidateProfile() {
             }
           />
         </Grid>
-        <Grid item xs={12} sm={9} md={6}>
+        <Grid item={true} xs={12} sm={9} md={6}>
           <Typography variant="h6">Phone</Typography>
           <TextField
             disabled={!edit}
@@ -209,7 +194,7 @@ function CandidateProfile() {
             }
           />
         </Grid>
-        <Grid item xs={12} sm={9} md={6}>
+        <Grid item={true} xs={12} sm={9} md={6}>
           <Typography variant="h6">Experience</Typography>
           <TextField
             disabled={!edit}
@@ -221,7 +206,7 @@ function CandidateProfile() {
             }
           />
         </Grid>
-        <Grid item xs={12} sm={9} md={6}>
+        <Grid item={true} xs={12} sm={9} md={6}>
           <Typography variant="h6">Education</Typography>
           <TextField
             disabled={!edit}
@@ -234,7 +219,7 @@ function CandidateProfile() {
             }
           />
         </Grid>
-        <Grid item xs={12} sm={9} md={6}>
+        <Grid item={true} xs={12} sm={9} md={6}>
           <Typography variant="h6">Domain</Typography>
           <Select
             fullWidth
@@ -285,9 +270,9 @@ function CandidateProfile() {
             ))}
           </Select>
         </Grid>
-        <Grid item xs={12} sm={9} md={6}>
+        <Grid item={true} xs={12} sm={9} md={6}>
           <Typography variant="h6">Upload Resume</Typography>
-          <Grid item sx={{ display: "flex" }}>
+          <Grid item={true} sx={{ display: "flex" }}>
             {edit ? (
               <form onSubmit={submitFile}>
                 <input accept="application/pdf" type="file" />
@@ -308,7 +293,7 @@ function CandidateProfile() {
         </Grid>
 
         <Grid
-          item
+          item={true}
           xs={12}
           sx={{ display: "flex", justifyContent: "center", gap: "2rem" }}
         >

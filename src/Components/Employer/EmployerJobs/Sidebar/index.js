@@ -37,7 +37,8 @@ function Sidebar({ selectAjob }) {
   }, []);
 
   return (
-    <div className="sidebar" style={{ overflow: "scroll", height: "90vh" }}>
+    <div className="sidebar" style={{ 
+      }}>
       <Button onClick={() => selectAjob(false)}>
         <AddIcon /> post a job
       </Button>

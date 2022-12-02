@@ -19,7 +19,7 @@ import { UserContext } from "../../../context/UserContext";
 function JobForm({ selectAjob, jobData, setJobData}) {
   const [state, dispatch] = useContext(UserContext)
   const userInfo = state.user
-  console.log(userInfo)
+  
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -47,7 +47,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
           employerId: userInfo.uid,
           createdAt: new Date(),
           employerName: userInfo.displayName,
-
+          status: 'apply',
         });
       }
       selectAjob(false)
@@ -55,7 +55,7 @@ function JobForm({ selectAjob, jobData, setJobData}) {
     } catch (e) {
       console.error("Error adding document", e);
     }
-    console.log("submit", jobData);
+    
   };
   const handleSkillChange = (event) => {
     const {

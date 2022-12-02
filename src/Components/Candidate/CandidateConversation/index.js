@@ -1,11 +1,11 @@
 import { Button, Grid } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
+import { orderByValue } from "firebase/database";
 import {
   collection,
   query,
   onSnapshot,
   where,
-  getDocs,
   setDoc,
   doc,
   deleteDoc,
@@ -17,19 +17,20 @@ import MessageArea from "../../common/MessageArea";
 import { UserContext } from "../../context/UserContext";
 
 function CandidateConversation() {
-   const [lastMessageMobile, setLastMessageMobile] = useState(true);
-   const [selectConversation, setSelectConversation] = useState(null)
+  const [lastMessageMobile, setLastMessageMobile] = useState(true);
+  const [selectConversation, setSelectConversation] = useState(null);
   const [allLastMessages, setAllLastMessages] = useState(null);
   const [allCoversations, setAllCoversations] = useState(null);
-  const [state, dispatch] = useContext(UserContext)
+  const [state, dispatch] = useContext(UserContext);
   const userInfo = state.user;
 
-   const selectAConversation = (data) => {
+  const selectAConversation = (data) => {
     setSelectConversation(data);
     try {
       const q = query(
         collection(db, "one-to-one-messages"),
-        where("conversationId", "==", data.conversationId)
+        where("conversationId", "==", data.conversationId),
+        // orderByValue("createdAt")
       );
 
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -38,8 +39,8 @@ function CandidateConversation() {
           data.push(doc.data());
         });
         setAllCoversations(data);
+
         
-        console.log(data)
       });
     } catch (err) {
       console.log(err);
@@ -51,7 +52,7 @@ function CandidateConversation() {
     try {
       const q = query(
         collection(db, "last_messages"),
-        where("candidateId", "==", userInfo.uid)
+        where("candidateId", "==", userInfo.uid),
       );
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const data = [];
@@ -69,34 +70,32 @@ function CandidateConversation() {
   }, []);
 
   const postMessage = async (message) => {
-    console.log(selectConversation)
-    const oneToOneMessageId = uuidv4()
+    
+    const oneToOneMessageId = uuidv4();
+    
+
     try {
       await setDoc(
         doc(db, "last_messages", selectConversation.last_message_id),
         {
-          last_message : message,
-          createdAt: new Date()
+          last_message: message,
+          createdAt: new Date().getTime(),
         },
         { merge: true }
       );
-      await setDoc(
-        doc(db, "one-to-one-messages", oneToOneMessageId),
-        {
-          message : message,
-          createdAt: new Date(),
-          conversationId: selectConversation.conversationId,
-          userId: userInfo.uid,
-          userType: 'candidate'
-          
-        },
-      );
+      await setDoc(doc(db, "one-to-one-messages", oneToOneMessageId), {
+        message: message,
+        createdAt: new Date().getTime(),
+        conversationId: selectConversation.conversationId,
+        userId: userInfo.uid,
+        userType: "candidate",
+      });
     } catch (e) {
       console.error(e);
     }
-  }
+  };
   return allLastMessages && allLastMessages.length > 0 ? (
-    <Grid container>
+    <Grid container sx={{ height: '100%'}}>
       <Grid
         sm={4}
         xs={12}
@@ -104,7 +103,8 @@ function CandidateConversation() {
           display: { xs: lastMessageMobile ? "block" : "none", sm: "block" },
         }}
       >
-        <LastMessage type='candidate'
+        <LastMessage
+          type="candidate"
           allLastMessages={allLastMessages}
           selectAConversation={selectAConversation}
         />
@@ -116,8 +116,16 @@ function CandidateConversation() {
           display: { xs: lastMessageMobile ? "none" : "block", sm: "block" },
         }}
       >
-        <Button sx={{ display: { xs: 'block', sm: 'none'}}} onClick={() => setLastMessageMobile(true)}>Back</Button>
-        <MessageArea postMessage={postMessage} allCoversations={allCoversations} />
+        <Button
+          sx={{ display: { xs: "block", sm: "none" } }}
+          onClick={() => setLastMessageMobile(true)}
+        >
+          Back
+        </Button>
+        <MessageArea
+          postMessage={postMessage}
+          allCoversations={allCoversations}
+        />
       </Grid>
     </Grid>
   ) : allLastMessages && allLastMessages.length === 0 ? (

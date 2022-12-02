@@ -20,7 +20,7 @@ function CandidateOnboarding() {
   const [state, dispatch] = useContext(UserContext);
   // const userData = JSON.parse(localStorage.getItem('users'))
   const userData = state.user;
-  // console.log(userData)
+  
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -43,7 +43,6 @@ function CandidateOnboarding() {
   };
   const submitUserInfo = async (e) => {
     e.preventDefault();
-    // console.log(userData)
 
     try {
       await setDoc(doc(db, "userData", `${userData.uid}`), {
@@ -55,7 +54,7 @@ function CandidateOnboarding() {
     } catch (e) {
       console.error("Error adding document", e);
     }
-    console.log("submit", userInfo);
+    
   };
   const handleSkillChange = (event) => {
     const {
@@ -102,7 +101,6 @@ function CandidateOnboarding() {
             // textAlign: 'left',
             justifyContent: "center",
             borderRadius: "8px",
-            marginBottom: "4rem",
           }}
         >
           <Grid item xs={12} md={6} sm={9}>

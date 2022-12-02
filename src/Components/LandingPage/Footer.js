@@ -7,10 +7,10 @@ import { EmployersList, JobSeekersList, QuickLinksList } from "../text/data";
 function Footer() {
   
   // const [state, dispatch] = useContext(UserContext)
-  // console.log(state)
+  
   const navigate = useNavigate();
   const reRoute = (page) => {
-    // console.log(page);
+    
     // if(state.user){
       navigate(`${page}`);
     // }

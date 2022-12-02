@@ -40,7 +40,9 @@ function EmployerJobs() {
     }
   };
   return (
-    <div className="jobs"  style={{ height: '80vh'}}>
+    <div className="jobs"  style={{ 
+      height: '80vh'
+      }}>
       <Grid container sx={{
         color: 'rgb(31, 93, 117)',
       }}>

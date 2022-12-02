@@ -24,6 +24,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { v4 as uuid } from "uuid";
 import { UserContext } from "../../context/UserContext";
+import Loader from "../../muiComponents/Loader";
 
 function Applications() {
   const [loading, setLoading] = useState(true);
@@ -42,11 +43,11 @@ function Applications() {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       data.push(doc.data());
-      console.log(doc.data());
+      
     });
     setAllApllications(data);
     setLoading(false);
-    // console.log("Current jobs: ", jobs);
+    
   };
   useEffect(() => {
     fetchJobs();
@@ -54,11 +55,12 @@ function Applications() {
   return (
     <>
       {loading ? (
-        <div>Loading...</div>
+       <Loader />
       ) : (
         <div
           style={{
             display: "flex",
+            flexWrap: 'wrap',
             justifyContent: "center",
             marginTop: "2rem",
           }}

@@ -38,8 +38,8 @@ const columnName = [
   // },
 ];
 function Applicants() {
-  const [state, dispatch] = useContext(UserContext)
-  const userInfo = state.user
+  const [state, dispatch] = useContext(UserContext);
+  const userInfo = state.user;
 
   const [allApplications, setAllApplications] = useState(null);
 
@@ -64,7 +64,7 @@ function Applicants() {
     fetchJobs();
   }, []);
   const handleClick = async (action, row) => {
-    console.log(row);
+    
     const last_message_id = uuidv4();
     const oneToOneMessageId = uuidv4();
     if (action === "accept") {
@@ -82,7 +82,7 @@ function Applicants() {
       }
       try {
         await setDoc(doc(db, "last_messages", last_message_id), {
-          lastMessage: "hey hello!",
+          lastMessage: "",
           createdAt: new Date(),
           employerId: row.employerId,
           candidateId: row.candidateId,
@@ -96,7 +96,7 @@ function Applicants() {
         await setDoc(doc(db, "one-to-one-messages", oneToOneMessageId), {
           createdAt: new Date(),
           conversationId: `${row.employerId}-${row.candidateId}`,
-          userType: 'employer',
+          userType: "employer",
           userId: userInfo.uid,
           message: `hey hello! ${row.title}`,
         });

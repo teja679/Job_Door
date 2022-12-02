@@ -18,12 +18,13 @@ import { db } from "../../../firebaseConfig";
 import { Box, Button, Chip, Grid, Input, Typography } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { UserContext } from "../../context/UserContext";
+import Loader from "../../muiComponents/Loader";
 
 function CandidateJobs() {
   const [loading, setLoading] = useState(true);
   const [state, dispatch] = useContext(UserContext);
   const userInfo = state.user;
-  const [applied, setApplied] = useState(false)
+  const [applied, setApplied] = useState(false);
   const [allJobs, setAllJobs] = useState(null);
 
   const fetchJobs = async () => {
@@ -35,7 +36,7 @@ function CandidateJobs() {
           jobs.push(doc.data());
         });
         setAllJobs(jobs);
-        console.log(jobs)
+        
         setLoading(false);
       });
     } catch (err) {
@@ -47,7 +48,7 @@ function CandidateJobs() {
   }, []);
 
   const applyForJob = async (job) => {
-    console.log('job',job)
+    
     const applicationId = uuidv4();
 
     const q = await query(
@@ -60,7 +61,11 @@ function CandidateJobs() {
     querySnapshot.forEach((doc) => {
       data.push(doc.data());
     });
-
+    const job_data = allJobs.map(item => {
+        if(item.uid === job.employerId){
+          item.status = 'applied'
+        }
+    } )
     const isApplied = data.find((item) => item.jobId === job.Job_id);
 
     if (isApplied) {
@@ -92,14 +97,18 @@ function CandidateJobs() {
     }
   };
   return loading ? (
-    <div>Loading...</div>
+    <Loader />
   ) : (
     <>
       <h1>Jobs</h1>
       <Grid
         container
-        sx={{ display: "flex", justifyContent: "center",alignItems: 'center', marginBottom: "4rem" }}
-        className="sidebar"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: "4rem",
+        }}
       >
         {allJobs && allJobs.length > 0 ? (
           allJobs.map((job) => (
@@ -163,14 +172,17 @@ function CandidateJobs() {
                   ))}
                 </Box>
               </Grid>
-              <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
+              <Grid
+                item
+                xs={12}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <Button
                   sx={{ margin: "10px 0", display: "block" }}
-                  
                   variant="outlined"
                   onClick={() => applyForJob(job)}
                 >
-                 Apply
+                  {job.status === 'applied' ? 'Applied' : 'Apply'}
                 </Button>
               </Grid>
             </Grid>

@@ -36,7 +36,7 @@ function EmployerProfile() {
       const docSnap = await getDoc(docRef)
 
       if(docSnap.exists()) {
-        console.log('Document Data', docSnap.data())
+        
         setUserInfo(docSnap.data())
       }
     }

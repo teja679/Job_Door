@@ -4,16 +4,13 @@ import React, { useState } from "react";
 function MessageArea({ postMessage, allCoversations }) {
   const [message, setMessage] = useState("");
   const loggedIn_user = JSON.parse(localStorage.getItem("user"));
-  console.log("userInfo", loggedIn_user);
-  const textMessage = () => {
-    console.log("hai");
-  };
+    
   return (
     <>
       {allCoversations ? (
         <Grid container>
-          <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-            {allCoversations.map((item) => {
+          <Grid item={true} xs={12} sx={{ display: "flex", flexDirection: "column", overflow: 'scroll' }}>
+            {allCoversations.map((item, index) => {
               return (
                 <div
                   style={{
@@ -28,17 +25,16 @@ function MessageArea({ postMessage, allCoversations }) {
                     gap: "1rem",
                     padding: "10px",
                   }}
-                  key={item.conversationId}
+                  key={item.conversationId + index}
                 >
                   <Typography
                     style={{
-
-                      width: '80%',
+                      width: "80%",
                       background: "#e6ffe6",
                       padding: "8px 16px",
-                      display: 'flex',
+                      display: "flex",
                       borderRadius: "5px",
-                      flexWrap: 'wrap',
+                      flexWrap: "wrap",
                     }}
                   >
                     {item.message}
@@ -49,7 +45,7 @@ function MessageArea({ postMessage, allCoversations }) {
             })}
           </Grid>
           <Grid
-            item
+            item={true}
             xs={12}
             sx={{
               // position: "fixed",
@@ -67,14 +63,14 @@ function MessageArea({ postMessage, allCoversations }) {
                 bottom: { xs: "3.5rem", sm: "3.5rem", md: 0 },
               }}
             >
-              <Grid item md={10} sm={10} xs={10} sx={{bgcolor:'#fff'}}>
+              <Grid item={true} md={10} sm={10} xs={10} sx={{ bgcolor: "#fff" }}>
                 <TextField
-                  fullWidth 
+                  fullWidth
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 />
               </Grid>
-              <Grid item md={2} sm={2} xs={2} sx={{zIndex: '100'}}>
+              <Grid item={true} md={2} sm={2} xs={2} sx={{ zIndex: "100" }}>
                 <Button
                   fullWidth
                   sx={{ p: 2 }}

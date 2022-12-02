@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import CircularIndeterminate from "../Loader";
+import CircularIndeterminate from "../muiComponents/Loader";
 import { Box } from "@mui/system";
 const mock = [
   {
@@ -36,7 +36,7 @@ const mock = [
   },
 ];
 function LastMessage({ type, allLastMessages, selectAConversation }) {
-  console.log(allLastMessages)
+
   return (
     <>
       {allLastMessages && allLastMessages.length > 0 ? (
@@ -57,12 +57,12 @@ function LastMessage({ type, allLastMessages, selectAConversation }) {
             justifyContent: 'space-between',
           }}
         > 
-        <Grid item xs={12} md={12} sx={{display: 'flex', alignItems: 'center'}}>
+        <Grid item={true} xs={12} md={12} sx={{display: 'flex', alignItems: 'center'}}>
           <AccountCircleIcon sx={{ bgColor: 'gray' ,color:'lightgray' ,fontSize: '3.2rem', marginRight: '1rem'}} />
-        <Grid item display='block' sx={{
+        <Grid item={true} display='block' sx={{
             paddingRight: '1rem',}}>
           <Typography variant="h5">
-            { type ? item.employer_name : item.candidate_name} <br />
+            { type === 'candidate' ? item.employer_name : item.candidate_name} <br />
           </Typography>
           <Box sx={{display: 'flex',}}>
           <Typography variant="p" sx={{
@@ -107,7 +107,7 @@ export default LastMessage;
             padding: "10px",
           }}
         >
-          <Grid item xs={9}>
+          <Grid item={true} xs={9}>
             {item.name}
           </Grid>
           <Grid item xs={3}>

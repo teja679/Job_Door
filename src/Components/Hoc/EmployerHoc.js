@@ -236,7 +236,7 @@ function EmployerHoc({ children }) {
           bottom: 0,
           width: "100%",
           background: "white",
-          zIndex: "2",
+          zIndex: "100",
         }}
       >
         <BottomNavigation

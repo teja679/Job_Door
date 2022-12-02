@@ -72,7 +72,7 @@ function CandidateHoc({ children }) {
     setAnchorElUser(null);
   };
   const reRoute = (page) => {
-    console.log(page);
+    
     handleCloseNavMenu();
     navigate(`../candidate/${page}`);
   };
@@ -282,7 +282,8 @@ function CandidateHoc({ children }) {
           bottom: 0,
           width: "100%",
           background: "white",
-          zIndex: "2",
+          overflow: 'hidden',
+          zIndex: "100",
         }}
       >
         <BottomNavigation

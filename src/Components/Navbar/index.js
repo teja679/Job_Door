@@ -35,7 +35,7 @@ function NavbarComp() {
   const [state, dispatch] = React.useContext(DarkModeContext);
 
   const navigateToPage = (path) => {
-    // console.log(path)
+    
     navigate(path);
   };
   const handleOpenNavMenu = (event) => {

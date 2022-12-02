@@ -51,7 +51,7 @@ function EmployerOnboarding() {
     catch (e){
       console.error('Error adding document', e)
     }
-    console.log('submit', userInfo)
+    
   }
   const handleSkillChange = (event) => {
     const {

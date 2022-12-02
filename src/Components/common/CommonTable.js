@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,7 +33,6 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-
 function CommonTable({ data, columnsName, handleClick }) {
   return (
     <TableContainer component={Paper}>
@@ -49,20 +48,30 @@ function CommonTable({ data, columnsName, handleClick }) {
           {data.map((row, i) => (
             <StyledTableRow
               key={i}
-              sx={{ pointerEvents: row.status === 'approved' ? "none" : 'unset',
-               opacity: row.status === 'approved' ? 0.4 : 1 }}
+              sx={{
+                pointerEvents: row.status === "approved" ? "none" : "unset",
+                opacity: row.status === "approved" ? 0.4 : 1,
+              }}
             >
               {columnsName.map((item) => {
                 if (item.key === "buttons") {
                   return (
-                    <>
-                      <Button onClick={() => handleClick("accept", row)}>
+                    <Grid
+                      sx={{
+                        height: '100%',
+                        margin: 0,
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Button sx={{padding: '1rem 0'}} onClick={() => handleClick("accept", row)}>
                         Accept
                       </Button>
-                      <Button onClick={() => handleClick("reject", row)}>
+                      <Button sx={{padding: '1rem 0'}} onClick={() => handleClick("reject", row)}>
                         Reject
                       </Button>
-                    </>
+                    </Grid>
                   );
                 } else {
                   return <StyledTableCell>{row[item.key]}</StyledTableCell>;

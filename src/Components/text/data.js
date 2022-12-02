@@ -1,34 +1,75 @@
 export const JobSeekersList = [
   {
     title: "Create Account",
-    link: '/candidate/auth',
-  },{
+    link: "/candidate/auth",
+  },
+  {
     title: "Edit Profile",
-    link: '/candidate/profile',
-  },{
-    title:"Apply for Job",
-    link: '/candidate/jobs',
-  },{
+    link: "/candidate/profile",
+  },
+  {
+    title: "Apply for Job",
+    link: "/candidate/jobs",
+  },
+  {
     title: "Applied Jobs",
-    link: '/candidate/applications',
+    link: "/candidate/applications",
   },
 ];
+export const skillSet = [
+  "Java",
+  "JavaScript",
+  "React",
+  "HTML",
+  "Angular",
+  "CSS",
+  "Bootstrap",
+];
+export const domainItems = [
+  "Frontend",
+  "Backend",
+  "Full Stack",
+  "React",
+  "JavsScript",
+  "Java",
+  "C++",
+];
+
 export const EmployersList = [
   {
     title: "Create Account",
-    link: '/employer/auth',
-  },{
+    link: "/employer/auth",
+  },
+  {
     title: "Edit Profile",
-    link: '/employer/profile',
-  },{
-    title:"Post a Job",
-    link: '/employer/jobs',
-  },{
+    link: "/employer/profile",
+  },
+  {
+    title: "Post a Job",
+    link: "/employer/jobs",
+  },
+  {
     title: "Applications",
-    link: '/employer/applicants',
+    link: "/employer/applicants",
   },
 ];
 
+export const pages = [
+  {
+    label: "Find Jobs",
+    path: "/candidate/auth",
+    bgc: "#f99d1c",
+    c: "#fff",
+    list: JobSeekersList,
+  },
+  {
+    label: "Find Candidates",
+    path: "/employer/auth",
+    bgc: "#5ba3d9",
+    c: "#fff",
+    list: EmployersList,
+  },
+];
 
 export const section2_info = [
   {
