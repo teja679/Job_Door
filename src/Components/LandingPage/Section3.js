@@ -5,11 +5,7 @@ import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
 
 function Section3() {
   return (
-    <Grid
-      container
-      sx={{ padding: "3rem 0", }}
-      className="section-2"
-    >
+    <Grid container sx={{ padding: "3rem 0" }} className="section-2">
       <Typography
         variant="h3"
         sx={{ fontWeight: 700, width: "100%", textAlign: "center" }}
@@ -21,7 +17,7 @@ function Section3() {
         sx={{
           display: "flex",
           padding: "2rem",
-          justifyContent: 'center',
+          justifyContent: "center",
           textAlign: "left",
         }}
       >
@@ -35,7 +31,7 @@ function Section3() {
             sx={{
               margin: "1.5rem",
               padding: "1rem",
-              minWidth: '350px',
+              minWidth: "350px",
               border: "1px solid lightgray",
               borderRadius: "1rem",
               display: "flex",
@@ -50,24 +46,33 @@ function Section3() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
-                padding: '1rem',
+                padding: "1rem",
                 justifyContent: "flex-start",
               }}
             >
-              <img src={item.img} height='80px' width="250px" alt="logo" />
-              <Typography variant="p">{item.jobType}</Typography>
+              <img src={item.img} height="80px" width="250px" alt="logo" />
+              <Typography variant="p" sx={{paddingLeft: '5rem'}}>{item.jobType}</Typography>
               <div style={{ margin: 0 }}>{/* <h2>{item.company}</h2> */}</div>
             </div>
-            <Typography typography="h6" sx={{px: 2}} sm={12}>
+            <Typography typography="h6" sx={{ paddingLeft: 2 }} sm={12}>
               {item.title}
             </Typography>
-            <div style={{display: 'flex',padding: '0 1rem', justifyContent: "space-between"}}>
+            <Typography variant="p" sx={{ paddingLeft: 2 }}>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Repudiandae alias laborum temporibus mollitia a magni facere nihil
+              fuga cumque cupiditate!
+            </Typography>
+            <div
+              style={{
+                display: "flex",
+                padding: "0 1rem",
+                justifyContent: "space-between",
+              }}
+            >
               <Typography variant="h5">
-               <CurrencyRupeeRoundedIcon /> {item.salary}
+                <CurrencyRupeeRoundedIcon /> {item.salary}
               </Typography>
-              <Button variant="outlined">
-                Apply
-              </Button>
+              <Button variant="outlined">Apply Now</Button>
             </div>
           </Grid>
         ))}
