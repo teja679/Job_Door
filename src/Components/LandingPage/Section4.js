@@ -16,8 +16,9 @@ function Section4() {
         marginTop: "4rem 0",
       }}
     >
-      <img
-        style={{ width: { xs: "100%", md: "50%" } }}
+      <img className="section3-img"
+        style={{ width: { xs: "100%", md: "50%", 
+        opacity: { xs: "0.5", md: "1" }, } }}
         width="50%"
         src="https://images.squarespace-cdn.com/content/v1/58e1415ab3db2bb2903c6ce6/1491317767134-GNVEOWYORUAPMMUTUZMY/online-job-search.jpg"
         alt="res"
