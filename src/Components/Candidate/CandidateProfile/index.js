@@ -18,13 +18,15 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { getDownloadURL } from "firebase/storage";
 import Loader from "../../muiComponents/Loader";
+import LinearDeterminate from "../../muiComponents/Progress";
+import CircularIndeterminate from "../../muiComponents/Progress";
 
 function CandidateProfile() {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [state, dispatch] = useContext(UserContext);
   const userData = state.user;
-
+  
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -136,12 +138,14 @@ function CandidateProfile() {
   return loading ? (
     <Loader />
   ) : (
-    <>
+    <div style={{
+      color: "#111",
+      backgroundColor: "#fff",}}>
       <h1>Profile</h1>
 
       <Grid
         container
-        spacing={2}
+        spacing={2} 
         sx={{
           padding: "1rem",
           maxWidth: "95%",
@@ -155,7 +159,7 @@ function CandidateProfile() {
         }}
       >
         <Grid item={true} xs={12} sm={9} md={6}>
-          <Typography item={true} md={6} variant="h6">
+          <Typography item={true} md={6} variant="h6" >
             Name
           </Typography>
           <TextField
@@ -275,9 +279,11 @@ function CandidateProfile() {
           <Grid item={true} sx={{ display: "flex" }}>
             {edit ? (
               <form onSubmit={submitFile}>
-                <input accept="application/pdf" type="file" />
+                <input style={{height: '3rem'}} accept="application/pdf" type="file" />
                 {progresspercent > 0 && progresspercent <= 100 ? (
-                  <div>{progresspercent}</div>
+                  // <div>{progresspercent}</div>
+                  // <CircularIndeterminate />
+                  <LinearDeterminate progress={progresspercent} setProgress={setProgresspercent}/>
                 ) : (
                   <Button type="submit">Upload</Button>
                 )}
@@ -313,7 +319,7 @@ function CandidateProfile() {
           )}
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 }
 

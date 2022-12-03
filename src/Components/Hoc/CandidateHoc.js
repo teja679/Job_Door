@@ -55,8 +55,16 @@ function CandidateHoc({ children }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [state, dispatch] = React.useContext(DarkModeContext);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -72,7 +80,6 @@ function CandidateHoc({ children }) {
     setAnchorElUser(null);
   };
   const reRoute = (page) => {
-    
     handleCloseNavMenu();
     navigate(`../candidate/${page}`);
   };
@@ -82,7 +89,7 @@ function CandidateHoc({ children }) {
     navigate("/");
   };
   return (
-    <>
+    <div>
       <Box
         sx={{
           display: { xs: "none", md: "block" },
@@ -97,39 +104,20 @@ function CandidateHoc({ children }) {
         >
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-            <IconButton
-            sx={{
-              display: { xs: "none", md: "block" },
-              color: state.darkMode ? "#fff" : "#111",
-              mr: 1,
-            }}
-          >
-            <img
-              width="50"
-              style={{ borderRadius: "50%" }}
-              src="https://img.favpng.com/3/19/25/search-logo-png-favpng-m99bRGyXRSuw3yU7NMxS9cYqR.jpg"
-              alt="logo"
-            />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-              marginLeft: 2,
-            }}
-          >
-            Job Door
-          </Typography>
-              {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+              <IconButton
+                sx={{
+                  display: { xs: "none", md: "block" },
+                  color: state.darkMode ? "#fff" : "#111",
+                  mr: 1,
+                }}
+              >
+                <img
+                  width="50"
+                  style={{ borderRadius: "50%" }}
+                  src="https://img.favpng.com/3/19/25/search-logo-png-favpng-m99bRGyXRSuw3yU7NMxS9cYqR.jpg"
+                  alt="logo"
+                />
+              </IconButton>
               <Typography
                 variant="h6"
                 noWrap
@@ -143,10 +131,11 @@ function CandidateHoc({ children }) {
                   letterSpacing: ".3rem",
                   color: "inherit",
                   textDecoration: "none",
+                  marginLeft: 2,
                 }}
               >
-                LOGO
-              </Typography> */}
+                Job Door
+              </Typography>
 
               <Box
                 sx={{
@@ -197,25 +186,7 @@ function CandidateHoc({ children }) {
                   ))}
                 </Menu>
               </Box>
-              <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-              <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href=""
-                sx={{
-                  mr: 2,
-                  display: { xs: "flex", md: "none" },
-                  flexGrow: 1,
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  letterSpacing: ".3rem",
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-                LOGO
-              </Typography>
+
               <Box
                 sx={{
                   color: state.darkMode ? "#fff" : "gray",
@@ -229,8 +200,8 @@ function CandidateHoc({ children }) {
                     key={page.key}
                     onClick={() => reRoute(page.key)}
                     sx={{
-                      // color: state.darkMode ? "#fff" : "gray",
-                      // bgcolor: state.darkMode ? "#252525" : "#fff",
+                      color: state.darkMode ? "#fff" : "gray",
+                      bgcolor: state.darkMode ? "#252525" : "#fff",
                       my: 2,
                       display: "block",
                     }}
@@ -260,7 +231,7 @@ function CandidateHoc({ children }) {
                   <Button
                     sx={
                       {
-                        // color: state.darkMode ? "#fff" : "gray",
+                        color: state.darkMode ? "#fff" : "gray",
                         // bgcolor: state.darkMode ? "#252525" : "#fff",
                       }
                     }
@@ -282,8 +253,10 @@ function CandidateHoc({ children }) {
           bottom: 0,
           width: "100%",
           background: "white",
-          overflow: 'hidden',
+          overflow: "hidden",
           zIndex: "100",
+          color: state.darkMode ? "#fff" : "gray",
+          bgcolor: state.darkMode ? "#222" : "#fff",
         }}
       >
         <BottomNavigation
@@ -295,55 +268,70 @@ function CandidateHoc({ children }) {
         >
           {pages.map((page) => (
             <BottomNavigationAction
+             sx={{
+              
+              color: state.darkMode ? "#ddd" : "gray",
+              bgcolor: state.darkMode ? "#222" : "#fff",
+             }}
               onClick={() => reRoute(page.key)}
               key={page.key}
               label={page.label}
               icon={page.icon}
             />
           ))}
-         {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
+          <BottomNavigationAction
+          sx={{
+            color: state.darkMode ? "#ddd" : "gray",
+            bgcolor: state.darkMode ? "#222" : "#fff",
+          }}
+            onClick={handleClick}
+            label={"Menu"}
+            icon={<MenuIcon />}
+          />
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "2rem",
               }}
             >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page.label}
-                  // onClick={() => navigateToPage(page.path)}
+              <Tooltip title="Open settings">
+                <Switch
+                  onChange={() => {
+                    state.darkMode
+                      ? dispatch({ type: "Make_light" })
+                      : dispatch({ type: "Make_dark" });
+                  }}
+                />
+              </Tooltip>
+              <Tooltip>
+                <Button
+                  sx={
+                    {
+                      // color: state.darkMode ? "#fff" : "gray",
+                      // bgcolor: state.darkMode ? "#252525" : "#fff",
+                    }
+                  }
+                  onClick={logoutFunction}
                 >
-                  <Typography textAlign="center">{page.label}1</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
+                  Logout
+                </Button>
+              </Tooltip>
+            </div>
+          </Menu>
         </BottomNavigation>
       </Box>
       {children}
-    </>
+    </div>
   );
 }
 

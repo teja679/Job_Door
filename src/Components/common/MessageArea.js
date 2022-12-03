@@ -4,12 +4,22 @@ import React, { useState } from "react";
 function MessageArea({ postMessage, allCoversations }) {
   const [message, setMessage] = useState("");
   const loggedIn_user = JSON.parse(localStorage.getItem("user"));
-    
+
   return (
     <>
       {allCoversations ? (
         <Grid container>
-          <Grid item={true} xs={12} sx={{ display: "flex", flexDirection: "column", overflow: 'scroll' }}>
+          <Grid
+            item={true}
+            xs={12}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              overflow: "scroll",
+              marginBottom: { xs: "7.5rem", sm: "7rem", md: '3.5rem' }
+            }}
+          >
+            
             {allCoversations.map((item, index) => {
               return (
                 <div
@@ -63,7 +73,13 @@ function MessageArea({ postMessage, allCoversations }) {
                 bottom: { xs: "3.5rem", sm: "3.5rem", md: 0 },
               }}
             >
-              <Grid item={true} md={10} sm={10} xs={10} sx={{ bgcolor: "#fff" }}>
+              <Grid
+                item={true}
+                md={10}
+                sm={10}
+                xs={10}
+                sx={{ bgcolor: "#fff" }}
+              >
                 <TextField
                   fullWidth
                   value={message}
@@ -75,7 +91,7 @@ function MessageArea({ postMessage, allCoversations }) {
                   fullWidth
                   sx={{ p: 2 }}
                   variant="contained"
-                  onClick={() => postMessage(message)}
+                  onClick={() => postMessage(message, setMessage)}
                 >
                   Send
                 </Button>

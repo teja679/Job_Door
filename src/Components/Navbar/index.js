@@ -20,7 +20,7 @@ function NavbarComp() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [state, dispatch] = React.useContext(DarkModeContext);
-
+ 
   const navigate = useNavigate();
   const navigateToPage = (path) => {
     navigate(path);
@@ -47,6 +47,7 @@ function NavbarComp() {
   const handleCloseUserMenu = (event) => {
     setAnchorElUser(null);
   };
+  console.log(state)
   return (
     <AppBar
       position="fixed"
@@ -126,7 +127,7 @@ function NavbarComp() {
                   key={page.label}
                   onClick={() => navigateToPage(page.path)}
                 >
-                  <Typography textAlign="center">{page.label}1</Typography>
+                  <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -161,7 +162,7 @@ function NavbarComp() {
               textDecoration: "none",
             }}
           >
-            Work-Place
+           Job Door
           </Typography>
           <Box
             sx={{

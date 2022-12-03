@@ -1,6 +1,7 @@
-import { Button, Grid } from "@mui/material";
+import { AppBar, Button, Grid, IconButton, Toolbar } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { orderByValue } from "firebase/database";
+import './styles.css'
 import {
   collection,
   query,
@@ -15,6 +16,7 @@ import { db } from "../../../firebaseConfig";
 import LastMessage from "../../common/LastMessage";
 import MessageArea from "../../common/MessageArea";
 import { UserContext } from "../../context/UserContext";
+import { Container } from "@mui/system";
 
 function CandidateConversation() {
   const [lastMessageMobile, setLastMessageMobile] = useState(true);
@@ -38,7 +40,8 @@ function CandidateConversation() {
         querySnapshot.forEach((doc) => {
           data.push(doc.data());
         });
-        setAllCoversations(data);
+       const sortedData =  data?.sort((a,b) => (a.createdAt > b.createdAt ? 1 : -1))
+        setAllCoversations(sortedData);
 
         
       });
@@ -69,11 +72,10 @@ function CandidateConversation() {
     fetchJobs();
   }, []);
 
-  const postMessage = async (message) => {
+  const postMessage = async (message, setMessage) => {
     
     const oneToOneMessageId = uuidv4();
     
-
     try {
       await setDoc(
         doc(db, "last_messages", selectConversation.last_message_id),
@@ -93,6 +95,7 @@ function CandidateConversation() {
     } catch (e) {
       console.error(e);
     }
+    setMessage('')
   };
   return allLastMessages && allLastMessages.length > 0 ? (
     <Grid container sx={{ height: '100%'}}>
@@ -116,6 +119,27 @@ function CandidateConversation() {
           display: { xs: lastMessageMobile ? "none" : "block", sm: "block" },
         }}
       >
+
+<AppBar
+      position="fixed"
+      sx={{ display: { xs: "block", sm: "none" } }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar container disableGutters>
+          <IconButton
+            sx={{
+              display: { xs: "none", md: "block" },
+              color: state.darkMode ? "#fff" : "#111",
+              mr: 1,
+            }}
+          >
+            
+          </IconButton>
+          </Toolbar>
+          </Container>
+          </AppBar>
+
+
         <Button
           sx={{ display: { xs: "block", sm: "none" } }}
           onClick={() => setLastMessageMobile(true)}

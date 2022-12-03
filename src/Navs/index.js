@@ -23,19 +23,15 @@ import EmployerHoc from "../Components/Hoc/EmployerHoc";
 import { UserContext } from "../Components/context/UserContext";
 
 function Navs() {
-  const [state, dispatch] = useContext(UserContext)
+  const [state, dispatch] = useContext(UserContext);
   // const user = JSON.parse(localStorage.getItem("user")) || null;
   // const userinfo = JSON.parse(localStorage.getItem("userinfo")) || null;
   const CandidateProtactedRotes = () => {
-    // if ("a" === "a")
-    if (state.user && state.userInfo?.type === "candidate")
-     return <Outlet />;
+    if (state.user && state.userInfo?.type === "candidate") return <Outlet />;
     else return <Navigate to="/" />;
   };
   const EmployerProtactedRotes = () => {
-    // if ("a" === "a")
-    if (state.user && state.userInfo?.type === "employer")
-     return <Outlet />;
+    if (state.user && state.userInfo?.type === "employer") return <Outlet />;
     else return <Navigate to="/" />;
   };
   return (
@@ -50,11 +46,7 @@ function Navs() {
           <Route path="/employer/auth" element={<AuthPage type="employer" />} />
           <Route
             path="candidate/onboarding"
-            element={
-                <CandidateOnboarding />
-              // <CandidateHoc>
-              // </CandidateHoc>
-            }
+            element={<CandidateOnboarding />}
           />
           <Route element={<CandidateProtactedRotes />}>
             <Route
@@ -77,7 +69,7 @@ function Navs() {
               path="candidate/profile"
               element={
                 <CandidateHoc>
-                  <CandidateProfile />
+                  <CandidateProfile darkMode={state.darkMode} />
                 </CandidateHoc>
               }
             />
@@ -94,7 +86,7 @@ function Navs() {
           <Route
             path="employer/onboarding"
             element={
-                <EmployerOnboarding />
+              <EmployerOnboarding />
               // <EmployerHoc>
               // </EmployerHoc>
             }
