@@ -1,8 +1,8 @@
-import { AppBar, Button, Grid, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Button, Grid, IconButton, Toolbar, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { orderByValue } from "firebase/database";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import './styles.css'
+
+import "./styles.css";
 import {
   collection,
   query,
@@ -26,13 +26,15 @@ function CandidateConversation() {
   const [allCoversations, setAllCoversations] = useState(null);
   const [state, dispatch] = useContext(UserContext);
   const userInfo = state.user;
-
+  const [employerName, setEmployerName] = useState('')
   const selectAConversation = (data) => {
+    
     setSelectConversation(data);
+    setEmployerName(data.employer_name)
     try {
       const q = query(
         collection(db, "one-to-one-messages"),
-        where("conversationId", "==", data.conversationId),
+        where("conversationId", "==", data.conversationId)
         // orderByValue("createdAt")
       );
 
@@ -41,22 +43,24 @@ function CandidateConversation() {
         querySnapshot.forEach((doc) => {
           data.push(doc.data());
         });
-       const sortedData =  data?.sort((a,b) => (a.createdAt > b.createdAt ? 1 : -1))
+        const sortedData = data?.sort((a, b) =>
+          a.createdAt > b.createdAt ? 1 : -1
+        );
         setAllCoversations(sortedData);
-
-        
       });
     } catch (err) {
       console.error(err);
     }
     setLastMessageMobile(false);
+    employerName = data.employer_name;
+    console.log(employerName)
   };
-
+  console.log(selectConversation)
   const fetchJobs = async () => {
     try {
       const q = query(
         collection(db, "last_messages"),
-        where("candidateId", "==", userInfo.uid),
+        where("candidateId", "==", userInfo.uid)
       );
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const data = [];
@@ -74,9 +78,8 @@ function CandidateConversation() {
   }, []);
 
   const postMessage = async (message, setMessage) => {
-    
     const oneToOneMessageId = uuidv4();
-    
+
     try {
       await setDoc(
         doc(db, "last_messages", selectConversation.last_message_id),
@@ -96,10 +99,10 @@ function CandidateConversation() {
     } catch (e) {
       console.error(e);
     }
-    setMessage('')
+    setMessage("");
   };
   return allLastMessages && allLastMessages.length > 0 ? (
-    <Grid container sx={{ height: '100%'}}>
+    <Grid container sx={{ height: "100%" }}>
       <Grid
         sm={4}
         xs={12}
@@ -120,36 +123,19 @@ function CandidateConversation() {
           display: { xs: lastMessageMobile ? "none" : "block", sm: "block" },
         }}
       >
+       
 
-<AppBar
-      position="fixed"
-      sx={{ display: { xs: "block", sm: "none" } }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar container disableGutters>
-          <IconButton
-            sx={{
-              display: { xs: "none", md: "block" },
-              color: state.darkMode ? "#fff" : "#111",
-              mr: 1,
-            }}
-          >
-
-          </IconButton>
-          </Toolbar>
-          </Container>
-          </AppBar>
-
-
-        <Button
+        {/* <Button
           sx={{ display: { xs: "block", sm: "none" } }}
           onClick={() => setLastMessageMobile(true)}
         >
           Back
-        </Button>
+        </Button> */}
         <MessageArea
           postMessage={postMessage}
           allCoversations={allCoversations}
+          setLastMessageMobile={setLastMessageMobile}
+          employerName={employerName}
         />
       </Grid>
     </Grid>

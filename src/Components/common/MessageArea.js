@@ -1,10 +1,14 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { AppBar, IconButton, Toolbar, Container } from "@mui/material";
 
-function MessageArea({ postMessage, allCoversations }) {
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+function MessageArea({ postMessage, allCoversations, setLastMessageMobile,employerName }) {
   const [message, setMessage] = useState("");
   const loggedIn_user = JSON.parse(localStorage.getItem("user"));
-
+  console.log(employerName)
   return (
     <>
       {allCoversations ? (
@@ -19,7 +23,27 @@ function MessageArea({ postMessage, allCoversations }) {
               marginBottom: { xs: "7.5rem", sm: "7rem", md: '3.5rem' }
             }}
           >
-            
+             <AppBar position="fixed" sx={{ backgroundColor: 'white',display: { xs: "block", sm: "none" } }}>
+          <Container maxWidth="xl">
+            <Toolbar container disableGutters>
+              <IconButton
+                sx={{
+                  mr: 1, 
+                }}
+              >
+                <ArrowBackIcon onClick={() => setLastMessageMobile(true)} />
+              </IconButton>
+              <Grid item={true} xs={12} md={12} sx={{display: 'flex', alignItems: 'center'}}>
+          <AccountCircleIcon sx={{ bgColor: 'gray' ,color:'lightgray' ,fontSize: '3.2rem', marginRight: '1rem'}} />
+        
+          <Typography variant="h5" sx={{color: '#111'}}>
+            {employerName}
+          </Typography>
+          </Grid>
+
+            </Toolbar>
+          </Container>
+        </AppBar>
             {allCoversations.map((item, index) => {
               return (
                 <div
