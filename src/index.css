@@ -1,23 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;800&display=swap");
 
-body {
-  
-  color: #111 ;
-  background-color: #fff;
-  margin: 0;
-  font-family: poppins-medium-webfont-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -28,17 +10,46 @@ body {
   font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
   /* var(--black) == #111 */
-  background-color: var(--black);
+  /* background-color: var(--black); */
+}
+:root {
+  --blue: #3a80e9;
+  --white: #ffffff;
+  --black: #111;
+  --gray: #888;
+  --darkgray: #1b1b1b;
+  --green: #61c96f;
+  --red: #f94141;
+  /* --lightGreen: #c0dfd3;
+  --darkGreen: #3a4c40; */
 }
 
+[data-theme="light"] {
+  --white: #ffffff;
+  --black: #111;
+  --gray: #888;
+  --darkgray: #1b1b1b;
+  --lightGreen: #1d0101;
+  --lightRed: #192702;
+}
+
+[data-theme="dark"] {
+  --white: #111;
+  --black: #fff;
+  --gray: #888;
+  --darkgray: #f3f3f3;
+  --lightGreen: #9ccbb8;
+  --lightRed: #f69697;
+}
 a {
   color: inherit;
   text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 ::selection {
@@ -64,6 +75,6 @@ img {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--blue);
+  background: var(--white);
   border-radius: 1rem;
 }

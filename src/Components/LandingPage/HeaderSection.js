@@ -20,6 +20,11 @@ function HeaderSection() {
   return (
     <div
       style={{
+        // display: 'flex',
+        textAlign: 'center',
+        // flexDirection: 'column',
+        // justifyContent: 'center',
+        // alignItems: 'center',
         margin: "4rem 0",
         color: state.darkMode ? "#fff" : "#111",
         backgroundColor: state.darkMode ? "#111" : "#fff",

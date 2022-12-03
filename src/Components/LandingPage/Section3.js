@@ -1,12 +1,13 @@
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import React from "react";
 import { section3_info } from "../text/data";
+import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
 
 function Section3() {
   return (
     <Grid
       container
-      sx={{ padding: "3rem 0", border: "1px solid lightgray" }}
+      sx={{ padding: "3rem 0", }}
       className="section-2"
     >
       <Typography
@@ -34,7 +35,7 @@ function Section3() {
             sx={{
               margin: "1.5rem",
               padding: "1rem",
-              width: '300px',
+              minWidth: '350px',
               border: "1px solid lightgray",
               borderRadius: "1rem",
               display: "flex",
@@ -53,13 +54,21 @@ function Section3() {
                 justifyContent: "flex-start",
               }}
             >
-              <img src={item.img} width="fit-content" alt="logo" />
+              <img src={item.img} height='80px' width="250px" alt="logo" />
               <Typography variant="p">{item.jobType}</Typography>
               <div style={{ margin: 0 }}>{/* <h2>{item.company}</h2> */}</div>
             </div>
-            <Typography typography="h6" sm={12}>
+            <Typography typography="h6" sx={{px: 2}} sm={12}>
               {item.title}
             </Typography>
+            <div style={{display: 'flex',padding: '0 1rem', justifyContent: "space-between"}}>
+              <Typography variant="h5">
+               <CurrencyRupeeRoundedIcon /> {item.salary}
+              </Typography>
+              <Button variant="outlined">
+                Apply
+              </Button>
+            </div>
           </Grid>
         ))}
       </Grid>

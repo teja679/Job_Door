@@ -145,7 +145,7 @@ export const section3_info = [
   {
     company: "Adobe",
     img: "https://www.thesoftwarereport.com/wp-content/uploads/2022/07/adobe-1.png",
-    jobType: "Remote",
+    jobType: "Freelance",
     title: "Backend Engineer",
     workType: "Fulltime",
     desc: " gewegteg",
