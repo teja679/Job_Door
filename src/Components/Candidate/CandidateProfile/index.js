@@ -275,7 +275,7 @@ function CandidateProfile() {
           </Select>
         </Grid>
         <Grid item={true} xs={12} sm={9} md={6}>
-          <Typography variant="h6">Upload Resume</Typography>
+          <Typography variant="h6">Resume</Typography>
           <Grid item={true} sx={{ display: "flex" }}>
             {edit ? (
               <form onSubmit={submitFile}>
@@ -293,7 +293,7 @@ function CandidateProfile() {
                 View Resume
               </Button>
             ) : (
-              <Button>Upload Resume</Button>
+              <Button>Upload Pdf</Button>
             )}
           </Grid>
         </Grid>

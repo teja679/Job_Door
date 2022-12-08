@@ -7,14 +7,8 @@ import "./styles.css";
 
 import { db } from "../../firebaseConfig";
 import {
-  collection,
-  query,
   getDoc,
-  where,
-  getDocs,
-  setDoc,
   doc,
-  deleteDoc,
 } from "firebase/firestore";
 import { UserContext } from "../context/UserContext";
 function AuthPage({ type }) {
@@ -53,17 +47,17 @@ function AuthPage({ type }) {
             if (userType === type) {
               navigate("/candidate/profile");
             } else {
-              navigate('/')
+              // navigate('/')
               alert("you are already onboarded as employer");
-              // return;
+              return;
             }
           } else {
             if (userType === type) {
               navigate("/employer/profile");
             } else {
-              navigate('/')
+              // navigate('/')
               alert("you are already onboarded as candidate");
-              // return;
+              return;
             }
           }
         } else {

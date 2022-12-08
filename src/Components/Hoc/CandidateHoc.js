@@ -7,14 +7,13 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import RestoreIcon from "@mui/icons-material/Restore";
 import MenuIcon from "@mui/icons-material/Menu";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AdbIcon from "@mui/icons-material/Adb";
 import {
   BottomNavigation,
@@ -178,7 +177,7 @@ function CandidateHoc({ children }) {
                   {pages.map((page) => (
                     <MenuItem
                       key={page.key}
-                      color="inherit"
+                      color={state.darkMode ? "#fff" : "gray"}
                       onClick={() => reRoute(page.key)}
                     >
                       <Typography textAlign="center">{page.label}</Typography>
@@ -229,12 +228,10 @@ function CandidateHoc({ children }) {
                 </Tooltip>
                 <Tooltip>
                   <Button
-                    sx={
-                      {
-                        color: state.darkMode ? "#fff" : "gray",
-                        // bgcolor: state.darkMode ? "#252525" : "#fff",
-                      }
-                    }
+                    sx={{
+                      color: state.darkMode ? "#fff" : "gray",
+                      // bgcolor: state.darkMode ? "#252525" : "#fff",
+                    }}
                     onClick={logoutFunction}
                   >
                     Logout
@@ -261,6 +258,10 @@ function CandidateHoc({ children }) {
       >
         <BottomNavigation
           showLabels
+          sx={{
+            color: state.darkMode ? "#ddd" : "gray",
+            bgcolor: state.darkMode ? "#222" : "#fff",
+          }}
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
@@ -268,26 +269,26 @@ function CandidateHoc({ children }) {
         >
           {pages.map((page) => (
             <BottomNavigationAction
-             sx={{
-              
-              color: state.darkMode ? "#ddd" : "gray",
-              bgcolor: state.darkMode ? "#222" : "#fff",
-             }}
+              sx={{
+                color: state.darkMode ? "#ddd" : "gray",
+                bgcolor: state.darkMode ? "#222" : "#fff",
+              }}
               onClick={() => reRoute(page.key)}
               key={page.key}
               label={page.label}
               icon={page.icon}
             />
           ))}
-          <BottomNavigationAction
-          sx={{
-            color: state.darkMode ? "#ddd" : "gray",
-            bgcolor: state.darkMode ? "#222" : "#fff",
-          }}
+          <IconButton
+            sx={{
+              color: state.darkMode ? "#ddd" : "gray",
+              // bgcolor: state.darkMode ? "#222" : "#fff",
+            }}
             onClick={handleClick}
-            label={"Menu"}
-            icon={<MenuIcon />}
-          />
+            // label={"Menu"}
+          >
+            <MoreVertIcon sx={{p:0.5}} />
+          </IconButton>
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}

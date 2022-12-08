@@ -129,9 +129,9 @@ function EmployerConversation() {
       </Grid>
     </Grid>
   ) : allLastMessages && allLastMessages.length === 0 ? (
-    <div>No data posted</div>
+    <div style={{margin: '2rem'}}>No data posted</div>
   ) : (
-    <div>No data available</div>
+    <div style={{margin: '2rem'}}>No data available</div>
   );
 }
 

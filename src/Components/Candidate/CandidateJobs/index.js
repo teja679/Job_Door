@@ -36,7 +36,7 @@ function CandidateJobs() {
           jobs.push(doc.data());
         });
         setAllJobs(jobs);
-        
+
         setLoading(false);
       });
     } catch (err) {
@@ -48,7 +48,6 @@ function CandidateJobs() {
   }, []);
 
   const applyForJob = async (job) => {
-    
     const applicationId = uuidv4();
 
     const q = await query(
@@ -61,11 +60,11 @@ function CandidateJobs() {
     querySnapshot.forEach((doc) => {
       data.push(doc.data());
     });
-    const job_data = allJobs.map(item => {
-        if(item.uid === job.employerId){
-          item.status = 'applied'
-        }
-    } )
+    const job_data = allJobs.map((item) => {
+      if (item.uid === job.employerId) {
+        item.status = "applied";
+      }
+    });
     const isApplied = data.find((item) => item.jobId === job.Job_id);
 
     if (isApplied) {
@@ -100,7 +99,7 @@ function CandidateJobs() {
     <Loader />
   ) : (
     <>
-      <h1>Jobs</h1>
+      {/* <h1>Jobs</h1> */}
       <Grid
         container
         sx={{
@@ -182,15 +181,15 @@ function CandidateJobs() {
                   variant="outlined"
                   onClick={() => applyForJob(job)}
                 >
-                  {job.status === 'applied' ? 'Applied' : 'Apply'}
+                  {job.status === "applied" ? "Applied" : "Apply"}
                 </Button>
               </Grid>
             </Grid>
           ))
         ) : allJobs && allJobs.length === 0 ? (
-          <div>No data posted</div>
+          <div style={{margin: '2rem'}}>No data found</div>
         ) : (
-          <div>No data available</div>
+          <div style={{margin: '2rem'}}>No data available</div>
         )}
       </Grid>
     </>

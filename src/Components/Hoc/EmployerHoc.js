@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Person4Icon from "@mui/icons-material/Person4";
@@ -53,6 +54,14 @@ function EmployerHoc({ children }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [state, dispatch] = React.useContext(DarkModeContext);
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -68,9 +77,9 @@ function EmployerHoc({ children }) {
     setAnchorElUser(null);
   };
   const reRoute = (page) => {
-    
-    handleCloseNavMenu();
+    console.log(`../employer/${page}`);
     navigate(`../employer/${page}`);
+    handleCloseNavMenu();
   };
   const logoutFunction = () => {
     localStorage.clear();
@@ -78,8 +87,8 @@ function EmployerHoc({ children }) {
     navigate("/");
   };
   return (
-    <div style={{height: '100vh'}}>
-      <Box sx={{ display: { xs: "none", md: "block", height: '10vh' } }}>
+    <div style={{ height: "100vh" }}>
+      <Box sx={{ display: { xs: "none", md: "block", height: "10vh" } }}>
         <AppBar
           position="fixed"
           sx={{
@@ -89,42 +98,47 @@ function EmployerHoc({ children }) {
         >
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-            <IconButton
-            sx={{
-              display: { xs: "none", md: "block" },
-              color: state.darkMode ? "#fff" : "#111",
-              mr: 1,
-            }}
-          >
-            <img
-              width="50"
-              style={{ borderRadius: "50%" }}
-              src="https://img.favpng.com/3/19/25/search-logo-png-favpng-m99bRGyXRSuw3yU7NMxS9cYqR.jpg"
-              alt="logo"
-            />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-              marginLeft: 2,
-            }}
-          >
-            Job Door
-          </Typography>
+              <IconButton
+                sx={{
+                  display: { xs: "none", md: "block" },
+                  color: state.darkMode ? "#fff" : "#111",
+                  mr: 1,
+                }}
+              >
+                <img
+                  width="50"
+                  style={{ borderRadius: "50%" }}
+                  src="https://img.favpng.com/3/19/25/search-logo-png-favpng-m99bRGyXRSuw3yU7NMxS9cYqR.jpg"
+                  alt="logo"
+                />
+              </IconButton>
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                href="/"
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  letterSpacing: ".3rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                  marginLeft: 2,
+                }}
+              >
+                Job Door
+              </Typography>
 
-              <Box sx={{ color: state.darkMode ? "#fff" : "gray",
+              <Box
+                sx={{
+                  color: state.darkMode ? "#fff" : "gray",
                   bgcolor: state.darkMode ? "#252525" : "#fff",
-                  flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                  flexGrow: 1,
+                  display: { xs: "flex", md: "none" },
+                }}
+              >
                 <IconButton
                   size="large"
                   aria-label="account of current user"
@@ -154,8 +168,11 @@ function EmployerHoc({ children }) {
                   }}
                 >
                   {pages.map((page) => (
-                    <MenuItem key={page.key}
-                    color="inherit" onClick={() => reRoute(page.key)}>
+                    <MenuItem
+                      key={page.key}
+                      color="inherit"
+                      onClick={() => reRoute(page.key)}
+                    >
                       <Typography textAlign="center">{page.label}</Typography>
                     </MenuItem>
                   ))}
@@ -241,6 +258,10 @@ function EmployerHoc({ children }) {
       >
         <BottomNavigation
           showLabels
+          sx={{
+            color: state.darkMode ? "#ddd" : "gray",
+            bgcolor: state.darkMode ? "#222" : "#fff",
+          }}
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
@@ -248,12 +269,66 @@ function EmployerHoc({ children }) {
         >
           {pages.map((page) => (
             <BottomNavigationAction
+              sx={{
+                color: state.darkMode ? "#ddd" : "gray",
+                bgcolor: state.darkMode ? "#222" : "#fff",
+              }}
               onClick={() => reRoute(page.key)}
               key={page.key}
               label={page.label}
               icon={page.icon}
             />
           ))}
+          <IconButton
+            sx={{
+              color: state.darkMode ? "#ddd" : "gray",
+              // bgcolor: state.darkMode ? "#222" : "#fff",
+            }}
+            onClick={handleClick}
+            // label={"Menu"}
+          >
+            <MoreVertIcon sx={{ p: 0.5 }} />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+            color={state.darkMode ? "#ddd" : "gray"}
+            bgcolor={state.darkMode ? "#222" : "#fff"}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "2rem",
+              }}
+            >
+              <Tooltip title="Open settings">
+                <Switch
+                  onChange={() => {
+                    state.darkMode
+                      ? dispatch({ type: "Make_light" })
+                      : dispatch({ type: "Make_dark" });
+                  }}
+                />
+              </Tooltip>
+              <Tooltip>
+                <Button
+                  sx={{
+                    // color: "gray",
+                    // bgcolor: state.darkMode ? "#252525" : "#fff",
+                  }}
+                  onClick={logoutFunction}
+                >
+                  Logout
+                </Button>
+              </Tooltip>
+            </div>
+          </Menu>
         </BottomNavigation>
       </Box>
       {children}

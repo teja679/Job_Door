@@ -17,7 +17,7 @@ export const JobSeekersList = [
   },
   {
     title: "Conversations",
-    link: "/candidate/conversations",
+    link: "/candidate/conversation",
   },
 ];
 
@@ -39,8 +39,8 @@ export const EmployersList = [
     link: "/employer/applicants",
   },
   {
-    title: "Employer conversations",
-    link: "/employer/conversations",
+    title: "Employer conversation",
+    link: "/employer/conversation",
   },
 ];
 export const quickList = [
